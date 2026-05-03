@@ -1,6 +1,5 @@
 import type { Hole } from '@/lib/types'
-import { toRoman } from '@/lib/format'
-import TempleMarker from '@/components/decorations/TempleMarker'
+import TileRule from '@/components/decorations/TileRule'
 import HostNote from '@/components/HostNote'
 
 interface Props {
@@ -11,42 +10,48 @@ interface Props {
 
 export default function HoleCard({ hole, showMapLink = true, currentPlayerName = '' }: Props) {
   return (
-    <article className="space-y-5">
-      {/* District + coordinates row */}
-      {(hole.district || hole.coords) && (
-        <div className="flex items-baseline justify-between">
-          <span className="smallcaps">{hole.district ?? hole.address}</span>
-          {hole.coords && (
-            <span className="font-mono text-ink-muted text-xs" style={{ letterSpacing: '0.08em' }}>
-              {hole.coords}
-            </span>
-          )}
-        </div>
-      )}
-
-      {/* Multiplier badge — only for late high-stakes holes */}
-      {hole.score_multiplier > 1 && !hole.is_practice && (
-        <div className="inline-flex items-center gap-2 border border-gold/60 bg-gold/8 px-3 py-1.5">
-          <span className="smallcaps-gold">× {hole.score_multiplier} multiplikator</span>
-        </div>
-      )}
+    <article className="space-y-4 fade-up">
+      {/* District + multiplier badge row */}
+      <div className="flex items-baseline justify-between">
+        <span className="smallcaps">{hole.district ?? hole.address}</span>
+        {hole.score_multiplier > 1 && !hole.is_practice && (
+          <span className="smallcaps-terra">× {hole.score_multiplier} multiplier</span>
+        )}
+      </div>
 
       {/* Stop name */}
-      <h2 className="display-lg">{hole.name}</h2>
+      <h2 className="display-lg" style={{ marginBottom: 4 }}>{hole.name}</h2>
 
-      {/* Address as italic subtitle */}
-      <p className="font-serif italic text-ink-secondary text-lg -mt-2">
+      {/* Address */}
+      <p className="font-sans italic text-ink-secondary" style={{ fontSize: '1rem', marginBottom: 8 }}>
         {hole.address}
       </p>
 
-      {/* Gold rule */}
-      <div className="w-12 h-px bg-gold" />
+      {/* Drink pill */}
+      <div className="inline-flex items-center gap-2" style={{ background: '#8B1A3A', padding: '5px 14px' }}>
+        <span style={{ fontSize: '1rem' }}>{hole.drink_emoji}</span>
+        <span className="font-sans italic" style={{ color: '#FEF4E0', fontSize: '0.9rem', letterSpacing: '0.04em' }}>
+          {hole.drink}
+        </span>
+      </div>
 
-      {/* Fun fact as field-note quote */}
+      <TileRule />
+
+      {/* Fun fact quote */}
       <p className="field-quote">
         &ldquo;{hole.fun_fact}&rdquo;
       </p>
-      <p className="smallcaps">— Feltnote · Stop {toRoman(hole.id)}</p>
+      <p className="smallcaps">— Feltnote · Stop {hole.id}</p>
+
+      {/* Practice banner */}
+      {hole.is_practice && (
+        <div style={{ border: '1px solid rgba(212,168,67,0.5)', background: 'rgba(212,168,67,0.06)', padding: '12px 16px' }}>
+          <p className="smallcaps-gold" style={{ marginBottom: 4 }}>Prøverunde</p>
+          <p className="font-sans italic text-ink-secondary" style={{ fontSize: '0.9rem' }}>
+            Point tæller ikke. Lær reglerne undervejs.
+          </p>
+        </div>
+      )}
 
       {/* Maps link */}
       {showMapLink && (
@@ -54,14 +59,14 @@ export default function HoleCard({ hole, showMapLink = true, currentPlayerName =
           href={hole.maps_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 font-sans text-ink underline underline-offset-4 decoration-gold decoration-1 hover:decoration-2 text-base"
+          className="inline-flex items-center gap-2 font-sans text-ink-secondary underline underline-offset-4 decoration-gold decoration-1"
+          style={{ fontSize: '0.9rem' }}
         >
-          <TempleMarker size={16} color="#B89A60" />
           Åbn i Google Maps
         </a>
       )}
 
-      {/* Host notes — only shown to Lukas */}
+      {/* Host notes — only shown to Emil */}
       <HostNote text={hole.host_notes} currentPlayerName={currentPlayerName} />
     </article>
   )

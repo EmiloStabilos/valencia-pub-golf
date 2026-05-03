@@ -9,33 +9,39 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Surfaces — warm parchment / cream
-        'parchment': '#F2EBDD',          // primary background (warm cream)
-        'parchment-light': '#F8F2E5',     // cards, slightly lighter
-        'parchment-dark': '#ECE4D2',      // sections, slightly darker
-        'ink': '#1A2438',                // deep navy ink (text, CTAs)
-        'ink-deep': '#0F1722',            // darker navy for deep contrast
+        // Surfaces — warm saffron
+        'parchment':       '#FBE8C8',
+        'parchment-light': '#FEF4E0',
+        'parchment-dark':  '#F0D4A0',
 
-        // Antique gold accents
-        'gold': '#B89A60',                // muted antique gold
-        'gold-soft': '#D4BD85',           // lighter gold tint
+        // Primary accents
+        'terracotta':      '#C8381A',
+        'terracotta-dark': '#9E2A10',
+        'terracotta-light':'#E8714A',
+        'cobalt':          '#1A3A7A',
+        'cobalt-soft':     '#2B5BA8',
+        'gold':            '#E8A020',
+        'gold-soft':       '#F5C860',
+        'sangria':         '#8B1A3A',
+        'sun':             '#F5C518',
 
-        // Score / status colors
-        'olive': '#5C6B3C',               // good — under average
-        'wine': '#9B3F36',                // bad — over by a lot
+        // Score / status
+        'olive':           '#3A6820',
+        'wine':            '#8B1A1A',
 
         // Ink hierarchy
-        'ink-secondary': '#4A5568',
-        'ink-muted': '#8B8579',           // warm tan-grey
-        'ink-faint': '#B5AC9A',           // very faint tan-grey for hints
+        'ink':             '#2A0A06',
+        'ink-secondary':   '#5A2010',
+        'ink-muted':       '#8A5030',
+        'ink-faint':       '#C0906A',
 
-        // Hairline rules
-        'rule': '#D8D2C5',                // hairline gray-tan
+        // Rules
+        'rule':            '#D8B888',
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        serif: ['"Bodoni Moda"', 'Georgia', 'serif'],
+        sans:  ['"IM Fell English"', 'Georgia', 'serif'],
+        mono:  ['"JetBrains Mono"', 'monospace'],
       },
       letterSpacing: {
         widest: '0.18em',

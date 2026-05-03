@@ -2,8 +2,8 @@
 
 import type { Player, Score, Hole } from '@/lib/types'
 import { computeLeaderboard } from '@/lib/scoring'
-import { toRoman, formatDateHeader } from '@/lib/format'
-import LaurelBranch from '@/components/decorations/LaurelBranch'
+import { formatDateHeader } from '@/lib/format'
+import ArchDivider from '@/components/decorations/ArchDivider'
 
 interface Props {
   players: Player[]
@@ -17,109 +17,151 @@ export default function FinalScoreboard({ players, scores, holes, currentPlayer 
   const winner = board[0]
   const { date } = formatDateHeader()
 
-  // Total amphorae drunk = sum of all committed_sips for non-practice holes
-  const totalAmphorae = scores
+  const totalSips = scores
     .filter((s) => {
       const h = holes.find((x) => x.id === s.hole_id)
       return s.committed_sips != null && !h?.is_practice
     })
     .reduce((sum, s) => sum + (s.committed_sips ?? 0), 0)
 
-  // Hours: from first score's created_at to last score's created_at
-  const dates = scores
-    .map((s) => new Date(s.created_at).getTime())
-    .filter((t) => !Number.isNaN(t))
-    .sort((a, b) => a - b)
-  const hours =
-    dates.length >= 2
-      ? ((dates[dates.length - 1] - dates[0]) / (1000 * 60 * 60)).toFixed(1)
-      : '—'
-
-  // Total stops actually played (with at least one committed score)
   const playedStops = new Set(
     scores.filter((s) => s.committed_sips != null).map((s) => s.hole_id)
   ).size
 
   return (
     <div className="min-h-screen bg-parchment">
-      <div className="max-w-md mx-auto px-6 pt-10 pb-12 space-y-8">
-        {/* Top eyebrow */}
-        <div className="text-center">
-          <p className="smallcaps">
+      {/* Cobalt hero */}
+      <div
+        className="azulejo-bg"
+        style={{ padding: '40px 24px 32px', position: 'relative', overflow: 'hidden' }}
+      >
+        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
+          <p className="smallcaps" style={{ color: 'rgba(240,234,214,0.6)', marginBottom: 20 }}>
             Final · {date}
           </p>
-          <h1 className="display-xl mt-4 leading-none">Turen er forbi.</h1>
-        </div>
 
-        {/* Champion */}
-        <div className="flex items-center justify-center gap-4 pt-4">
-          <LaurelBranch size={56} color="#B89A60" />
-          <div className="text-center">
-            <p className="font-serif text-ink leading-none" style={{ fontSize: '2.6rem', fontWeight: 500 }}>
-              {winner.player.name}
+          {/* Moorish arch watermark */}
+          <svg
+            viewBox="0 0 200 100"
+            width={140}
+            style={{ display: 'block', margin: '0 auto', opacity: 0.2 }}
+          >
+            <path
+              d="M20 100 L20 50 Q20 5 100 5 Q180 5 180 50 L180 100"
+              fill="none"
+              stroke="#F0EAD6"
+              strokeWidth="2"
+            />
+          </svg>
+
+          {/* Winner overlay */}
+          <div style={{ marginTop: -70, position: 'relative', zIndex: 3 }}>
+            <p
+              className="font-serif"
+              style={{
+                fontWeight: 900,
+                fontSize: '3rem',
+                color: '#F0EAD6',
+                lineHeight: 1,
+                textShadow: '0 2px 12px rgba(0,0,0,0.3)',
+              }}
+            >
+              {winner?.player.name ?? ''}
             </p>
-            <p className="smallcaps-gold mt-2">Vinder · {winner.total} point</p>
+            <p
+              className="smallcaps"
+              style={{ marginTop: 10, color: '#F5C860', letterSpacing: '0.22em' }}
+            >
+              Winner · {winner?.total ?? 0} points
+            </p>
           </div>
-          <LaurelBranch size={56} color="#B89A60" mirrored />
         </div>
+      </div>
 
-        <div className="gold-rule" />
+      {/* Arch divider */}
+      <ArchDivider color="rgba(26,74,122,0.35)" bg="#FBE8C8" />
 
-        {/* Full leaderboard */}
-        <div className="border-t border-rule">
+      <div style={{ padding: '16px 24px 32px' }}>
+        {/* Title */}
+        <h1 className="font-serif" style={{ fontWeight: 900, fontSize: '2.6rem', color: '#2A0A06', lineHeight: 1, marginBottom: 2 }}>
+          The route
+        </h1>
+        <h1 className="font-serif italic" style={{ fontWeight: 900, fontSize: '2.6rem', color: '#C8381A', lineHeight: 1, marginBottom: 24 }}>
+          is complete.
+        </h1>
+
+        {/* Leaderboard */}
+        <div style={{ borderTop: '1px solid #D8B888', marginBottom: 24 }}>
           {board.map((entry, i) => (
             <div
               key={entry.player.id}
-              className="flex items-center justify-between py-4 border-b border-rule"
+              className="flex items-center justify-between"
+              style={{ padding: '16px 0', borderBottom: '1px solid #D8B888' }}
             >
-              <div className="flex items-center gap-4">
-                <span
-                  className="font-mono text-ink-muted text-xs w-6"
-                  style={{ letterSpacing: '0.08em' }}
-                >
-                  {toRoman(i + 1)}
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', width: 20 }}>
+                  {i + 1}
                 </span>
                 <div>
-                  <p className="font-serif text-ink text-xl leading-tight">
+                  <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.2rem', color: '#2A0A06' }}>
                     {entry.player.name}
                     {entry.player.id === currentPlayer.id && (
-                      <span className="font-serif italic text-ink-muted text-base ml-2">(dig)</span>
+                      <span className="font-sans italic text-ink-muted" style={{ fontSize: '0.9rem', marginLeft: 8 }}>
+                        (dig)
+                      </span>
                     )}
                   </p>
-                  <p className="font-mono text-ink-muted mt-1" style={{ fontSize: '0.72rem', letterSpacing: '0.08em' }}>
+                  <p className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', marginTop: 3, letterSpacing: '0.06em' }}>
                     {entry.spotOns} spot-on
                     {entry.commitmentFails > 0 && ` · ${entry.commitmentFails} fejl`}
                     {entry.penaltyShots > 0 && ` · ${entry.penaltyShots} shots`}
                   </p>
                 </div>
               </div>
-              <span className="font-serif text-ink" style={{ fontSize: '2rem', fontWeight: 500 }}>
+              <span className="font-serif" style={{ fontWeight: 900, fontSize: '2rem', color: '#2A0A06' }}>
                 {entry.total}
               </span>
             </div>
           ))}
         </div>
 
-        {/* Stat tile */}
-        <div className="grid grid-cols-3 border border-rule">
+        {/* Stats grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr',
+            border: '1px solid #D8B888',
+            marginBottom: 24,
+          }}
+        >
           {[
             { label: 'Stops', value: playedStops },
-            { label: 'Amforaer', value: totalAmphorae },
-            { label: 'Timer', value: hours },
+            { label: 'Sips', value: totalSips },
+            { label: 'End', value: '🌅' },
           ].map((stat, i) => (
             <div
               key={stat.label}
-              className={`py-4 px-3 text-center ${i < 2 ? 'border-r border-rule' : ''}`}
+              style={{
+                padding: '16px 8px',
+                textAlign: 'center',
+                borderRight: i < 2 ? '1px solid #D8B888' : 'none',
+              }}
             >
-              <p className="smallcaps mb-1">{stat.label}</p>
-              <p className="font-serif text-ink leading-none" style={{ fontSize: '1.6rem', fontWeight: 500 }}>
+              <p className="smallcaps" style={{ marginBottom: 6 }}>{stat.label}</p>
+              <p className="font-serif" style={{ fontWeight: 700, fontSize: '1.5rem', color: '#2A0A06', lineHeight: 1 }}>
                 {stat.value}
               </p>
             </div>
           ))}
         </div>
 
-        <p className="text-center smallcaps">Runde slut</p>
+        {/* Bottom tile border */}
+        <div className="tile-border" style={{ marginBottom: 20 }} />
+        <p className="text-center smallcaps" style={{ marginBottom: 20 }}>Round complete</p>
+
+        <button onClick={() => window.location.href = '/'} className="btn-ghost">
+          Back to start
+        </button>
       </div>
     </div>
   )

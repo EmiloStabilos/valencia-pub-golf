@@ -1,6 +1,6 @@
-# Athens Pub Golf — Claude context primer
+# Valencia Pub Golf — Claude context primer
 
-> **You are reading this because Lukas has asked you to help fix something in the Athens Pub Golf app, probably from his phone, probably mildly drunk, in Athens. Be terse and helpful. Don't lecture.**
+> **You are reading this because Lukas has asked you to help fix something in the Valencia Pub Golf app, probably from his phone, probably mildly drunk, in Valencia. Be terse and helpful. Don't lecture.**
 
 ---
 
@@ -9,20 +9,20 @@
 | What | Where |
 |---|---|
 | **Live app** (share with players) | https://athens-pub-golf-app-prod.vercel.app |
-| **Supabase SQL Editor** (paste-and-run) | https://supabase.com/dashboard/project/dxzexvudbxkidhydwylw/sql/new |
-| **Supabase project ID** | `dxzexvudbxkidhydwylw` (region eu-west-1, name "AthenApp") |
+| **Supabase SQL Editor** (paste-and-run) | https://supabase.com/dashboard/project/fiucpbakevqzytbphghy/sql/new |
+| **Supabase project ID** | `fiucpbakevqzytbphghy` (region eu-west-1, name "AthenApp") |
 | **Vercel project name** | `athens-pub-golf-app` (Lukas's personal Hobby team) |
 | **GitHub repo** | `lukashoerup/athens-pub-golf` (**public** — fetch docs directly) |
 | **Raw doc URLs** | `https://raw.githubusercontent.com/lukashoerup/athens-pub-golf/main/<file>` |
 | **Default branch** | `main` (auto-deploys to Vercel on push) |
 
-If you have **Supabase MCP** connected (tool name pattern `mcp__*__execute_sql`), run SQL directly against project `dxzexvudbxkidhydwylw`. If not, output ready-to-paste SQL that Lukas pastes into the SQL Editor on his phone.
+If you have **Supabase MCP** connected (tool name pattern `mcp__*__execute_sql`), run SQL directly against project `fiucpbakevqzytbphghy`. If not, output ready-to-paste SQL that Lukas pastes into the SQL Editor on his phone.
 
 ---
 
 ## What this app is
 
-A real-time multiplayer pub-golf scoring webapp for **6 players** (Nico, Kris, Misse, **Lukas (host)**, Rasmus, Rode) playing **12 stops** across Athens over 1 day. Stop 1 is a practice round — points don't count.
+A real-time multiplayer pub-golf scoring webapp for **4 players** playing **9 stops** across Valencia over 1 day. Stop 1 is a practice round — points don't count.
 
 - **Stack**: Next.js 15 (App Router) + Supabase (Postgres + Realtime, 4 tables) + Tailwind, hosted on Vercel
 - **Anon-key auth** — the app uses `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel env vars; no user-level auth. The anon role has full read/write access by design.
@@ -33,11 +33,11 @@ A real-time multiplayer pub-golf scoring webapp for **6 players** (Nico, Kris, M
 ## How you help during the trip
 
 ### Mode A — Supabase MCP available
-You can run SQL directly. Project ID: `dxzexvudbxkidhydwylw`.
+You can run SQL directly. Project ID: `fiucpbakevqzytbphghy`.
 
 1. Lukas describes a problem ("Misse trykkede ❌ ved en fejl på hul 6")
 2. Read [`docs/ADMIN.md`](docs/ADMIN.md) for the closest recipe
-3. **Run the SQL via `execute_sql`** against project `dxzexvudbxkidhydwylw`
+3. **Run the SQL via `execute_sql`** against project `fiucpbakevqzytbphghy`
 4. **Echo back what you did** in plain English so Lukas can verify
 5. Don't ask permission for routine fixes — Lukas wants autonomous behavior. Do confirm before destructive ops on multiple holes (e.g. "this will reset 3 holes — proceed?").
 

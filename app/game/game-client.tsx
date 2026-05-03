@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import type { Player, Score, GameState, Hole, Waypoint } from '@/lib/types'
 import { checkPenaltyShot } from '@/lib/scoring'
-import { toRoman as romanize } from '@/lib/format'
+
 import CommitPhase from '@/components/game/CommitPhase'
 import RevealPhase from '@/components/game/RevealPhase'
 import DrinkPhase from '@/components/game/DrinkPhase'
@@ -14,7 +14,6 @@ import FinalScoreboard from '@/components/game/FinalScoreboard'
 import InfoSheet from '@/components/InfoSheet'
 import RouteStrip from '@/components/RouteStrip'
 import RouteTimeline from '@/components/RouteTimeline'
-import LaurelWreath from '@/components/decorations/LaurelWreath'
 
 const TOTAL_PLAYERS = 6
 const DRINK_DEADLINE_MS = 2 * 60 * 1000 // 2-min deadline once first player finishes
@@ -310,41 +309,55 @@ export default function GamePage() {
 
   return (
     <div className="min-h-screen bg-parchment">
-      {/* Sticky header — minimal, classical */}
-      <header className="sticky top-0 z-40 bg-parchment/95 backdrop-blur-sm border-b border-rule">
-        <div className="max-w-md mx-auto flex items-center justify-between px-5 py-3 gap-2">
+      {/* Sticky header — Valencia style */}
+      <header
+        className="sticky top-0 z-40 backdrop-blur-sm"
+        style={{ background: 'rgba(251,232,200,0.97)', borderBottom: '1px solid #D8B888' }}
+      >
+        <div className="max-w-md mx-auto flex items-center justify-between px-5 gap-2" style={{ padding: '10px 20px' }}>
           {canSwitchPlayer ? (
             <button
               onClick={handleSwitchPlayer}
-              className="flex items-center gap-1.5 text-ink-muted hover:text-ink min-w-0"
+              className="flex items-center gap-1.5 min-w-0"
               aria-label="Skift spiller"
             >
-              <span className="font-mono text-sm">‹</span>
-              <span className="font-serif text-base text-ink truncate">{currentPlayer.name}</span>
+              <span className="font-sans text-ink-muted" style={{ fontSize: '0.9rem' }}>‹</span>
+              <span className="font-serif text-ink truncate" style={{ fontWeight: 600, fontSize: '1.05rem' }}>
+                {currentPlayer.name}
+              </span>
             </button>
           ) : (
-            <span className="font-serif text-base text-ink truncate min-w-0">
+            <span className="font-serif text-ink truncate min-w-0" style={{ fontWeight: 600, fontSize: '1.05rem' }}>
               {currentPlayer.name}
             </span>
           )}
 
           <div className="text-center flex-shrink-0">
-            <p className="smallcaps-ink">
-              Stop {romanize(currentHolePosition)} <span className="text-gold">·</span> {romanize(totalHoles)}
+            <p className="smallcaps">
+              Stop {currentHolePosition}
+              <span style={{ color: '#C8381A' }}> · </span>
+              {totalHoles}
             </p>
           </div>
 
+          {/* Arch icon */}
           <button
             onClick={() => setShowInfo(true)}
-            className="text-ink-muted hover:text-ink p-1 -m-1 flex items-center justify-center"
+            className="flex items-center justify-center"
             aria-label="Vis info"
+            style={{ width: 30, display: 'flex', justifyContent: 'flex-end' }}
           >
-            <LaurelWreath size={22} color="currentColor" />
+            <svg viewBox="0 0 24 24" width={22} height={22} fill="none">
+              <path d="M4 20 L4 10 Q4 4 12 4 Q20 4 20 10 L20 20" stroke="#C8381A" strokeWidth="1.5" />
+              <line x1="2" y1="20" x2="22" y2="20" stroke="#C8381A" strokeWidth="1.5" />
+              <line x1="8" y1="20" x2="8" y2="14" stroke="#C8381A" strokeWidth="1" />
+              <line x1="16" y1="20" x2="16" y2="14" stroke="#C8381A" strokeWidth="1" />
+            </svg>
           </button>
         </div>
 
         {/* Route progress strip — tap to open timeline */}
-        <div className="max-w-md mx-auto border-t border-rule/50">
+        <div className="max-w-md mx-auto" style={{ borderTop: '1px solid rgba(216,205,176,0.5)' }}>
           <RouteStrip
             holes={holes}
             currentHoleId={gameState.current_hole}

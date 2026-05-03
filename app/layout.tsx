@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Athens Pub Golf ⛳',
-  description: '12 huller · 6 spillere · 1 dag i Athen',
+  title: 'Valencia Pub Golf ⛳',
+  description: '8 stops · 4 spillere · 1 dag i Valencia',
 }
 
 export const viewport: Viewport = {
@@ -11,7 +11,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#2C1810',
+  themeColor: '#1A3A7A',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

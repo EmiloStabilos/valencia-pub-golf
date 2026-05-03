@@ -3,20 +3,19 @@
 import { useState } from 'react'
 import type { Hole, Score } from '@/lib/types'
 import HoleCard from '@/components/HoleCard'
-import Amphora from '@/components/decorations/Amphora'
-import { toRoman } from '@/lib/format'
+import TileRule from '@/components/decorations/TileRule'
 import { checkPenaltyShot } from '@/lib/scoring'
 
 function penaltyShotLabel(reason: string | null, maxSips: number): string {
   switch (reason) {
     case 'max':
-      return `committed ${toRoman(maxSips)} (max)`
+      return `meldt ${maxSips} (max)`
     case 'min':
-      return 'committed I (min)'
+      return 'meldt 1 (min)'
     case 'same_as_last':
       return 'samme tal som forrige'
     case '8':
-      return 'committed VIII' // legacy data
+      return 'meldt 8'
     default:
       return ''
   }
@@ -25,7 +24,6 @@ function penaltyShotLabel(reason: string | null, maxSips: number): string {
 interface Props {
   hole: Hole
   myScore: Score | undefined
-  /** This player's committed sips on the previous hole — for live straf-shot preview */
   myPreviousSips: number | null
   committedCount: number
   totalPlayers: number
@@ -39,8 +37,6 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
   const [submitting, setSubmitting] = useState(false)
 
   const hasCommitted = myScore?.committed_sips != null
-
-  // Live preview of which penalty rules trigger for the currently selected number
   const previewReasons = checkPenaltyShot(sips, hole.max_sips, myPreviousSips, hole.id).reasons
 
   const decrement = () => setSips((s) => Math.max(1, s - 1))
@@ -59,115 +55,118 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
     <div className="space-y-8">
       <HoleCard hole={hole} currentPlayerName={currentPlayerName} />
 
-      {hole.is_practice && (
-        <div className="border border-gold/50 bg-gold/5 px-5 py-4">
-          <p className="smallcaps-gold mb-1">Prøverunde</p>
-          <p className="font-serif italic text-ink-secondary text-base leading-snug">
-            Point tæller ikke. Gennemgå reglerne mens I går.
-          </p>
-        </div>
-      )}
-
       {!hasCommitted ? (
-        <section className="space-y-6">
+        <section className="space-y-5 fade-up-1">
           {/* Max sips reference card */}
           <div className="field-card flex items-center justify-between">
             <div>
-              <p className="smallcaps mb-0.5">Max</p>
-              <p className="font-serif font-medium text-ink" style={{ fontSize: '2rem', lineHeight: 1 }}>
-                {toRoman(hole.max_sips)}
+              <p className="smallcaps" style={{ marginBottom: 4 }}>Maximum</p>
+              <p className="font-serif" style={{ fontWeight: 700, fontSize: '2.2rem', color: '#2A0A06', lineHeight: 1 }}>
+                {hole.max_sips}
               </p>
             </div>
+            {/* Dot indicators */}
             <div className="flex items-center gap-1.5">
               {Array.from({ length: Math.min(hole.max_sips, 8) }).map((_, i) => (
-                <Amphora key={i} size={14} color="#1A2438" />
+                <div
+                  key={i}
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    background: i < sips ? '#C8381A' : '#F0D4A0',
+                    border: '1px solid #D8B888',
+                    transition: 'background 0.15s',
+                  }}
+                />
               ))}
             </div>
           </div>
 
-          {/* Stepper */}
-          <div className="space-y-3">
-            <div className="flex items-baseline justify-between">
-              <span className="smallcaps-ink">Dit tal</span>
-              {previewReasons.length > 0 && (
-                <span className="smallcaps text-wine">
-                  Straf-shot{previewReasons.length > 1 ? ` × ${previewReasons.length}` : ''}
-                </span>
-              )}
-            </div>
-
-            <div className="flex items-stretch justify-between">
-              <button
-                onClick={decrement}
-                disabled={sips <= 1}
-                aria-label="Færre slurke"
-                className="stepper-btn"
-              >
-                −
-              </button>
-              <div className="flex-1 flex items-center justify-center bg-parchment-light border-y border-rule h-24 pb-2">
-                <span
-                  className="font-serif text-ink select-none leading-none"
-                  style={{ fontSize: '3.4rem', fontWeight: 500, letterSpacing: '0.02em' }}
-                >
-                  {toRoman(sips)}
-                </span>
-              </div>
-              <button
-                onClick={increment}
-                disabled={sips >= hole.max_sips}
-                aria-label="Flere slurke"
-                className="stepper-btn"
-              >
-                +
-              </button>
-            </div>
-
-            <p className="font-serif italic text-ink-muted text-center text-base pt-1">
-              Antal slurke til at tømme drinken.
-            </p>
-
-            {/* Live straf-shot preview — list each rule that would trigger */}
+          {/* Stepper label row */}
+          <div className="flex items-baseline justify-between">
+            <span className="smallcaps-ink">Dit tal</span>
             {previewReasons.length > 0 && (
-              <div className="border-l-2 border-wine pl-3 py-1.5 mt-2">
-                <p className="smallcaps text-wine mb-1">
-                  ⚠ {previewReasons.length === 1 ? '1 straf-shot' : `${previewReasons.length} straf-shots`}
-                </p>
-                <ul className="space-y-0.5">
-                  {previewReasons.map((r, i) => (
-                    <li key={i} className="font-sans text-ink-secondary text-sm leading-snug">
-                      — {penaltyShotLabel(r, hole.max_sips)}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <span className="smallcaps-terra">
+                Straf-shot{previewReasons.length > 1 ? ` × ${previewReasons.length}` : ''}
+              </span>
             )}
           </div>
+
+          {/* Stepper */}
+          <div className="flex items-stretch justify-between">
+            <button
+              onClick={decrement}
+              disabled={sips <= 1}
+              aria-label="Færre slurke"
+              className="stepper-btn"
+            >
+              −
+            </button>
+            <div
+              className="flex-1 flex flex-col items-center justify-center"
+              style={{
+                background: '#FEF4E0',
+                borderTop: '1px solid #D8B888',
+                borderBottom: '1px solid #D8B888',
+                height: 96,
+                gap: 4,
+              }}
+            >
+              <span className="font-serif select-none leading-none" style={{ fontWeight: 900, fontSize: '3.8rem', color: '#2A0A06', lineHeight: 1 }}>
+                {sips}
+              </span>
+              <span className="font-sans italic" style={{ color: '#8A5030', fontSize: '0.78rem' }}>
+                {hole.drink_emoji} {hole.drink}
+              </span>
+            </div>
+            <button
+              onClick={increment}
+              disabled={sips >= hole.max_sips}
+              aria-label="Flere slurke"
+              className="stepper-btn"
+            >
+              +
+            </button>
+          </div>
+
+          {/* Penalty preview */}
+          {previewReasons.length > 0 && (
+            <div style={{ borderLeft: '3px solid #8B1A1A', paddingLeft: 14, paddingTop: 8, paddingBottom: 8, background: 'rgba(158,42,26,0.04)' }}>
+              <p className="smallcaps" style={{ color: '#8B1A1A', marginBottom: 4 }}>
+                ⚠ {previewReasons.length === 1 ? '1 straf-shot' : `${previewReasons.length} straf-shots`}
+              </p>
+              <ul className="space-y-0.5">
+                {previewReasons.map((r, i) => (
+                  <li key={i} className="font-sans text-ink-secondary" style={{ fontSize: '0.85rem', lineHeight: 1.5 }}>
+                    — {penaltyShotLabel(r, hole.max_sips)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <button onClick={handleLockIn} disabled={submitting} className="btn-primary">
             {submitting ? 'Sender...' : 'Lås Ind'}
           </button>
         </section>
       ) : (
-        <section className="space-y-6">
-          {/* Confirmation */}
-          <div className="field-card text-center py-8">
-            <p className="smallcaps mb-3">Du committed</p>
-            <p
-              className="font-serif text-ink leading-none"
-              style={{ fontSize: '4.6rem', fontWeight: 500, letterSpacing: '0.02em' }}
-            >
-              {toRoman(myScore!.committed_sips!)}
+        <section className="space-y-6 fade-up-1">
+          {/* Committed confirmation */}
+          <div className="field-card text-center" style={{ padding: '32px 20px' }}>
+            <p className="smallcaps" style={{ marginBottom: 12 }}>Du meldte</p>
+            <p className="font-serif leading-none" style={{ fontWeight: 900, fontSize: '5rem', color: '#2A0A06', lineHeight: 1 }}>
+              {myScore!.committed_sips}
             </p>
-            <p className="font-serif italic text-ink-muted text-base mt-3">
+            <p className="font-sans italic text-ink-muted" style={{ fontSize: '0.9rem', marginTop: 8 }}>
               {myScore!.committed_sips} slurke
             </p>
             {myScore!.penalty_shot && (() => {
-              const reasons = myScore!.penalty_shot_reasons && myScore!.penalty_shot_reasons.length > 0
+              const reasons = myScore!.penalty_shot_reasons?.length > 0
                 ? myScore!.penalty_shot_reasons
                 : (myScore!.penalty_shot_reason ? [myScore!.penalty_shot_reason] : [])
               return (
-                <div className="mt-4 border-l-2 border-wine pl-3 py-1 inline-block text-left">
+                <div className="mt-4 inline-block text-left" style={{ borderLeft: '2px solid #8B1A1A', paddingLeft: 12, paddingTop: 4, paddingBottom: 4 }}>
                   <p className="smallcaps text-wine mb-1">
                     ⚠ {reasons.length === 1 ? 'Straf-shot' : `${reasons.length} straf-shots`}
                   </p>
@@ -183,11 +182,28 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
             })()}
           </div>
 
-          {/* Waiting status */}
+          {/* Waiting for others */}
           <div className="text-center">
-            <p className="smallcaps">Venter på de andre</p>
-            <p className="font-serif text-ink mt-2" style={{ fontSize: '1.4rem' }}>
-              {toRoman(committedCount)} <span className="text-ink-muted">af</span> {toRoman(totalPlayers)}
+            <TileRule />
+            <p className="smallcaps" style={{ marginTop: 16, marginBottom: 10 }}>Venter på de andre</p>
+            {/* Player dots */}
+            <div className="flex items-center justify-center gap-2 mb-4">
+              {Array.from({ length: totalPlayers }).map((_, i) => (
+                <div
+                  key={i}
+                  style={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: '50%',
+                    background: i < committedCount ? '#C8381A' : 'transparent',
+                    border: i < committedCount ? 'none' : '1.5px solid #D8B888',
+                    transition: 'background 0.3s',
+                  }}
+                />
+              ))}
+            </div>
+            <p className="font-serif text-ink" style={{ fontWeight: 700, fontSize: '2rem' }}>
+              {committedCount} <span className="font-sans text-ink-muted" style={{ fontSize: '1rem' }}>af {totalPlayers}</span>
             </p>
           </div>
         </section>

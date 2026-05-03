@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import type { Player } from '@/lib/types'
-import { formatDateHeader, toRoman } from '@/lib/format'
-import DoricColumn from '@/components/decorations/DoricColumn'
+import { formatDateHeader } from '@/lib/format'
+import ArchDivider from '@/components/decorations/ArchDivider'
 import Rules from '@/components/Rules'
 
 export default function PlayerSelectPage() {
@@ -36,49 +36,143 @@ export default function PlayerSelectPage() {
 
   return (
     <div className="min-h-screen bg-parchment flex flex-col">
-      {/* Header masthead */}
-      <div className="px-6 pt-12 pb-8 text-center">
-        <DoricColumn height={180} color="#1A2438" strokeWidth={1.0} className="mx-auto" />
+      {/* Hero — azulejo header */}
+      <div className="azulejo-bg" style={{ padding: '40px 24px 0', textAlign: 'center', position: 'relative' }}>
+        {/* Moorish arch watermark */}
+        <svg
+          viewBox="0 0 260 200"
+          width={220}
+          style={{ margin: '0 auto', display: 'block', opacity: 0.15 }}
+        >
+          <path
+            d="M30 200 L30 100 Q30 20 130 20 Q230 20 230 100 L230 200"
+            fill="none"
+            stroke="#F0EAD6"
+            strokeWidth="2.5"
+          />
+          <path
+            d="M55 200 L55 105 Q55 45 130 45 Q205 45 205 105 L205 200"
+            fill="none"
+            stroke="#F0EAD6"
+            strokeWidth="1.2"
+          />
+          <line x1="10" y1="200" x2="250" y2="200" stroke="#F0EAD6" strokeWidth="1.5" />
+        </svg>
 
-        <h1 className="display-xl mt-7 leading-none">Athens</h1>
-        <p className="display-italic mt-2" style={{ fontSize: '2.0rem' }}>
-          Pub Golf
-        </p>
+        {/* Title overlaid on arch */}
+        <div style={{ marginTop: -130, position: 'relative', zIndex: 2, paddingBottom: 36 }}>
+          <h1
+            className="font-serif"
+            style={{
+              fontWeight: 900,
+              fontSize: '3.6rem',
+              lineHeight: 1,
+              color: '#F0EAD6',
+              letterSpacing: '-0.01em',
+              textShadow: '0 2px 16px rgba(0,0,0,0.4)',
+            }}
+          >
+            Valencia
+          </h1>
+          <p
+            className="font-serif italic"
+            style={{
+              fontWeight: 600,
+              fontSize: '1.9rem',
+              color: '#F5C860',
+              marginTop: 4,
+              textShadow: '0 1px 8px rgba(0,0,0,0.3)',
+            }}
+          >
+            Pub Golf
+          </p>
 
-        <div className="gold-rule" />
+          {/* Thin tile border strip */}
+          <div className="tile-border-thin" style={{ margin: '20px auto', width: 120 }} />
 
-        <div className="smallcaps mt-4">
-          {day} · XII STOPS
-        </div>
-        <div className="font-mono text-ink-muted mt-1.5" style={{ fontSize: '0.78rem', letterSpacing: '0.16em' }}>
-          {date}
+          <p
+            className="smallcaps"
+            style={{ color: 'rgba(240,234,214,0.7)', letterSpacing: '0.22em' }}
+          >
+            {day} · 8 STOPS
+          </p>
+          <p
+            className="font-mono"
+            style={{ color: 'rgba(240,234,214,0.5)', fontSize: '0.72rem', letterSpacing: '0.18em', marginTop: 4 }}
+          >
+            {date}
+          </p>
         </div>
       </div>
 
+      {/* Arch divider — azulejo → parchment */}
+      <ArchDivider color="rgba(26,74,122,0.4)" bg="#FBE8C8" />
+
       {/* Player list */}
-      <div className="flex-1 px-6">
+      <div className="flex-1 bg-parchment">
         {loading ? (
           <div className="flex justify-center py-10">
             <div className="w-6 h-6 border border-ink border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
-          <div className="border-t border-rule">
+          <div style={{ borderTop: '1px solid #D8B888' }}>
             {players.map((player) => (
               <button
                 key={player.id}
                 onClick={() => handleSelect(player)}
                 disabled={selecting !== null}
-                className="w-full flex items-center justify-between py-4 border-b border-rule active:bg-parchment-dark transition-colors disabled:opacity-50 text-left"
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '18px 24px',
+                  background: '#FBE8C8',
+                  border: 'none',
+                  borderBottom: '1px solid #D8B888',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  opacity: selecting !== null && selecting !== player.id ? 0.35 : 1,
+                  transition: 'opacity 0.3s',
+                }}
               >
-                <div className="flex items-center gap-4">
-                  <span className="font-mono text-ink-muted text-base w-8" style={{ letterSpacing: '0.05em' }}>
-                    {toRoman(player.display_order)}
-                  </span>
-                  <span className="font-serif font-semibold text-ink text-xl">
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                  {/* Numbered square */}
+                  <div
+                    style={{
+                      width: 36,
+                      height: 36,
+                      background: selecting === player.id ? '#C8381A' : '#F0D4A0',
+                      border: '1px solid #D8B888',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                      transition: 'background 0.3s',
+                    }}
+                  >
+                    <span
+                      className="font-serif"
+                      style={{
+                        fontWeight: 700,
+                        fontSize: '0.85rem',
+                        color: selecting === player.id ? '#F0EAD6' : '#8A5030',
+                      }}
+                    >
+                      {player.display_order}
+                    </span>
+                  </div>
+                  <span
+                    className="font-serif"
+                    style={{ fontWeight: 600, fontSize: '1.25rem', color: '#2A0A06' }}
+                  >
                     {player.name}
                   </span>
                 </div>
-                <span className="smallcaps">
+                <span
+                  className="smallcaps"
+                  style={{ color: selecting === player.id ? '#C8381A' : '#8A5030' }}
+                >
                   {selecting === player.id ? 'Forbinder...' : 'Klar'}
                 </span>
               </button>
@@ -86,18 +180,37 @@ export default function PlayerSelectPage() {
           </div>
         )}
 
-        {/* Rules collapsible */}
-        <div className="mt-8 mb-6">
+        {/* Rules accordion */}
+        <div style={{ paddingBottom: 24 }}>
           <button
             onClick={() => setRulesOpen((o) => !o)}
-            className="w-full flex items-center justify-between py-3 border-t border-b border-rule"
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '16px 24px',
+              background: 'transparent',
+              border: 'none',
+              borderTop: '1px solid #D8B888',
+              borderBottom: '1px solid #D8B888',
+              cursor: 'pointer',
+            }}
           >
-            <span className="smallcaps-ink">Athens Rules</span>
-            <span className="text-ink-muted text-sm">{rulesOpen ? '−' : '+'}</span>
+            <span className="smallcaps-ink">Regler</span>
+            <span className="font-serif text-ink-muted" style={{ fontSize: '1.1rem' }}>
+              {rulesOpen ? '−' : '+'}
+            </span>
           </button>
 
           {rulesOpen && (
-            <div className="py-5">
+            <div
+              style={{
+                padding: '20px 24px',
+                borderBottom: '1px solid #D8B888',
+                background: '#FEF4E0',
+              }}
+            >
               <Rules compact />
             </div>
           )}

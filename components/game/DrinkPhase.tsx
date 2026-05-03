@@ -2,15 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import type { Hole, Player, Score } from '@/lib/types'
-import { toRoman } from '@/lib/format'
-import MeanderRule from '@/components/decorations/MeanderRule'
+import TileRule from '@/components/decorations/TileRule'
 
 interface Props {
   hole: Hole
   scores: Score[]
   players: Player[]
   myScore: Score | undefined
-  /** ISO timestamp — set when the first player marks ✓. Null until then. */
   deadlineAt: string | null
   onDrinkResult: (completed: boolean) => Promise<void>
 }
@@ -21,7 +19,6 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
   const [sipsTaken, setSipsTaken] = useState(0)
   const [now, setNow] = useState(() => Date.now())
 
-  // Tick once a second while there's an active deadline.
   useEffect(() => {
     if (!deadlineAt) return
     const interval = setInterval(() => setNow(Date.now()), 1000)
@@ -36,7 +33,6 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
   const isUrgent = remainingMs != null && remainingMs <= 30_000 && remainingMs > 0
   const isExpired = remainingMs === 0
 
-  // Persist sip count locally per (hole, player) so a refresh doesn't lose it.
   const sipKey = myScore ? `sip-count-${hole.id}-${myScore.player_id}` : null
   useEffect(() => {
     if (!sipKey) return
@@ -65,37 +61,34 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
 
   return (
     <div className="space-y-7">
-      <div className="text-center">
+      {/* Header */}
+      <div className="text-center fade-up">
         <p className="smallcaps">
-          {hole.name} · Stop {toRoman(hole.id)}
+          {hole.name} · Stop {hole.id}
         </p>
-        <h2 className="display-lg mt-3">Æresspørgsmål</h2>
-        <MeanderRule width={140} className="mx-auto mt-5" />
+        <h2 className="display-lg mt-3 fade-up">A question</h2>
+        <h2 className="display-lg fade-up-1" style={{ fontStyle: 'italic' }}>of honour.</h2>
+        <TileRule wide />
       </div>
 
-      {/* 5-min countdown — visible to all players once first ✓ has been registered */}
+      {/* 2-min countdown */}
       {remainingMs != null && !hasAnswered && (
         <div
-          className={`border px-5 py-4 text-center transition-colors ${
-            isExpired
-              ? 'border-wine/60 bg-wine/10 text-wine'
-              : isUrgent
-              ? 'border-wine/40 bg-wine/5 text-wine'
-              : 'border-gold/40 bg-gold/5 text-ink'
-          }`}
+          className="border px-5 py-4 text-center transition-colors"
+          style={{
+            borderColor: isExpired ? 'rgba(139,26,26,0.6)' : isUrgent ? 'rgba(139,26,26,0.4)' : 'rgba(232,160,32,0.4)',
+            background: isExpired ? 'rgba(139,26,26,0.1)' : isUrgent ? 'rgba(139,26,26,0.05)' : 'rgba(232,160,32,0.05)',
+          }}
         >
-          <p className="smallcaps mb-1">
+          <p className="smallcaps" style={{ marginBottom: 4 }}>
             {isExpired ? 'Tid udløbet' : 'Tid tilbage'}
           </p>
-          <p
-            className="font-mono leading-none"
-            style={{ fontSize: '2.4rem', fontWeight: 600, letterSpacing: '0.04em' }}
-          >
+          <p className="font-mono leading-none" style={{ fontSize: '2.4rem', fontWeight: 600, letterSpacing: '0.04em', color: isExpired || isUrgent ? '#8B1A1A' : '#2A0A06' }}>
             {isExpired
               ? '+III'
               : `${remainingMin}:${String(remainingSecPart).padStart(2, '0')}`}
           </p>
-          <p className="font-serif italic text-ink-muted text-sm mt-2">
+          <p className="font-sans italic text-ink-muted" style={{ fontSize: '0.9rem', marginTop: 8 }}>
             {isExpired
               ? 'Du fik tre strafpoint — gruppen er videre.'
               : 'Bunde drinken inden uret går — ellers +III strafpoint.'}
@@ -103,64 +96,56 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
         </div>
       )}
 
+      {/* Committed card */}
       {myScore && (
-        <div className="text-center field-card py-8">
-          <p className="smallcaps mb-3">Du committed</p>
-          <p
-            className="font-serif text-ink leading-none"
-            style={{ fontSize: '4.6rem', fontWeight: 500, letterSpacing: '0.02em' }}
-          >
-            {toRoman(myScore.committed_sips!)}
+        <div className="field-card text-center fade-up-2" style={{ padding: '28px 20px' }}>
+          <p className="smallcaps" style={{ marginBottom: 10 }}>Du meldte</p>
+          <p className="font-serif leading-none" style={{ fontWeight: 900, fontSize: '4.4rem', color: '#2A0A06', lineHeight: 1 }}>
+            {myScore.committed_sips}
           </p>
-          <p className="font-serif italic text-ink-muted text-base mt-3">
+          <p className="font-sans italic text-ink-muted" style={{ fontSize: '0.85rem', marginTop: 6 }}>
             {myScore.committed_sips} slurke
           </p>
-
-          <div className="gold-rule mt-5" />
-          <p className="font-serif text-ink text-lg mt-3 leading-tight">
-            Drak du den på {toRoman(myScore.committed_sips!)} slurke?
+          <div style={{ width: 40, height: 1, background: '#E8A020', margin: '16px auto', opacity: 0.6 }} />
+          <p className="font-serif text-ink" style={{ fontSize: '1.1rem', lineHeight: 1.4 }}>
+            Drak du den på {myScore.committed_sips} slurke?
           </p>
         </div>
       )}
 
-      {/* Sip counter (local memory aid — does not affect score) */}
+      {/* Sip counter */}
       {myScore && !hasAnswered && (
         <div
-          className={`border px-5 py-5 text-center transition-colors ${
-            reachedTarget ? 'border-gold/60 bg-gold/5' : 'border-rule bg-parchment-light'
-          }`}
+          className="text-center fade-up-3"
+          style={{
+            border: reachedTarget ? '1px solid rgba(232,160,32,0.5)' : '1px solid #D8B888',
+            background: reachedTarget ? 'rgba(232,160,32,0.05)' : '#FEF4E0',
+            padding: 16,
+            transition: 'border-color 0.3s, background 0.3s',
+          }}
         >
-          <p className="smallcaps mb-3">Slurketæller</p>
+          <p className="smallcaps" style={{ marginBottom: 10 }}>Slurketæller</p>
           <button
             type="button"
             onClick={() => setSipsTaken((n) => n + 1)}
-            className="w-full py-4 active:bg-parchment-dark/30 transition-colors"
+            style={{ width: '100%', padding: '12px 0', background: 'none', border: 'none', cursor: 'pointer' }}
             aria-label="Tilføj én slurk"
           >
-            <p
-              className="font-serif text-ink leading-none"
-              style={{ fontSize: '3.4rem', fontWeight: 500, letterSpacing: '0.02em' }}
-            >
-              {sipsTaken === 0 ? '·' : toRoman(sipsTaken)}
-              <span className="font-serif italic text-ink-muted" style={{ fontSize: '1.6rem' }}>
-                {' / '}
-              </span>
-              {toRoman(committed)}
+            <p className="font-serif leading-none" style={{ fontWeight: 900, fontSize: '3rem', color: '#2A0A06', lineHeight: 1 }}>
+              {sipsTaken === 0 ? '·' : sipsTaken}
+              <span className="font-sans italic text-ink-muted" style={{ fontSize: '1.4rem' }}> / </span>
+              {committed}
             </p>
-            <p className="font-serif italic text-ink-muted text-sm mt-2">
+            <p className="font-sans italic text-ink-muted" style={{ fontSize: '0.8rem', marginTop: 4 }}>
               {sipsTaken} af {committed} slurke
             </p>
           </button>
-          <p className="font-sans text-ink-muted text-xs mt-3" style={{ letterSpacing: '0.06em' }}>
-            {reachedTarget
-              ? 'Du har ramt dit commit — bekræft nedenfor'
-              : 'Tryk på tælleren hver gang du tager en slurk'}
-          </p>
           {sipsTaken > 0 && (
             <button
               type="button"
               onClick={() => setSipsTaken((n) => Math.max(0, n - 1))}
-              className="font-mono text-ink-muted text-xs mt-3 underline underline-offset-4"
+              className="font-mono text-ink-muted underline underline-offset-4"
+              style={{ fontSize: '0.7rem', background: 'none', border: 'none', cursor: 'pointer', marginTop: 6 }}
             >
               Trin tilbage
             </button>
@@ -168,44 +153,36 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
         </div>
       )}
 
+      {/* Answer buttons or result */}
       {!hasAnswered ? (
-        <div className="space-y-3">
+        <div className="space-y-3 fade-up-4">
           {!confirmFail ? (
             <>
-              <button
-                onClick={() => handleResult(true)}
-                disabled={submitting}
-                className="btn-success"
-              >
+              <button onClick={() => handleResult(true)} disabled={submitting} className="btn-success">
                 Ja — Klarede det
               </button>
-              <button
-                onClick={() => setConfirmFail(true)}
-                disabled={submitting}
-                className="btn-ghost"
-              >
-                Nej — Fejlede (+III)
+              <button onClick={() => setConfirmFail(true)} disabled={submitting} className="btn-ghost">
+                Nej — Fejlede (+3)
               </button>
             </>
           ) : (
-            <div className="border border-wine/40 bg-wine/5 px-5 py-6 space-y-4 text-center">
-              <p className="font-serif text-ink text-xl">Sikker?</p>
-              <p className="font-serif italic text-ink-secondary text-base">
+            <div
+              style={{
+                border: '1px solid rgba(139,26,26,0.4)',
+                background: 'rgba(139,26,26,0.04)',
+                padding: '24px 20px',
+                textAlign: 'center',
+              }}
+            >
+              <p className="font-serif text-ink" style={{ fontSize: '1.3rem', marginBottom: 6 }}>Sikker?</p>
+              <p className="font-sans italic text-ink-secondary" style={{ fontSize: '0.9rem', marginBottom: 18 }}>
                 +III strafpoint på dette stop.
               </p>
-              <div className="space-y-3 pt-1">
-                <button
-                  onClick={() => handleResult(false)}
-                  disabled={submitting}
-                  className="btn-danger"
-                >
+              <div className="space-y-3">
+                <button onClick={() => handleResult(false)} disabled={submitting} className="btn-danger">
                   Ja, jeg fejlede
                 </button>
-                <button
-                  onClick={() => setConfirmFail(false)}
-                  disabled={submitting}
-                  className="btn-ghost"
-                >
+                <button onClick={() => setConfirmFail(false)} disabled={submitting} className="btn-ghost">
                   Tilbage
                 </button>
               </div>
@@ -213,40 +190,43 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
           )}
         </div>
       ) : (
-        <div className="text-center field-card py-6">
+        <div className="field-card text-center" style={{ padding: '24px 20px' }}>
           {myScore?.completed === true ? (
             <>
-              <p className="smallcaps text-olive mb-2">Klaret</p>
-              <p className="font-serif italic text-ink text-lg">Æren intakt.</p>
+              <p className="smallcaps" style={{ color: '#3A6820', marginBottom: 6 }}>Klaret</p>
+              <p className="font-serif italic text-ink" style={{ fontSize: '1.1rem' }}>Æren intakt.</p>
             </>
           ) : (
             <>
-              <p className="smallcaps text-wine mb-2">Fejlede</p>
-              <p className="font-serif italic text-ink text-lg">+III strafpoint registreret.</p>
+              <p className="smallcaps" style={{ color: '#8B1A1A', marginBottom: 6 }}>Fejlede</p>
+              <p className="font-serif italic text-ink" style={{ fontSize: '1.1rem' }}>+III strafpoint registreret.</p>
             </>
           )}
         </div>
       )}
 
-      {/* Status list */}
-      <div className="border-t border-rule">
+      {/* Player status list */}
+      <div style={{ borderTop: '1px solid #D8B888' }}>
         {players.map((player) => {
           const score = scores.find((s) => s.player_id === player.id)
           const done = score?.completed !== null && score?.completed !== undefined
           const status = !done ? 'Venter' : score?.completed ? 'Klaret' : 'Fejlede'
-          const tone = !done ? 'text-ink-muted' : score?.completed ? 'text-olive' : 'text-wine'
+          const statusColor = !done ? '#8A5030' : score?.completed ? '#3A6820' : '#8B1A1A'
           return (
             <div
               key={player.id}
-              className="flex items-center justify-between py-3 border-b border-rule"
+              className="flex items-center justify-between"
+              style={{ padding: '12px 0', borderBottom: '1px solid #D8B888' }}
             >
               <div className="flex items-center gap-3">
-                <span className="font-mono text-ink-muted text-xs w-6" style={{ letterSpacing: '0.08em' }}>
-                  {toRoman(player.display_order)}
+                <span className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', width: 20, letterSpacing: '0.1em' }}>
+                  {player.display_order}
                 </span>
-                <span className="font-serif text-ink text-lg">{player.name}</span>
+                <span className="font-serif" style={{ fontWeight: 500, fontSize: '1.05rem', color: '#2A0A06' }}>
+                  {player.name}
+                </span>
               </div>
-              <span className={`smallcaps ${tone}`}>{status}</span>
+              <span className="smallcaps" style={{ color: statusColor }}>{status}</span>
             </div>
           )
         })}

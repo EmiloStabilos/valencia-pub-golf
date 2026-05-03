@@ -1,5 +1,3 @@
-import { toRoman } from '@/lib/format'
-
 const PENALTY_TABLE: { range: string; penalty: string; label: string }[] = [
   { range: '±0.5 eller mindre', penalty: '+0', label: 'Spot on' },
   { range: '±0.5 til ±1.0', penalty: '+1', label: '' },
@@ -17,7 +15,6 @@ const EXAMPLE: { sips: number; distance: number; penalty: number; total: number;
 ]
 
 interface Props {
-  /** Compact mode for inline use on splash */
   compact?: boolean
 }
 
@@ -28,8 +25,8 @@ export default function Rules({ compact = false }: Props) {
       <section className="space-y-2">
         <p className="smallcaps-ink">Spillet</p>
         <ul className="font-sans text-ink-secondary text-base space-y-1.5 leading-snug list-none">
-          <li>VI spillere, XII stops på én dag i Athen.</li>
-          <li>Stop I er <em className="font-serif">prøverunde</em> — point tæller ikke.</li>
+          <li>4 spillere, 8 stops på én dag i Valencia.</li>
+          <li>Stop 1 er <em className="font-serif">prøverunde</em> — point tæller ikke.</li>
           <li>Hvert stop har én drink som <strong>alle</strong> skal tømme.</li>
         </ul>
       </section>
@@ -71,7 +68,7 @@ export default function Rules({ compact = false }: Props) {
 
       {/* Section 3 — Example */}
       <section className="space-y-3">
-        <p className="smallcaps-ink">Eksempel — gennemsnit IV.0</p>
+        <p className="smallcaps-ink">Eksempel — gennemsnit 4.0</p>
         <div className="border border-rule">
           <div className="grid grid-cols-12 bg-parchment-dark/50 border-b border-rule">
             <p className="smallcaps col-span-2 px-2 py-2">Du</p>
@@ -111,7 +108,7 @@ export default function Rules({ compact = false }: Props) {
         <ul className="font-sans text-ink-secondary text-base space-y-1.5 leading-snug list-none">
           <li>Antallet af slurke giver <strong>ingen point</strong> i sig selv. Du bliver kun straffet for at afvige fra gruppens gennemsnit.</li>
           <li><strong>Sweet spot</strong>: gæt hvad de andre vælger, og ram tallet præcist.</li>
-          <li>Pas på straf-shots ved I og max — de koster ikke point, men de koster væske.</li>
+          <li>Pas på straf-shots ved 1 og max — de koster ikke point, men de koster væske.</li>
         </ul>
       </section>
 
@@ -123,7 +120,7 @@ export default function Rules({ compact = false }: Props) {
         </p>
         <ul className="font-sans text-ink-secondary text-base space-y-1 leading-snug list-none ml-1">
           <li><span className="font-mono text-olive font-semibold">✓</span> Klarede det — ingen straf</li>
-          <li><span className="font-mono text-wine font-semibold">✗</span> Fejlede — <strong>+III strafpoint</strong></li>
+          <li><span className="font-mono text-wine font-semibold">✗</span> Fejlede — <strong>+3 strafpoint</strong></li>
         </ul>
         <p className="font-serif italic text-ink-muted text-base mt-1">
           Æressystem. Gruppen holder dig ansvarlig.
@@ -138,26 +135,26 @@ export default function Rules({ compact = false }: Props) {
         </p>
         <ul className="font-sans text-ink-secondary text-base space-y-1.5 leading-snug list-none">
           <li>
-            <strong>Du committer max</strong> (fx VIII på øl, III på shot) — straf-shot.<br />
+            <strong>Du melder max</strong> (fx 8 på øl, 3 på shot) — straf-shot.<br />
             <em className="font-serif text-ink-muted text-sm">
-              Stop med bare at bunke. Max ændres per stop — så det er altid det største mulige tal.
+              Stop med bare at bunke. Max ændres per stop — det er altid det største mulige tal.
             </em>
           </li>
           <li>
-            <strong>Du committer I</strong> (kun ét lille nip) — straf-shot.<br />
+            <strong>Du melder 1</strong> (kun ét lille nip) — straf-shot.<br />
             <em className="font-serif text-ink-muted text-sm">
               Stop med bare at nippe. Ingen low-effort taktik.
             </em>
           </li>
           <li>
-            <strong>Du committer samme tal som forrige stop</strong> — straf-shot.<br />
+            <strong>Du melder samme tal som forrige stop</strong> — straf-shot.<br />
             <em className="font-serif text-ink-muted text-sm">
-              For at tvinge variation. Gælder fra Stop III.
+              For at tvinge variation. Gælder fra Stop 3.
             </em>
           </li>
         </ul>
         <p className="font-sans text-ink-secondary text-base leading-snug mt-3 pt-2 border-t border-rule">
-          <strong>Reglerne stables.</strong> Hvis du committer I to gange i streg, får du <strong>2 straf-shots</strong> — én for at vælge I, én for samme tal som sidst. Tilsvarende hvis du committer max-tallet to gange i streg.
+          <strong>Straffe lægger sig sammen.</strong> Melder du 1 to gange i streg, får du <strong>2 straf-shots</strong> — én for at melde 1, én for samme tal som sidst. Tilsvarende hvis du melder max to gange i streg.
         </p>
       </section>
 
@@ -165,7 +162,7 @@ export default function Rules({ compact = false }: Props) {
       <section className="space-y-2">
         <p className="smallcaps-ink">Sluttiden tæller mere</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
-          De sidste tre stop har en score-multiplikator. Senlige fejl koster mere — sjusk ikke når der er meget på spil.
+          De sidste tre stop har en score-multiplikator. Sene fejl koster mere — sjusk ikke når der er meget på spil.
         </p>
         <div className="border border-rule mt-2">
           <div className="grid grid-cols-3 bg-parchment-dark/50 border-b border-rule">
@@ -174,9 +171,9 @@ export default function Rules({ compact = false }: Props) {
             <p className="smallcaps px-3 py-2 text-right">Eksempel</p>
           </div>
           {[
-            { stop: 'X', mult: '× 1.5', example: 'Score 4 → 6' },
-            { stop: 'XI', mult: '× 2.0', example: 'Score 4 → 8' },
-            { stop: 'XII', mult: '× 2.5', example: 'Score 4 → 10' },
+            { stop: '7', mult: '× 1.5', example: 'Score 4 → 6' },
+            { stop: '8', mult: '× 2.0', example: 'Score 4 → 8' },
+            { stop: '9', mult: '× 2.5', example: 'Score 4 → 10' },
           ].map((row, i, arr) => (
             <div key={i} className={`grid grid-cols-3 ${i < arr.length - 1 ? 'border-b border-rule' : ''}`}>
               <p className="font-mono text-ink text-base font-semibold px-3 py-2">{row.stop}</p>
@@ -191,7 +188,7 @@ export default function Rules({ compact = false }: Props) {
       <section className="space-y-2">
         <p className="smallcaps-ink">Vinderen</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
-          Laveste totalscore efter Stop {toRoman(12)} vinder. Som rigtig golf — det handler om at score lavt.
+          Laveste totalscore efter Stop 8 vinder. Som rigtig golf — det handler om at score lavt.
         </p>
       </section>
     </div>

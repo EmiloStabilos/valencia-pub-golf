@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import type { Player, Score, Hole, GameState, HoleScore } from '@/lib/types'
 import { computeLeaderboard, computeHoleScores, calculateGroupAverage } from '@/lib/scoring'
-import { toRoman } from '@/lib/format'
 import Rules from './Rules'
 
 type Tab = 'standing' | 'history' | 'rules'
@@ -123,7 +122,7 @@ function StandingTab({ players, scores, holes }: { players: Player[]; scores: Sc
   return (
     <div className="px-6 py-4">
       <p className="smallcaps mb-2">
-        Efter {playedStops > 0 ? `Stop ${toRoman(playedStops)}` : 'ingen stop'}
+        Efter {playedStops > 0 ? `Stop ${playedStops}` : 'ingen stop'}
       </p>
 
       {playedStops === 0 ? (
@@ -142,7 +141,7 @@ function StandingTab({ players, scores, holes }: { players: Player[]; scores: Sc
                   className="font-mono text-ink-muted text-xs w-6"
                   style={{ letterSpacing: '0.08em' }}
                 >
-                  {toRoman(i + 1)}
+                  {i + 1}
                 </span>
                 <div>
                   <p className="font-serif text-ink text-lg leading-tight">{entry.player.name}</p>
@@ -265,8 +264,8 @@ function HistoryTab({
               }`}
               title={
                 avg != null
-                  ? `Stop ${toRoman(hole.id)}: gns. ${avg.toFixed(1)} slurke`
-                  : `Stop ${toRoman(hole.id)}: endnu ikke spillet`
+                  ? `Stop ${hole.id}: gns. ${avg.toFixed(1)} slurke`
+                  : `Stop ${hole.id}: endnu ikke spillet`
               }
             >
               <p className="font-mono text-base font-semibold leading-none">
@@ -282,7 +281,7 @@ function HistoryTab({
               className="text-center font-mono text-ink-faint"
               style={{ fontSize: '0.55rem', letterSpacing: '0.05em' }}
             >
-              {toRoman(h.id)}
+              {h.id}
             </p>
           ))}
         </div>
@@ -367,12 +366,12 @@ function HistoryTab({
                       }`}
                       title={
                         hiddenSecret
-                          ? `Stop ${toRoman(hole.id)}: hemmelig — afsløres efter alle har committed`
+                          ? `Stop ${hole.id}: hemmelig — afsløres efter alle har meldt`
                           : sips != null
-                          ? `Stop ${toRoman(hole.id)}: ${sips} slurke${
+                          ? `Stop ${hole.id}: ${sips} slurke${
                               points != null ? ` → ${points} point${isPractice ? ' (tæller ikke)' : ''}` : ''
                             }${failed ? ' (fejlede)' : ''}${score?.penalty_shot ? ' (straf-shot)' : ''}`
-                          : `Stop ${toRoman(hole.id)}: endnu ikke spillet`
+                          : `Stop ${hole.id}: endnu ikke spillet`
                       }
                     >
                       {hiddenSecret ? (
@@ -409,7 +408,7 @@ function HistoryTab({
                     className="text-center font-mono text-ink-faint"
                     style={{ fontSize: '0.55rem', letterSpacing: '0.05em' }}
                   >
-                    {toRoman(h.id)}
+                    {h.id}
                   </p>
                 ))}
               </div>
@@ -430,7 +429,7 @@ function HistoryTab({
         </div>
         <div className="flex items-center gap-2 text-ink-muted">
           <span className="inline-block w-3 h-3 bg-wine/8 border border-wine/30" />
-          <span className="font-sans text-sm">Høj score (≥4) eller fejlet commitment</span>
+          <span className="font-sans text-sm">Høj score (≥4) eller fejlet melding</span>
         </div>
         <div className="flex items-center gap-2 text-ink-muted">
           <span className="inline-block w-3 h-3 bg-parchment-dark/40 border border-gold/30 border-dashed" />
