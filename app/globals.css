@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Source+Sans+3:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,600;1,6..96,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,9 +11,9 @@
   }
 
   body {
-    background-color: #F2EBDD;
-    color: #1A2438;
-    font-family: 'Source Sans 3', system-ui, sans-serif;
+    background-color: #FBE8C8;
+    color: #2A0A06;
+    font-family: 'IM Fell English', Georgia, serif;
     font-weight: 400;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
@@ -24,113 +24,196 @@
   }
 
   ::selection {
-    background-color: #B89A60;
-    color: #F2EBDD;
+    background-color: #E8A020;
+    color: #FBE8C8;
   }
 }
 
 @layer components {
-  /* Small-caps label — used liberally for category, section, status labels */
+  /* Small-caps label */
   .smallcaps {
     @apply font-sans uppercase text-ink-muted;
     font-size: 0.72rem;
     letter-spacing: 0.18em;
-    font-weight: 500;
+    font-weight: 400;
   }
 
   .smallcaps-ink {
     @apply font-sans uppercase text-ink;
     font-size: 0.72rem;
     letter-spacing: 0.18em;
-    font-weight: 600;
+    font-weight: 400;
   }
 
   .smallcaps-gold {
     @apply font-sans uppercase text-gold;
     font-size: 0.72rem;
     letter-spacing: 0.18em;
-    font-weight: 600;
+    font-weight: 400;
   }
 
-  /* Gold rule — the short horizontal line that punctuates titles */
+  .smallcaps-terra {
+    @apply font-sans uppercase text-terracotta;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    font-weight: 400;
+  }
+
+  /* Gold rule */
   .gold-rule {
     width: 36px;
     height: 1px;
-    background-color: #B89A60;
+    background-color: #E8A020;
     margin: 14px auto;
+    opacity: 0.7;
   }
 
   .gold-rule-wide {
     width: 60px;
     height: 1px;
-    background-color: #B89A60;
+    background-color: #E8A020;
     margin: 14px auto;
+    opacity: 0.7;
   }
 
-  /* Hairline divider between rows */
+  /* Hairline divider */
   .rule-row {
-    border-top: 1px solid #D8D2C5;
+    border-top: 1px solid #D8B888;
   }
 
-  /* Primary CTA — deep navy block button */
+  /* Tile border — repeating azulejo strip */
+  .tile-border {
+    height: 10px;
+    background: repeating-linear-gradient(
+      90deg,
+      #1A3A7A 0px,  #1A3A7A 10px,
+      #FBE8C8 10px, #FBE8C8 20px,
+      #C8381A 20px, #C8381A 30px,
+      #FBE8C8 30px, #FBE8C8 40px,
+      #E8A020 40px, #E8A020 50px,
+      #FBE8C8 50px, #FBE8C8 60px
+    );
+  }
+
+  .tile-border-thin {
+    height: 5px;
+    background: repeating-linear-gradient(
+      90deg,
+      #1A3A7A 0px,  #1A3A7A 10px,
+      #FBE8C8 10px, #FBE8C8 20px,
+      #C8381A 20px, #C8381A 30px,
+      #FBE8C8 30px, #FBE8C8 40px,
+      #E8A020 40px, #E8A020 50px,
+      #FBE8C8 50px, #FBE8C8 60px
+    );
+  }
+
+  /* Azulejo background — cobalt with geometric tile SVG */
+  .azulejo-bg {
+    background-color: #1A3A7A;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%231A3A7A'/%3E%3Crect x='2' y='2' width='20' height='20' fill='none' stroke='%23FBE8C8' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='2' width='20' height='20' fill='none' stroke='%23FBE8C8' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='2' y='26' width='20' height='20' fill='none' stroke='%23FBE8C8' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='26' width='20' height='20' fill='none' stroke='%23FBE8C8' stroke-width='0.8' opacity='0.25'/%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='%23E8A020' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='36' r='4' fill='none' stroke='%23E8A020' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='12' r='4' fill='none' stroke='%23C8381A' stroke-width='0.8' opacity='0.3'/%3E%3Ccircle cx='12' cy='36' r='4' fill='none' stroke='%23C8381A' stroke-width='0.8' opacity='0.3'/%3E%3Cpath d='M24 2 L24 46 M2 24 L46 24' stroke='%23FBE8C8' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
+  }
+
+  /* Primary CTA — sangria */
   .btn-primary {
-    @apply w-full h-14 bg-ink text-parchment font-sans font-semibold flex items-center justify-center disabled:opacity-40 transition-opacity active:opacity-80;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-size: 0.85rem;
+    @apply w-full flex items-center justify-center font-sans uppercase disabled:opacity-40 transition-all;
+    height: 58px;
+    background: #8B1A3A;
+    color: #FEF4E0;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    box-shadow: 0 3px 0 #5A0A1E;
+  }
+  .btn-primary:active:not(:disabled) {
+    background: #6A1028;
+    box-shadow: none;
+    transform: translateY(2px);
   }
 
-  /* Secondary outlined / ghost button */
+  /* Ghost — outlined */
   .btn-ghost {
-    @apply w-full h-14 bg-transparent text-ink font-sans font-semibold flex items-center justify-center border border-ink/40 transition-colors active:bg-ink/5;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-size: 0.85rem;
+    @apply w-full flex items-center justify-center font-sans uppercase bg-transparent transition-all disabled:opacity-40;
+    height: 58px;
+    color: #2A0A06;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    border: 1.5px solid #D8B888;
+  }
+  .btn-ghost:active:not(:disabled) {
+    background: rgba(216,184,136,0.12);
   }
 
+  /* Success — olive */
   .btn-success {
-    @apply w-full h-14 bg-olive text-parchment font-sans font-semibold flex items-center justify-center disabled:opacity-40 transition-opacity active:opacity-80;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-size: 0.85rem;
+    @apply w-full flex items-center justify-center font-sans uppercase disabled:opacity-40 transition-all;
+    height: 58px;
+    background: #3A6820;
+    color: #FEF4E0;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    box-shadow: 0 3px 0 #254510;
+  }
+  .btn-success:active:not(:disabled) {
+    box-shadow: none;
+    transform: translateY(2px);
   }
 
+  /* Danger — wine */
   .btn-danger {
-    @apply w-full h-14 bg-wine text-parchment font-sans font-semibold flex items-center justify-center disabled:opacity-40 transition-opacity active:opacity-80;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-size: 0.85rem;
+    @apply w-full flex items-center justify-center font-sans uppercase disabled:opacity-40 transition-all;
+    height: 58px;
+    background: #8B1A1A;
+    color: #FEF4E0;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    box-shadow: 0 3px 0 #5A0A0A;
+  }
+  .btn-danger:active:not(:disabled) {
+    box-shadow: none;
+    transform: translateY(2px);
   }
 
-  /* Stepper square button (— / +) */
+  /* Stepper square buttons (− / +) */
   .stepper-btn {
-    @apply w-16 h-24 border border-rule bg-parchment-light text-ink flex items-center justify-center text-2xl font-sans active:bg-parchment-dark disabled:opacity-30 disabled:cursor-not-allowed transition-colors;
+    @apply flex items-center justify-center text-ink disabled:opacity-30 disabled:cursor-not-allowed transition-colors;
+    width: 64px;
+    height: 96px;
+    background: #F0D4A0;
+    border: 1px solid #D8B888;
+    font-size: 1.6rem;
+    font-family: 'IM Fell English', Georgia, serif;
+  }
+  .stepper-btn:active:not(:disabled) {
+    background: #E8C890;
   }
 
-  /* Card — minimal, hairline border, no shadow */
+  /* Card — minimal, hairline border */
   .field-card {
-    @apply bg-parchment-light border border-rule p-5;
+    background: #FEF4E0;
+    border: 1px solid #D8B888;
+    padding: 20px;
   }
 
-  /* Quote — italic serif used for fun-facts */
+  /* Quote — italic serif for fun-facts */
   .field-quote {
-    @apply font-serif italic text-ink leading-relaxed;
-    font-size: 1.05rem;
+    @apply font-sans italic text-ink-secondary leading-relaxed;
+    font-size: 0.95rem;
+    line-height: 1.65;
   }
 
   /* Display headlines */
   .display-xl {
     @apply font-serif text-ink;
     font-size: 3.4rem;
-    font-weight: 500;
+    font-weight: 900;
     line-height: 1.0;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.01em;
   }
 
   .display-lg {
     @apply font-serif text-ink;
-    font-size: 2.4rem;
-    font-weight: 500;
+    font-size: 2.6rem;
+    font-weight: 700;
     line-height: 1.05;
     letter-spacing: -0.005em;
   }
@@ -138,13 +221,26 @@
   .display-md {
     @apply font-serif text-ink;
     font-size: 1.85rem;
-    font-weight: 500;
+    font-weight: 700;
     line-height: 1.15;
   }
 
   .display-italic {
-    @apply font-serif italic text-gold;
-    font-weight: 500;
+    @apply font-serif italic;
+    color: #F5C860;
+    font-weight: 600;
     letter-spacing: 0.005em;
   }
+
+  /* Fade-up animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up   { animation: fadeUp 0.3s ease both; }
+  .fade-up-1 { animation: fadeUp 0.3s ease 0.05s both; }
+  .fade-up-2 { animation: fadeUp 0.3s ease 0.10s both; }
+  .fade-up-3 { animation: fadeUp 0.3s ease 0.15s both; }
+  .fade-up-4 { animation: fadeUp 0.3s ease 0.20s both; }
 }

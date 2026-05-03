@@ -3,8 +3,7 @@
 import { useState } from 'react'
 import type { Hole, Player, Score } from '@/lib/types'
 import { computeHoleScores, computeLeaderboard, calculateGroupAverage } from '@/lib/scoring'
-import { toRoman } from '@/lib/format'
-import MeanderRule from '@/components/decorations/MeanderRule'
+import TileRule from '@/components/decorations/TileRule'
 
 interface Props {
   hole: Hole
@@ -42,62 +41,67 @@ export default function ScoringPhase({ hole, scores, players, allScores, holes, 
   return (
     <div className="space-y-7">
       {/* Header */}
-      <div className="text-center">
+      <div className="text-center fade-up">
         <p className="smallcaps">
-          {hole.name} · Stop {toRoman(hole.id)}
+          {hole.name} · Stop {hole.id}
         </p>
-        <h2 className="display-lg mt-3">Stillingen</h2>
-        <p className="font-serif italic text-ink-muted mt-2 text-base">
-          Gennemsnit: {avg.toFixed(1)} slurke
+        <h2 className="display-lg mt-3">The standings</h2>
+        <p className="font-sans italic text-ink-muted" style={{ fontSize: '0.9rem', marginTop: 6 }}>
+          Average: {avg.toFixed(1)} sips
         </p>
         {multiplier > 1 && !hole.is_practice && (
-          <p className="smallcaps-gold mt-3">
-            × {multiplier} score-multiplikator
-          </p>
+          <p className="smallcaps-terra" style={{ marginTop: 8 }}>× {multiplier} multiplier</p>
         )}
-        <MeanderRule width={140} className="mx-auto mt-5" />
+        <TileRule wide />
       </div>
 
       {/* Hole scores */}
       <section>
-        <p className="smallcaps mb-3">Hulscore</p>
+        <p className="smallcaps" style={{ marginBottom: 10 }}>Points this stop</p>
 
         {hole.is_practice && (
-          <p className="font-serif italic text-ink-muted text-center text-base py-2 border-y border-rule">
+          <p
+            className="font-sans italic text-ink-muted text-center"
+            style={{ fontSize: '0.9rem', padding: '10px 0', borderTop: '1px solid #D8B888', borderBottom: '1px solid #D8B888', marginBottom: 12 }}
+          >
             Prøverunde — point tæller ikke
           </p>
         )}
 
-        <div className="border-t border-rule">
+        <div style={{ borderTop: '1px solid #D8B888' }}>
           {sorted.map(({ player, score, base, distancePenalty, commitmentPenalty, total }, i) => {
             const totalPenalty = distancePenalty + commitmentPenalty
-            const tone =
-              totalPenalty === 0 ? 'text-olive' : totalPenalty <= 2 ? 'text-ink' : 'text-wine'
+            const scoreColor =
+              totalPenalty === 0 ? '#3A6820' : totalPenalty >= 4 ? '#8B1A1A' : '#2A0A06'
             return (
               <div
                 key={player.id}
-                className="flex items-center justify-between py-3 border-b border-rule"
+                className="flex items-center justify-between"
+                style={{ padding: '14px 0', borderBottom: '1px solid #D8B888' }}
               >
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-ink-muted text-xs w-6" style={{ letterSpacing: '0.08em' }}>
-                    {toRoman(i + 1)}
+                  <span className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', width: 20, letterSpacing: '0.1em' }}>
+                    {i + 1}
                   </span>
                   <div>
-                    <p className="font-serif text-ink text-lg leading-tight">{player.name}</p>
+                    <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.05rem', color: '#2A0A06' }}>
+                      {player.name}
+                    </p>
                     {score?.penalty_shot && (
-                      <p className="font-mono text-ink-muted text-xs mt-0.5">+ straf-shot</p>
+                      <p className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', marginTop: 2, letterSpacing: '0.06em' }}>
+                        + straf-shot
+                      </p>
                     )}
                   </div>
                 </div>
-
                 <div className="flex items-baseline gap-2">
-                  <span className="font-mono text-ink-muted text-sm">
-                    {base != null && `${base} slurke`}
-                    {distancePenalty > 0 && ` · +${distancePenalty}`}
+                  <span className="font-mono text-ink-muted" style={{ fontSize: '0.75rem' }}>
+                    {base != null && `${base}s`}
+                    {distancePenalty > 0 && ` +${distancePenalty}`}
                     {commitmentPenalty > 0 && ` +${commitmentPenalty}`}
                     {!hole.is_practice && multiplier > 1 && ` ×${multiplier}`}
                   </span>
-                  <span className={`font-serif ${tone}`} style={{ fontSize: '1.6rem', fontWeight: 600 }}>
+                  <span className="font-serif" style={{ fontWeight: 700, fontSize: '1.6rem', color: scoreColor }}>
                     {hole.is_practice ? distancePenalty + commitmentPenalty : total}
                   </span>
                 </div>
@@ -110,21 +114,24 @@ export default function ScoringPhase({ hole, scores, players, allScores, holes, 
       {/* Total leaderboard */}
       {!hole.is_practice && (
         <section>
-          <p className="smallcaps mb-3">Total</p>
-          <div className="border-t border-rule">
+          <p className="smallcaps" style={{ marginBottom: 10 }}>Total standings</p>
+          <div style={{ borderTop: '1px solid #D8B888' }}>
             {leaderboard.map((entry, i) => (
               <div
                 key={entry.player.id}
-                className="flex items-center justify-between py-3 border-b border-rule"
+                className="flex items-center justify-between"
+                style={{ padding: '14px 0', borderBottom: '1px solid #D8B888' }}
               >
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-ink-muted text-xs w-6" style={{ letterSpacing: '0.08em' }}>
-                    {toRoman(i + 1)}
+                  <span className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', width: 20, letterSpacing: '0.1em' }}>
+                    {i + 1}
                   </span>
                   <div>
-                    <p className="font-serif text-ink text-lg leading-tight">{entry.player.name}</p>
+                    <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.05rem', color: '#2A0A06' }}>
+                      {entry.player.name}
+                    </p>
                     {(entry.penaltyShots > 0 || entry.commitmentFails > 0) && (
-                      <p className="font-mono text-ink-muted text-xs mt-0.5">
+                      <p className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', marginTop: 2, letterSpacing: '0.06em' }}>
                         {entry.penaltyShots > 0 && `${entry.penaltyShots} shots`}
                         {entry.penaltyShots > 0 && entry.commitmentFails > 0 && ' · '}
                         {entry.commitmentFails > 0 && `${entry.commitmentFails} fejl`}
@@ -132,7 +139,7 @@ export default function ScoringPhase({ hole, scores, players, allScores, holes, 
                     )}
                   </div>
                 </div>
-                <span className="font-serif text-ink" style={{ fontSize: '1.6rem', fontWeight: 600 }}>
+                <span className="font-serif" style={{ fontWeight: 700, fontSize: '1.6rem', color: '#2A0A06' }}>
                   {entry.total}
                 </span>
               </div>
@@ -145,8 +152,8 @@ export default function ScoringPhase({ hole, scores, players, allScores, holes, 
         {advancing
           ? 'Går videre...'
           : isLastHole
-          ? 'Afslut · Vis Resultat'
-          : `Fortsæt · Stop ${nextHoleId != null ? toRoman(nextHoleId) : ''}`}
+          ? 'Final · See Results'
+          : `Continue · Stop ${nextHoleId ?? ''}`}
       </button>
     </div>
   )

@@ -2,7 +2,6 @@
 
 import { Fragment } from 'react'
 import type { Hole, Score, Player, Waypoint } from '@/lib/types'
-import { toRoman } from '@/lib/format'
 import { calculateGroupAverage } from '@/lib/scoring'
 import TempleMarker from '@/components/decorations/TempleMarker'
 import HostNote from '@/components/HostNote'
@@ -95,7 +94,7 @@ export default function RouteTimeline({ holes, waypoints = [], scores, players, 
           <div>
             <p className="smallcaps">Ruten</p>
             <p className="font-serif text-ink text-xl mt-0.5">
-              Stop {toRoman(currentIdx + 1)} af {toRoman(sortedHoles.length)}
+              Stop {currentIdx + 1} af {sortedHoles.length}
             </p>
           </div>
           <button
@@ -156,7 +155,7 @@ export default function RouteTimeline({ holes, waypoints = [], scores, players, 
                       className="font-mono text-ink-muted text-xs"
                       style={{ letterSpacing: '0.1em' }}
                     >
-                      {toRoman(hole.id)}
+                      {hole.id}
                     </span>
                     {hole.is_practice && <span className="smallcaps-gold">Prøve</span>}
                     {isCurrent && <span className="smallcaps-gold">· Nu</span>}
@@ -186,7 +185,7 @@ export default function RouteTimeline({ holes, waypoints = [], scores, players, 
                     <>
                       <p className="font-serif text-ink text-xl leading-tight mt-1">{hole.name}</p>
                       <p className="smallcaps mt-1">
-                        {hole.district} · {hole.drink} · Max {toRoman(hole.max_sips)}
+                        {hole.district} · {hole.drink} · Max {hole.max_sips}
                       </p>
                       {hole.score_multiplier > 1 && (
                         <p className="smallcaps-gold mt-1">× {hole.score_multiplier} multiplikator</p>
