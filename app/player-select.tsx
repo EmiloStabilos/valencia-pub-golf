@@ -155,7 +155,7 @@ export default function PlayerSelectPage() {
                       width: 36,
                       height: 36,
                       background: selecting === player.id ? 'var(--cobalt)' : 'var(--limestone-dark)',
-                      border: '1px solid var(--rule)',
+                      border: `1px solid ${selecting === player.id ? 'var(--cobalt)' : 'rgb(var(--cobalt-rgb) / 0.3)'}`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
