@@ -15,7 +15,7 @@ import InfoSheet from '@/components/InfoSheet'
 import RouteStrip from '@/components/RouteStrip'
 import RouteTimeline from '@/components/RouteTimeline'
 
-const TOTAL_PLAYERS = 6
+const TOTAL_PLAYERS = 4
 const DRINK_DEADLINE_MS = 15 * 60 * 1000 // 15-min timer starts when all players commit
 
 export default function GamePage() {
