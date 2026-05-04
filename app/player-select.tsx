@@ -128,7 +128,7 @@ export default function PlayerSelectPage() {
             <div className="w-6 h-6 border border-ink border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
-          <div style={{ borderTop: '1px solid var(--rule)' }}>
+          <div style={{ borderTop: '1px solid rgb(var(--ink-rgb) / 0.1)' }}>
             {activePlayers.map((player) => (
               <button
                 key={player.id}
@@ -142,7 +142,7 @@ export default function PlayerSelectPage() {
                   padding: '18px 24px',
                   background: 'var(--limestone)',
                   border: 'none',
-                  borderBottom: '1px solid var(--rule)',
+                  borderBottom: '1px solid rgb(var(--ink-rgb) / 0.1)',
                   cursor: 'pointer',
                   textAlign: 'left',
                   opacity: selecting !== null && selecting !== player.id ? 0.35 : 1,
