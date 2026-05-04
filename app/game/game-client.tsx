@@ -15,7 +15,6 @@ import InfoSheet from '@/components/InfoSheet'
 import RouteStrip from '@/components/RouteStrip'
 import RouteTimeline from '@/components/RouteTimeline'
 
-const TOTAL_PLAYERS = 4
 const DRINK_DEADLINE_MS = 15 * 60 * 1000 // 15-min timer starts when all players commit
 
 export default function GamePage() {
@@ -121,7 +120,7 @@ export default function GamePage() {
     const committedThisHole = scores.filter(
       (s) => s.hole_id === gameState.current_hole && s.committed_sips != null
     )
-    if (committedThisHole.length >= TOTAL_PLAYERS) {
+    if (committedThisHole.length >= activePlayers.length) {
       const deadline = new Date(Date.now() + DRINK_DEADLINE_MS).toISOString()
       supabase
         .from('game_state')
@@ -138,7 +137,7 @@ export default function GamePage() {
     const answeredThisHole = scores.filter(
       (s) => s.hole_id === gameState.current_hole && s.completed !== null
     )
-    if (answeredThisHole.length >= TOTAL_PLAYERS) {
+    if (answeredThisHole.length >= activePlayers.length) {
       supabase
         .from('game_state')
         .update({ phase: 'scoring', drink_deadline_at: null })
@@ -258,6 +257,7 @@ export default function GamePage() {
     )
   }
 
+  const activePlayers = players.filter((p) => p.active)
   const currentHole = holes.find((h) => h.id === gameState.current_hole)
   const currentHoleScores = scores.filter((s) => s.hole_id === gameState.current_hole)
   const myCurrentScore = currentHoleScores.find((s) => s.player_id === currentPlayer.id)
@@ -285,7 +285,7 @@ export default function GamePage() {
   if (gameState.phase === 'scoring' && isLastHole) {
     return (
       <FinalScoreboard
-        players={players}
+        players={activePlayers}
         scores={scores}
         holes={holes}
         currentPlayer={currentPlayer}
@@ -365,7 +365,7 @@ export default function GamePage() {
               myScore={myCurrentScore}
               myPreviousSips={myPrev?.committed_sips ?? null}
               committedCount={currentHoleScores.filter((s) => s.committed_sips != null).length}
-              totalPlayers={TOTAL_PLAYERS}
+              totalPlayers={activePlayers.length}
               currentPlayerName={currentPlayer.name}
               onCommit={handleCommit}
             />
@@ -376,7 +376,7 @@ export default function GamePage() {
           <RevealPhase
             hole={currentHole}
             scores={currentHoleScores}
-            players={players}
+            players={activePlayers}
             myScore={myCurrentScore}
             onRevealComplete={handleRevealComplete}
           />
@@ -386,7 +386,7 @@ export default function GamePage() {
           <DrinkPhase
             hole={currentHole}
             scores={currentHoleScores}
-            players={players}
+            players={activePlayers}
             myScore={myCurrentScore}
             deadlineAt={gameState.drink_deadline_at}
             onDrinkResult={handleDrinkResult}
@@ -397,7 +397,7 @@ export default function GamePage() {
           <ScoringPhase
             hole={currentHole}
             scores={currentHoleScores}
-            players={players}
+            players={activePlayers}
             allScores={scores}
             holes={holes}
             onNextHole={handleNextHole}
@@ -408,7 +408,7 @@ export default function GamePage() {
       {/* Info sheet — Stilling | Historik | Regler */}
       {showInfo && (
         <InfoSheet
-          players={players}
+          players={activePlayers}
           scores={scores}
           holes={holes}
           gameState={gameState}
@@ -423,7 +423,7 @@ export default function GamePage() {
           holes={holes}
           waypoints={waypoints}
           scores={scores}
-          players={players}
+          players={activePlayers}
           currentHoleId={gameState.current_hole}
           currentPlayerName={currentPlayer.name}
           onClose={() => setShowRoute(false)}

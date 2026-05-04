@@ -2,6 +2,7 @@ export interface Player {
   id: string
   name: string
   display_order: number
+  active: boolean
 }
 
 export interface Hole {
