@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import type { Hole, Player, Score } from '@/lib/types'
 import TileRule from '@/components/decorations/TileRule'
 
@@ -15,12 +15,25 @@ interface Props {
 
 export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt, onDrinkResult }: Props) {
   const [submitting, setSubmitting] = useState(false)
+  const [sipsTaken, setSipsTaken] = useState(0)
   const [now, setNow] = useState(() => Date.now())
+  const autoFailedRef = useRef(false)
 
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 1000)
     return () => clearInterval(interval)
   }, [])
+
+  const sipKey = myScore ? `sip-count-${hole.id}-${myScore.player_id}` : null
+  useEffect(() => {
+    if (!sipKey) return
+    const stored = sessionStorage.getItem(sipKey)
+    setSipsTaken(stored ? parseInt(stored, 10) || 0 : 0)
+  }, [sipKey])
+  useEffect(() => {
+    if (!sipKey) return
+    sessionStorage.setItem(sipKey, String(sipsTaken))
+  }, [sipKey, sipsTaken])
 
   const deadlineMs = deadlineAt ? new Date(deadlineAt).getTime() : null
   const remainingMs = deadlineMs != null ? Math.max(0, deadlineMs - now) : null
@@ -31,6 +44,15 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
   const isExpired = remainingMs === 0
 
   const hasAnswered = myScore?.completed !== null && myScore?.completed !== undefined
+  const committed = myScore?.committed_sips ?? 0
+  const wentOver = committed > 0 && sipsTaken > committed
+
+  // Auto-fail when player exceeds their committed sips
+  useEffect(() => {
+    if (!wentOver || hasAnswered || autoFailedRef.current) return
+    autoFailedRef.current = true
+    onDrinkResult(false)
+  }, [wentOver, hasAnswered, onDrinkResult])
 
   async function handleDone() {
     setSubmitting(true)
@@ -85,26 +107,70 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
         </p>
       </div>
 
-      {/* Committed card */}
-      {myScore && (
-        <div className="field-card text-center fade-up-2" style={{ padding: '28px 20px' }}>
-          <p className="smallcaps" style={{ marginBottom: 10 }}>Du meldte</p>
-          <p
-            className="font-serif leading-none"
-            style={{ fontWeight: 900, fontSize: '4.4rem', color: '#2A0A06', lineHeight: 1 }}
+      {/* Sip counter */}
+      {myScore && !hasAnswered && (
+        <div
+          className="text-center fade-up-2"
+          style={{
+            border: wentOver
+              ? '1px solid rgba(139,26,26,0.5)'
+              : sipsTaken === committed && committed > 0
+              ? '1px solid rgba(232,160,32,0.5)'
+              : '1px solid #D8B888',
+            background: wentOver
+              ? 'rgba(139,26,26,0.05)'
+              : sipsTaken === committed && committed > 0
+              ? 'rgba(232,160,32,0.05)'
+              : '#FEF4E0',
+            padding: 16,
+            transition: 'border-color 0.3s, background 0.3s',
+          }}
+        >
+          <p className="smallcaps" style={{ marginBottom: 10 }}>Slurketæller</p>
+          <button
+            type="button"
+            onClick={() => setSipsTaken((n) => n + 1)}
+            style={{ width: '100%', padding: '12px 0', background: 'none', border: 'none', cursor: 'pointer' }}
+            aria-label="Tilføj én slurk"
           >
-            {myScore.committed_sips}
-          </p>
-          <p className="font-sans italic text-ink-muted" style={{ fontSize: '0.85rem', marginTop: 6 }}>
-            {myScore.committed_sips} slurke
-          </p>
+            <p
+              className="font-serif leading-none"
+              style={{
+                fontWeight: 900,
+                fontSize: '3rem',
+                color: wentOver ? '#8B1A1A' : '#2A0A06',
+                lineHeight: 1,
+              }}
+            >
+              {sipsTaken === 0 ? '·' : sipsTaken}
+              <span className="font-sans italic text-ink-muted" style={{ fontSize: '1.4rem' }}> / </span>
+              {committed}
+            </p>
+            <p className="font-sans italic text-ink-muted" style={{ fontSize: '0.8rem', marginTop: 4 }}>
+              {wentOver ? 'For mange slurke — fejlede!' : `${sipsTaken} af ${committed} slurke`}
+            </p>
+          </button>
+          {sipsTaken > 0 && !wentOver && (
+            <button
+              type="button"
+              onClick={() => setSipsTaken((n) => Math.max(0, n - 1))}
+              className="font-mono text-ink-muted underline underline-offset-4"
+              style={{ fontSize: '0.7rem', background: 'none', border: 'none', cursor: 'pointer', marginTop: 6 }}
+            >
+              Trin tilbage
+            </button>
+          )}
         </div>
       )}
 
       {/* Done button or result */}
       {!hasAnswered ? (
         <div className="fade-up-3">
-          <button onClick={handleDone} disabled={submitting || isExpired} className="btn-success">
+          <button
+            onClick={handleDone}
+            disabled={submitting || isExpired || wentOver}
+            className="btn-success"
+          >
             Klarede det
           </button>
         </div>
