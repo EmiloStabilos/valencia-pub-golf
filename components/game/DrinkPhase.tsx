@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import type { Hole, Player, Score } from '@/lib/types'
 import TileRule from '@/components/decorations/TileRule'
 
@@ -17,7 +17,6 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
   const [submitting, setSubmitting] = useState(false)
   const [sipsTaken, setSipsTaken] = useState(0)
   const [now, setNow] = useState(() => Date.now())
-  const autoFailedRef = useRef(false)
 
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 1000)
@@ -47,17 +46,10 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
   const committed = myScore?.committed_sips ?? 0
   const wentOver = committed > 0 && sipsTaken > committed
 
-  // Auto-fail when player exceeds their committed sips
-  useEffect(() => {
-    if (!wentOver || hasAnswered || autoFailedRef.current) return
-    autoFailedRef.current = true
-    onDrinkResult(false)
-  }, [wentOver, hasAnswered, onDrinkResult])
-
-  async function handleDone() {
+  async function handleResult(completed: boolean) {
     setSubmitting(true)
     try {
-      await onDrinkResult(true)
+      await onDrinkResult(completed)
     } finally {
       setSubmitting(false)
     }
@@ -163,15 +155,22 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
         </div>
       )}
 
-      {/* Done button or result */}
+      {/* Done/fail buttons or result */}
       {!hasAnswered ? (
-        <div className="fade-up-3">
+        <div className="fade-up-3 space-y-3">
           <button
-            onClick={handleDone}
-            disabled={submitting || isExpired || wentOver}
+            onClick={() => handleResult(true)}
+            disabled={submitting || isExpired}
             className="btn-success"
           >
             Klarede det
+          </button>
+          <button
+            onClick={() => handleResult(false)}
+            disabled={submitting || isExpired}
+            className="btn-danger"
+          >
+            Fejlede (+III)
           </button>
         </div>
       ) : (
