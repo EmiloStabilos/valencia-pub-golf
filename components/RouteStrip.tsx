@@ -15,7 +15,7 @@ export default function RouteStrip({ holes, currentHoleId, onClick }: Props) {
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center justify-center gap-1.5 py-2.5 transition-colors active:bg-parchment-dark/40"
+      className="w-full flex items-center justify-center gap-1.5 py-2.5 transition-colors active:bg-white/10"
       aria-label="Vis rute"
     >
       {sortedHoles.map((h, i) => {
@@ -34,7 +34,7 @@ export default function RouteStrip({ holes, currentHoleId, onClick }: Props) {
                 ? 'none'
                 : isPast
                 ? 'none'
-                : '1.5px solid #D8B888',
+                : '1.5px solid rgba(245,241,235,0.35)',
               boxShadow: isCurrent ? '0 0 0 3px rgba(200,56,26,0.18)' : 'none',
               opacity: isPast ? 0.8 : 1,
               flexShrink: 0,

@@ -295,10 +295,10 @@ export default function GamePage() {
 
   return (
     <div className="min-h-screen bg-parchment">
-      {/* Sticky header — Valencia style */}
+      {/* Sticky header — cobalt brand bar */}
       <header
         className="sticky top-0 z-40 backdrop-blur-sm"
-        style={{ background: 'rgba(251,232,200,0.97)', borderBottom: '1px solid #D8B888' }}
+        style={{ background: 'rgba(26,58,122,0.97)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
       >
         <div className="max-w-md mx-auto flex items-center justify-between px-5 gap-2" style={{ padding: '10px 20px' }}>
           {canSwitchPlayer ? (
@@ -307,21 +307,21 @@ export default function GamePage() {
               className="flex items-center gap-1.5 min-w-0"
               aria-label="Skift spiller"
             >
-              <span className="font-sans text-ink-muted" style={{ fontSize: '0.9rem' }}>‹</span>
-              <span className="font-serif text-ink truncate" style={{ fontWeight: 600, fontSize: '1.05rem' }}>
+              <span className="font-sans" style={{ fontSize: '0.9rem', color: 'rgba(245,241,235,0.5)' }}>‹</span>
+              <span className="font-serif truncate" style={{ fontWeight: 600, fontSize: '1.05rem', color: '#F5F1EB' }}>
                 {currentPlayer.name}
               </span>
             </button>
           ) : (
-            <span className="font-serif text-ink truncate min-w-0" style={{ fontWeight: 600, fontSize: '1.05rem' }}>
+            <span className="font-serif truncate min-w-0" style={{ fontWeight: 600, fontSize: '1.05rem', color: '#F5F1EB' }}>
               {currentPlayer.name}
             </span>
           )}
 
           <div className="text-center flex-shrink-0">
-            <p className="smallcaps">
+            <p className="smallcaps" style={{ color: 'rgba(245,241,235,0.7)' }}>
               Stop {currentHolePosition}
-              <span style={{ color: '#C8381A' }}> · </span>
+              <span style={{ color: '#E8A020' }}> · </span>
               {totalHoles}
             </p>
           </div>
@@ -334,16 +334,16 @@ export default function GamePage() {
             style={{ width: 30, display: 'flex', justifyContent: 'flex-end' }}
           >
             <svg viewBox="0 0 24 24" width={22} height={22} fill="none">
-              <path d="M4 20 L4 10 Q4 4 12 4 Q20 4 20 10 L20 20" stroke="#C8381A" strokeWidth="1.5" />
-              <line x1="2" y1="20" x2="22" y2="20" stroke="#C8381A" strokeWidth="1.5" />
-              <line x1="8" y1="20" x2="8" y2="14" stroke="#C8381A" strokeWidth="1" />
-              <line x1="16" y1="20" x2="16" y2="14" stroke="#C8381A" strokeWidth="1" />
+              <path d="M4 20 L4 10 Q4 4 12 4 Q20 4 20 10 L20 20" stroke="#F5F1EB" strokeWidth="1.5" />
+              <line x1="2" y1="20" x2="22" y2="20" stroke="#F5F1EB" strokeWidth="1.5" />
+              <line x1="8" y1="20" x2="8" y2="14" stroke="#F5F1EB" strokeWidth="1" />
+              <line x1="16" y1="20" x2="16" y2="14" stroke="#F5F1EB" strokeWidth="1" />
             </svg>
           </button>
         </div>
 
         {/* Route progress strip — tap to open timeline */}
-        <div className="max-w-md mx-auto" style={{ borderTop: '1px solid rgba(216,205,176,0.5)' }}>
+        <div className="max-w-md mx-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
           <RouteStrip
             holes={holes}
             currentHoleId={gameState.current_hole}
