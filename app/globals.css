@@ -13,10 +13,10 @@
   --cobalt-soft:         #5BAAD9;
   --cobalt-deep:         #2E7AAF;
 
-  /* Surfaces */
-  --limestone:           #F5F1EB;
-  --limestone-light:     #FEFDFB;
-  --limestone-dark:      #E8E2D8;
+  /* Surfaces — clean Valencian whites */
+  --limestone:           #FFFEF8;
+  --limestone-light:     #FFFFFF;
+  --limestone-dark:      #FFF5C8;
   --limestone-stepper:   #EEF5FB;
 
   /* Accents — Valencian gold (the yellow stripes) */
@@ -49,9 +49,9 @@
   --olive-rgb:           58 104 32;
   --wine-rgb:            139 26 26;
   --ink-rgb:             42 10 6;
-  --limestone-rgb:       245 241 235;
-  --limestone-dark-rgb:  232 226 216;
-  --limestone-light-rgb: 254 253 251;
+  --limestone-rgb:       255 254 248;
+  --limestone-dark-rgb:  255 245 200;
+  --limestone-light-rgb: 255 255 255;
 }
 
 @layer base {
