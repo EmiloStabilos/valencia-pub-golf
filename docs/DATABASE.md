@@ -131,7 +131,7 @@ Tracks current hole and phase for the whole group.
 | `id` | INT | always `1` |
 | `current_hole` | INT | 1–12 (or beyond if extra stops added) |
 | `phase` | TEXT | one of: `'committing'`, `'reveal'`, `'drinking'`, `'scoring'` |
-| `drink_deadline_at` | TIMESTAMPTZ | Nullable. Set to NOW() + 2 min when the first player marks ✓ in the drinking phase. Any client whose own score is still null when this expires auto-fails (`completed=false`, +3 penalty). Reset to null on phase transitions. |
+| `drink_deadline_at` | TIMESTAMPTZ | Nullable. Set to NOW() + 15 min at the `committing → reveal` transition (when the last player commits). Any client whose score is still `null` when this expires auto-fails (`completed=false`, +3 penalty). Reset to null when moving to next hole. |
 
 ---
 
@@ -143,7 +143,7 @@ committing → reveal → drinking → scoring → (next hole, current_hole++) �
 
 - **`committing`**: players locking in slurke via stepper. Auto-advances to `reveal` when all 6 have a row in `scores` for `current_hole` with `committed_sips IS NOT NULL`.
 - **`reveal`**: shows everyone's numbers + group average + penalty shots. Auto-advances to `drinking` when one player taps "fortsæt".
-- **`drinking`**: ✓/✗ commitment-check buttons active. Auto-advances to `scoring` when all 6 scores have `completed IS NOT NULL`.
+- **`drinking`**: 15-min countdown active (timer was set at commit time). Players tap ✓ when done; sip counter auto-fails if over committed count. Auto-advances to `scoring` when all players have `completed IS NOT NULL` OR `drink_deadline_at` expires (whichever comes first).
 - **`scoring`**: shows hole scores + leaderboard. Manually advances to next hole when someone taps "NÆSTE STOP".
 
 After the last hole's scoring → final scoreboard renders client-side (no further DB transition).
