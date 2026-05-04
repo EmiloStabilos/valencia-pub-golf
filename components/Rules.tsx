@@ -11,7 +11,7 @@ const EXAMPLE: { sips: number; distance: number; penalty: number; total: number;
   { sips: 3, distance: 1.0, penalty: 1, total: 1, note: 'Tæt på' },
   { sips: 4, distance: 0, penalty: 0, total: 0, note: 'Spot on — laveste score' },
   { sips: 5, distance: 1.0, penalty: 1, total: 1, note: 'Tæt på' },
-  { sips: 8, distance: 4.0, penalty: 4, total: 4, note: 'Outlier + straf-shot' },
+  { sips: 8, distance: 4.0, penalty: 4, total: 4, note: 'Langt fra + straf-shot' },
 ]
 
 interface Props {
@@ -25,7 +25,7 @@ export default function Rules({ compact = false }: Props) {
       <section className="space-y-2">
         <p className="smallcaps-ink">Spillet</p>
         <ul className="font-sans text-ink-secondary text-base space-y-1.5 leading-snug list-none">
-          <li>4 spillere, 9 stops på én dag i Valencia.</li>
+          <li>4 spillere, 9 stop på én dag i Valencia.</li>
           <li>Stop 1 er <em className="font-serif">prøverunde</em> — point tæller ikke.</li>
           <li>Hvert stop har én drink som <strong>alle</strong> skal tømme.</li>
         </ul>
@@ -108,13 +108,12 @@ export default function Rules({ compact = false }: Props) {
         <ul className="font-sans text-ink-secondary text-base space-y-1.5 leading-snug list-none">
           <li>Antallet af slurke giver <strong>ingen point</strong> i sig selv. Du bliver kun straffet for at afvige fra gruppens gennemsnit.</li>
           <li><strong>Sweet spot</strong>: gæt hvad de andre vælger, og ram tallet præcist.</li>
-          <li>Pas på straf-shots ved 1 og max — de koster ikke point, men de koster væske.</li>
         </ul>
       </section>
 
       {/* Section 5 — Honor system */}
       <section className="space-y-2">
-        <p className="smallcaps-ink">Drak du den faktisk?</p>
+        <p className="smallcaps-ink">Drak du den faktisk på det meldte antal tårer?</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
           Efter alle har drukket, vælger hver spiller én af to:
         </p>
@@ -165,7 +164,7 @@ export default function Rules({ compact = false }: Props) {
       <section className="space-y-2">
         <p className="smallcaps-ink">Sluttiden tæller mere</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
-          De sidste tre stop har en score-multiplikator. Sene fejl koster mere — sjusk ikke når der er meget på spil.
+          De sidste tre stop har en score-multiplikator. Sene fejl koster mere — så husk at holde hovedet koldt på de sidste stop
         </p>
         <div className="border border-rule mt-2">
           <div className="grid grid-cols-3 bg-parchment-dark/50 border-b border-rule">
@@ -191,7 +190,7 @@ export default function Rules({ compact = false }: Props) {
       <section className="space-y-2">
         <p className="smallcaps-ink">Vinderen</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
-          Laveste totalscore efter Stop 9 vinder. Som rigtig golf — det handler om at score lavt.
+          Laveste totalscore efter Stop 9 vinder. Som rigtig golf handler det altså om at score lavt. Præmien gives efter sidste stop er gennemført.
         </p>
       </section>
     </div>
