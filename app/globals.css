@@ -43,12 +43,12 @@
   --badge-number:        #4A9CC8;
 
   /* Rule / border — Valencian golden-yellow (the yellow stripes as dividers) */
-  --rule:                #D4AC30;
+  --rule:                #D0CCBF;
 
   /* RGB channels — required for Tailwind opacity modifiers (bg-gold/30 etc.) */
   --cobalt-rgb:          74 156 200;
   --gold-rgb:            245 196 0;
-  --rule-rgb:            212 172 48;
+  --rule-rgb:            208 204 191;
   --olive-rgb:           58 104 32;
   --wine-rgb:            139 26 26;
   --ink-rgb:             42 10 6;
