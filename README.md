@@ -21,22 +21,7 @@ Tilpasset fra [lukashoerup/athens-pub-golf](https://github.com/lukashoerup/athen
 
 **Spillere (4):** Emil (host), Søren, Frederik, Ruben
 
-**Rute:**
 
-| Tid | Stop | Bar | Drink |
-|---|---|---|---|
-| 11:00 | I ★ | La Cola del Pez | Cerveza Artesana |
-| 11:45 | II | Insólito | Vermut |
-| 12:30 | III | Mientras Tanto | Cóctel |
-| 13:00 | 🍽 | Frokost: Casa Vani | — |
-| 14:30 | IV | Luna de Valencia Rooftop | Sangria |
-| 15:15 | V | El Mirador de Only YOU | G&T |
-| 16:00 | VI ×1.5 | Nuvolc | Cerveza |
-| 18:00 | 🍽 | Middag: Restaurant Secret | — |
-| 19:30 | VII ×2.0 | Bukowski Craft Beer | IPA |
-| 20:15 | VIII ×2.5 | Olhöps | Shot |
-
----
 
 ## Stack
 
