@@ -1,6 +1,6 @@
 # Valencia Pub Golf ⛳
 
-9 stop · 4 spillere · 1 dag i Valencia.
+9 stop · Dynamisk antal spillere · 1 dag i Valencia.
 
 Real-time multiplayer pub-golf med hemmelige meldte antal slurke, distance-baseret scoring, og frokost + middag undervejs.
 
