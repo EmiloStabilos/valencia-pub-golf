@@ -168,7 +168,7 @@ export default function PlayerSelectPage() {
                       style={{
                         fontWeight: 700,
                         fontSize: '0.85rem',
-                        color: selecting === player.id ? 'var(--limestone)' : 'var(--cobalt)',
+                        color: selecting === player.id ? 'var(--limestone)' : 'var(--badge-number)',
                       }}
                     >
                       {player.display_order}

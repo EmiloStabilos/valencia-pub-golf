@@ -39,6 +39,9 @@
   --ink-muted:           #8A5030;
   --ink-faint:           #C0906A;
 
+  /* Badge — player number in selection list */
+  --badge-number:        #4A9CC8;
+
   /* Rule / border — Valencian golden-yellow (the yellow stripes as dividers) */
   --rule:                #D4AC30;
 
