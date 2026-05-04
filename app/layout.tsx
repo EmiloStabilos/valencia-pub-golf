@@ -3,7 +3,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Valencia Pub Golf ⛳',
-  description: '8 stops · 4 spillere · 1 dag i Valencia',
+  description: '9 stops · 4 spillere · 1 dag i Valencia',
 }
 
 export const viewport: Viewport = {

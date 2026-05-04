@@ -25,7 +25,7 @@ export default function Rules({ compact = false }: Props) {
       <section className="space-y-2">
         <p className="smallcaps-ink">Spillet</p>
         <ul className="font-sans text-ink-secondary text-base space-y-1.5 leading-snug list-none">
-          <li>4 spillere, 8 stops på én dag i Valencia.</li>
+          <li>4 spillere, 9 stops på én dag i Valencia.</li>
           <li>Stop 1 er <em className="font-serif">prøverunde</em> — point tæller ikke.</li>
           <li>Hvert stop har én drink som <strong>alle</strong> skal tømme.</li>
         </ul>
@@ -188,7 +188,7 @@ export default function Rules({ compact = false }: Props) {
       <section className="space-y-2">
         <p className="smallcaps-ink">Vinderen</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
-          Laveste totalscore efter Stop 8 vinder. Som rigtig golf — det handler om at score lavt.
+          Laveste totalscore efter Stop 9 vinder. Som rigtig golf — det handler om at score lavt.
         </p>
       </section>
     </div>
