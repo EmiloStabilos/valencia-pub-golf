@@ -8,22 +8,23 @@
    DESIGN TOKENS — edit here to retheme the entire app
    ═══════════════════════════════════════════════════════════ */
 :root {
-  /* Brand */
-  --cobalt:              #1A3A7A;
-  --cobalt-soft:         #2B5BA8;
-  --cobalt-deep:         #0E2050;
+  /* Brand — Valencian sky blue (left panel of the flag) */
+  --cobalt:              #4A9CC8;
+  --cobalt-soft:         #5BAAD9;
+  --cobalt-deep:         #2E7AAF;
 
   /* Surfaces */
   --limestone:           #F5F1EB;
   --limestone-light:     #FEFDFB;
   --limestone-dark:      #E8E2D8;
-  --limestone-stepper:   #EDF0F5;
+  --limestone-stepper:   #EEF5FB;
 
-  /* Accents */
-  --gold:                #E8A020;
-  --gold-soft:           #F5C860;
-  --terracotta:          #C8381A;
-  --terracotta-dark:     #9E2A10;
+  /* Accents — Valencian gold (the yellow stripes) */
+  --gold:                #F5C400;
+  --gold-soft:           #FFD740;
+  /* Valencian red (the red stripes) */
+  --terracotta:          #CC2200;
+  --terracotta-dark:     #991A00;
   --sangria:             #8B1A3A;
 
   /* Status */
@@ -38,13 +39,13 @@
   --ink-muted:           #8A5030;
   --ink-faint:           #C0906A;
 
-  /* Rule / border — cool blue-stone replaces warm tan */
-  --rule:                #C0C8D8;
+  /* Rule / border — Valencian golden-yellow (the yellow stripes as dividers) */
+  --rule:                #D4AC30;
 
   /* RGB channels — required for Tailwind opacity modifiers (bg-gold/30 etc.) */
-  --cobalt-rgb:          26 58 122;
-  --gold-rgb:            232 160 32;
-  --rule-rgb:            192 200 216;
+  --cobalt-rgb:          74 156 200;
+  --gold-rgb:            245 196 0;
+  --rule-rgb:            212 172 48;
   --olive-rgb:           58 104 32;
   --wine-rgb:            139 26 26;
   --ink-rgb:             42 10 6;
@@ -162,7 +163,7 @@
      keeps hardcoded hex values. Only background-color uses the var. */
   .azulejo-bg {
     background-color: var(--cobalt);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%231A3A7A'/%3E%3Crect x='2' y='2' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='2' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='2' y='26' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='26' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='%23E8A020' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='36' r='4' fill='none' stroke='%23E8A020' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='12' r='4' fill='none' stroke='%23C8381A' stroke-width='0.8' opacity='0.3'/%3E%3Ccircle cx='12' cy='36' r='4' fill='none' stroke='%23C8381A' stroke-width='0.8' opacity='0.3'/%3E%3Cpath d='M24 2 L24 46 M2 24 L46 24' stroke='%23F5F1EB' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%234A9CC8'/%3E%3Crect x='2' y='2' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='2' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='2' y='26' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='26' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='%23F5C400' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='36' r='4' fill='none' stroke='%23F5C400' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='12' r='4' fill='none' stroke='%23CC2200' stroke-width='0.8' opacity='0.3'/%3E%3Ccircle cx='12' cy='36' r='4' fill='none' stroke='%23CC2200' stroke-width='0.8' opacity='0.3'/%3E%3Cpath d='M24 2 L24 46 M2 24 L46 24' stroke='%23F5F1EB' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
   }
 
   /* Primary CTA — cobalt */
