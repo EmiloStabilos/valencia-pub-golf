@@ -105,7 +105,7 @@ export default function RevealPhase({ hole, scores, players, onRevealComplete }:
             <div
               key={rp.player.id}
               style={{
-                background: '#FEF4E0',
+                background: '#FEFDFB',
                 padding: '16px 14px',
                 borderLeft: isLeader ? '3px solid #E8A020' : undefined,
                 opacity: revealed ? 1 : 0,

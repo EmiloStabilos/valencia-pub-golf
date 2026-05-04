@@ -9,10 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Surfaces — warm saffron
-        'parchment':       '#FBE8C8',
-        'parchment-light': '#FEF4E0',
-        'parchment-dark':  '#F0D4A0',
+        // Surfaces — Mediterranean limestone
+        'parchment':       '#F5F1EB',
+        'parchment-light': '#FEFDFB',
+        'parchment-dark':  '#E8E2D8',
 
         // Primary accents
         'terracotta':      '#C8381A',

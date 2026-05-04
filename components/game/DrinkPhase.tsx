@@ -113,7 +113,7 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
               ? 'rgba(139,26,26,0.05)'
               : sipsTaken === committed && committed > 0
               ? 'rgba(232,160,32,0.05)'
-              : '#FEF4E0',
+              : '#FEFDFB',
             padding: 16,
             transition: 'border-color 0.3s, background 0.3s',
           }}

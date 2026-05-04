@@ -11,7 +11,7 @@
   }
 
   body {
-    background-color: #FBE8C8;
+    background-color: #F5F1EB;
     color: #2A0A06;
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 400;
@@ -25,7 +25,7 @@
 
   ::selection {
     background-color: #E8A020;
-    color: #FBE8C8;
+    color: #F5F1EB;
   }
 }
 
@@ -87,11 +87,11 @@
     background: repeating-linear-gradient(
       90deg,
       #1A3A7A 0px,  #1A3A7A 10px,
-      #FBE8C8 10px, #FBE8C8 20px,
+      #F5F1EB 10px, #F5F1EB 20px,
       #C8381A 20px, #C8381A 30px,
-      #FBE8C8 30px, #FBE8C8 40px,
+      #F5F1EB 30px, #F5F1EB 40px,
       #E8A020 40px, #E8A020 50px,
-      #FBE8C8 50px, #FBE8C8 60px
+      #F5F1EB 50px, #F5F1EB 60px
     );
   }
 
@@ -100,18 +100,18 @@
     background: repeating-linear-gradient(
       90deg,
       #1A3A7A 0px,  #1A3A7A 10px,
-      #FBE8C8 10px, #FBE8C8 20px,
+      #F5F1EB 10px, #F5F1EB 20px,
       #C8381A 20px, #C8381A 30px,
-      #FBE8C8 30px, #FBE8C8 40px,
+      #F5F1EB 30px, #F5F1EB 40px,
       #E8A020 40px, #E8A020 50px,
-      #FBE8C8 50px, #FBE8C8 60px
+      #F5F1EB 50px, #F5F1EB 60px
     );
   }
 
   /* Azulejo background — cobalt with geometric tile SVG */
   .azulejo-bg {
     background-color: #1A3A7A;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%231A3A7A'/%3E%3Crect x='2' y='2' width='20' height='20' fill='none' stroke='%23FBE8C8' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='2' width='20' height='20' fill='none' stroke='%23FBE8C8' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='2' y='26' width='20' height='20' fill='none' stroke='%23FBE8C8' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='26' width='20' height='20' fill='none' stroke='%23FBE8C8' stroke-width='0.8' opacity='0.25'/%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='%23E8A020' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='36' r='4' fill='none' stroke='%23E8A020' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='12' r='4' fill='none' stroke='%23C8381A' stroke-width='0.8' opacity='0.3'/%3E%3Ccircle cx='12' cy='36' r='4' fill='none' stroke='%23C8381A' stroke-width='0.8' opacity='0.3'/%3E%3Cpath d='M24 2 L24 46 M2 24 L46 24' stroke='%23FBE8C8' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%231A3A7A'/%3E%3Crect x='2' y='2' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='2' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='2' y='26' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='26' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='%23E8A020' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='36' r='4' fill='none' stroke='%23E8A020' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='12' r='4' fill='none' stroke='%23C8381A' stroke-width='0.8' opacity='0.3'/%3E%3Ccircle cx='12' cy='36' r='4' fill='none' stroke='%23C8381A' stroke-width='0.8' opacity='0.3'/%3E%3Cpath d='M24 2 L24 46 M2 24 L46 24' stroke='%23F5F1EB' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
   }
 
   /* Primary CTA — sangria */
@@ -119,7 +119,7 @@
     @apply w-full flex items-center justify-center font-label uppercase disabled:opacity-40 transition-all;
     height: 58px;
     background: #8B1A3A;
-    color: #FEF4E0;
+    color: #FEFDFB;
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     box-shadow: 0 3px 0 #5A0A1E;
@@ -148,7 +148,7 @@
     @apply w-full flex items-center justify-center font-label uppercase disabled:opacity-40 transition-all;
     height: 58px;
     background: #3A6820;
-    color: #FEF4E0;
+    color: #FEFDFB;
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     box-shadow: 0 3px 0 #254510;
@@ -163,7 +163,7 @@
     @apply w-full flex items-center justify-center font-label uppercase disabled:opacity-40 transition-all;
     height: 58px;
     background: #8B1A1A;
-    color: #FEF4E0;
+    color: #FEFDFB;
     font-size: 0.72rem;
     letter-spacing: 0.22em;
     box-shadow: 0 3px 0 #5A0A0A;
@@ -178,7 +178,7 @@
     @apply flex items-center justify-center text-ink disabled:opacity-30 disabled:cursor-not-allowed transition-colors;
     width: 64px;
     height: 96px;
-    background: #F0D4A0;
+    background: #E8E2D8;
     border: 1px solid #D8B888;
     font-size: 1.6rem;
     font-family: 'Playfair Display', Georgia, serif;
@@ -189,7 +189,7 @@
 
   /* Card — minimal, hairline border */
   .field-card {
-    background: #FEF4E0;
+    background: #FEFDFB;
     border: 1px solid #D8B888;
     padding: 20px;
   }

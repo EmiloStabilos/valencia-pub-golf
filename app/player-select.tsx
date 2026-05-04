@@ -137,7 +137,7 @@ export default function PlayerSelectPage() {
       </div>
 
       {/* Arch divider — azulejo → parchment */}
-      <ArchDivider color="rgba(26,74,122,0.4)" bg="#FBE8C8" />
+      <ArchDivider color="rgba(26,74,122,0.4)" bg="#F5F1EB" />
 
       {/* Player list */}
       <div className="flex-1 bg-parchment">
@@ -158,7 +158,7 @@ export default function PlayerSelectPage() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '18px 24px',
-                  background: '#FBE8C8',
+                  background: '#F5F1EB',
                   border: 'none',
                   borderBottom: '1px solid #D8B888',
                   cursor: 'pointer',
@@ -172,7 +172,7 @@ export default function PlayerSelectPage() {
                     style={{
                       width: 36,
                       height: 36,
-                      background: selecting === player.id ? '#C8381A' : '#F0D4A0',
+                      background: selecting === player.id ? '#C8381A' : '#E8E2D8',
                       border: '1px solid #D8B888',
                       display: 'flex',
                       alignItems: 'center',
@@ -239,7 +239,7 @@ export default function PlayerSelectPage() {
                 style={{
                   padding: '16px 24px',
                   borderBottom: '1px solid #D8B888',
-                  background: '#FEF4E0',
+                  background: '#FEFDFB',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 12,
@@ -303,7 +303,7 @@ export default function PlayerSelectPage() {
                     placeholder="Nyt spillernavn"
                     style={{
                       flex: 1,
-                      background: '#FBE8C8',
+                      background: '#F5F1EB',
                       border: '1px solid #D8B888',
                       padding: '8px 12px',
                       fontFamily: 'inherit',
@@ -361,7 +361,7 @@ export default function PlayerSelectPage() {
               style={{
                 padding: '20px 24px',
                 borderBottom: '1px solid #D8B888',
-                background: '#FEF4E0',
+                background: '#FEFDFB',
               }}
             >
               <Rules compact />

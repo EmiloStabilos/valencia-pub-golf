@@ -30,7 +30,7 @@ export default function HoleCard({ hole, showMapLink = true, currentPlayerName =
       {/* Drink pill */}
       <div className="inline-flex items-center gap-2" style={{ background: '#8B1A3A', padding: '5px 14px' }}>
         <span style={{ fontSize: '1rem' }}>{hole.drink_emoji}</span>
-        <span className="font-sans italic" style={{ color: '#FEF4E0', fontSize: '0.9rem', letterSpacing: '0.04em' }}>
+        <span className="font-sans italic" style={{ color: '#FEFDFB', fontSize: '0.9rem', letterSpacing: '0.04em' }}>
           {hole.drink}
         </span>
       </div>

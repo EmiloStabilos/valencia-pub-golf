@@ -79,7 +79,7 @@ export default function FinalScoreboard({ players, scores, holes, currentPlayer 
       </div>
 
       {/* Arch divider */}
-      <ArchDivider color="rgba(26,74,122,0.35)" bg="#FBE8C8" />
+      <ArchDivider color="rgba(26,74,122,0.35)" bg="#F5F1EB" />
 
       <div style={{ padding: '16px 24px 32px' }}>
         {/* Title */}

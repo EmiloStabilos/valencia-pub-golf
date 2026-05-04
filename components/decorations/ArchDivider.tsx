@@ -3,7 +3,7 @@ interface Props {
   bg?: string
 }
 
-export default function ArchDivider({ color = 'rgba(26,74,122,0.4)', bg = '#FBE8C8' }: Props) {
+export default function ArchDivider({ color = 'rgba(26,74,122,0.4)', bg = '#F5F1EB' }: Props) {
   const xValues = [0, 65, 130, 195, 260, 325]
   return (
     <svg

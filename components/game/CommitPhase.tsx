@@ -74,7 +74,7 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
                     width: 8,
                     height: 8,
                     borderRadius: '50%',
-                    background: i < sips ? '#C8381A' : '#F0D4A0',
+                    background: i < sips ? '#C8381A' : '#E8E2D8',
                     border: '1px solid #D8B888',
                     transition: 'background 0.15s',
                   }}
@@ -106,7 +106,7 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
             <div
               className="flex-1 flex flex-col items-center justify-center"
               style={{
-                background: '#FEF4E0',
+                background: '#FEFDFB',
                 borderTop: '1px solid #D8B888',
                 borderBottom: '1px solid #D8B888',
                 height: 96,
