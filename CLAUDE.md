@@ -86,7 +86,7 @@ committing → reveal → drinking → scoring → (next hole, current_hole++) �
 
 - `committing`: players locking in sips. Auto-advances to `reveal` when all 4 commit. **Also sets `drink_deadline_at = NOW() + 15 min` at this point.**
 - `reveal`: numbers shown, average computed. Manual advance to `drinking`.
-- `drinking`: 15-min countdown visible. Players tap ✓ "Klarede det" when done. Sip counter tracks each sip — going over committed count auto-fails immediately. Anyone who hasn't tapped ✓ when timer expires gets auto-failed (+3). Auto-advances to `scoring` when all 4 have answered OR timer expires.
+- `drinking`: 15-min countdown visible. Players tap ✓ "Klarede det" or ✗ "Fejlede (+III)". Sip counter is informational only — no auto-fail on overshoot. Anyone who hasn't tapped either button when timer expires gets auto-failed (+3). Auto-advances to `scoring` when all 4 have answered OR timer expires.
 - `scoring`: shows hole results + leaderboard. Manual advance to next hole.
 
 A phase is "stuck" if Realtime didn't fire — fix with `UPDATE game_state SET phase = '...' WHERE id = 1`.

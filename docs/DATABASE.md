@@ -143,7 +143,7 @@ committing → reveal → drinking → scoring → (next hole, current_hole++) �
 
 - **`committing`**: players locking in slurke via stepper. Auto-advances to `reveal` when all 6 have a row in `scores` for `current_hole` with `committed_sips IS NOT NULL`.
 - **`reveal`**: shows everyone's numbers + group average + penalty shots. Auto-advances to `drinking` when one player taps "fortsæt".
-- **`drinking`**: 15-min countdown active (timer was set at commit time). Players tap ✓ when done; sip counter auto-fails if over committed count. Auto-advances to `scoring` when all players have `completed IS NOT NULL` OR `drink_deadline_at` expires (whichever comes first).
+- **`drinking`**: 15-min countdown active (timer was set at commit time). Players tap ✓ "Klarede det" or ✗ "Fejlede (+III)"; sip counter is informational only. Auto-advances to `scoring` when all players have `completed IS NOT NULL` OR `drink_deadline_at` expires (whichever comes first).
 - **`scoring`**: shows hole scores + leaderboard. Manually advances to next hole when someone taps "NÆSTE STOP".
 
 After the last hole's scoring → final scoreboard renders client-side (no further DB transition).

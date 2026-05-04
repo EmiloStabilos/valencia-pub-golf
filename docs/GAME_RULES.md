@@ -38,9 +38,9 @@ The committed sips number has **no direct point value** — it's only used to co
 
 | Outcome | Penalty |
 |---|---|
-| Tapped ✓ "Klarede det" in time | +0 |
-| Didn't tap ✓ before 15-min timer expired | **+3** |
-| Went over committed sip count | **+3** |
+| Tapped ✓ "Klarede det" | +0 |
+| Tapped ✗ "Fejlede (+III)" | **+3** |
+| Didn't tap either before 15-min timer expired | **+3** (auto-fail) |
 
 ### Strategic implication
 
@@ -119,13 +119,12 @@ The route includes **2 meal breaks** that appear as waypoints in the route timel
 When all players commit, a **15-minute countdown** starts immediately (visible during the reveal and drinking phases).
 
 During the drinking phase:
-- A **sip counter** lets each player tap once per sip to track progress
+- A **sip counter** lets each player tap once per sip to track progress (informational only)
 - Tap ✓ **"Klarede det"** when you finish your drink → no penalty
-- **Going over your committed sip count** → instant auto-fail (+3), sip counter turns red
-- **Not tapping ✓ before the timer hits 0:00** → auto-fail (+3)
-- No manual ✗ button — failures are triggered automatically by the sip counter or the timer
+- Tap ✗ **"Fejlede (+III)"** to self-report failure → +3 penalty
+- **Not tapping either button before the timer hits 0:00** → auto-fail (+3)
 
-Honor system for the sip counter. The group polices each other.
+Honor system. The group polices each other.
 
 ---
 
@@ -178,7 +177,7 @@ COMMIT → REVEAL → DRINK → SCORE → (next stop)
 
 1. **COMMIT**: Stepper screen, lock in ("melder"). Other players show as "X af Y har meldt" (no names — prevents strategic waiting). Live preview of penalty rules that would trigger. **15-min drink timer is set the moment the last player commits.**
 2. **REVEAL**: All numbers shown simultaneously. Average + per-player penalty shot list. Timer is already counting down.
-3. **DRINK**: 15-min countdown visible. Sip counter active — tap once per sip. Tap ✓ when done. Going over committed sips or letting the timer expire = auto-fail (+3).
+3. **DRINK**: 15-min countdown visible. Sip counter active (informational). Tap ✓ when done or ✗ to self-report failure. Timer expiry = auto-fail (+3).
 4. **SCORE**: Hole breakdown + live leaderboard.
 5. **Next**: Any player can advance to stop X+1.
 

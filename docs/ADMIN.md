@@ -47,13 +47,10 @@ WHERE player_id = (SELECT id FROM players WHERE name = 'Søren')
 
 ---
 
-## R2: Fix a wrong completed flag
+## R2: Wrong commitment-check (clicked ✗ by mistake)
 
-> "Frederik blev fejlagtigt markeret som fejlet" (auto-fail fired wrongly, or need to override)
+> "Frederik trykkede ❌ ved en fejl"
 
-There's no ✗ button anymore — `completed = false` is only set automatically (timer expired or over-sipped). Use this to correct a wrongly set flag.
-
-Set to passed (undo an auto-fail):
 ```sql
 UPDATE scores
 SET completed = true
@@ -61,14 +58,14 @@ WHERE player_id = (SELECT id FROM players WHERE name = 'Frederik')
   AND hole_id = 7;
 ```
 
-Set to failed manually (override):
+Reverse direction (changing ✓ to ✗):
 ```sql
 UPDATE scores SET completed = false
 WHERE player_id = (SELECT id FROM players WHERE name = 'Frederik')
   AND hole_id = 7;
 ```
 
-Reset to unanswered (null = timer still running, player can still tap ✓):
+Reset to unanswered (null = player can tap again, timer still running):
 ```sql
 UPDATE scores SET completed = null
 WHERE player_id = (SELECT id FROM players WHERE name = 'Frederik')
