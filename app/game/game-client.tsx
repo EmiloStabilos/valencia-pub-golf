@@ -16,7 +16,7 @@ import RouteStrip from '@/components/RouteStrip'
 import RouteTimeline from '@/components/RouteTimeline'
 
 const TOTAL_PLAYERS = 6
-const DRINK_DEADLINE_MS = 2 * 60 * 1000 // 2-min deadline once first player finishes
+const DRINK_DEADLINE_MS = 15 * 60 * 1000 // 15-min timer starts when all players commit
 
 export default function GamePage() {
   const router = useRouter()
@@ -115,22 +115,24 @@ export default function GamePage() {
   }, [])
 
   // Auto-transition: committing → reveal (when all players committed)
+  // Also sets the 15-min drink timer so it starts running from commit time.
   useEffect(() => {
     if (!gameState || gameState.phase !== 'committing') return
     const committedThisHole = scores.filter(
       (s) => s.hole_id === gameState.current_hole && s.committed_sips != null
     )
     if (committedThisHole.length >= TOTAL_PLAYERS) {
+      const deadline = new Date(Date.now() + DRINK_DEADLINE_MS).toISOString()
       supabase
         .from('game_state')
-        .update({ phase: 'reveal' })
+        .update({ phase: 'reveal', drink_deadline_at: deadline })
         .eq('id', 1)
         .eq('phase', 'committing')
         .then()
     }
   }, [scores, gameState])
 
-  // Auto-transition: drinking → scoring (when all players answered)
+  // Auto-transition: drinking → scoring when all answered OR 15-min timer expires.
   useEffect(() => {
     if (!gameState || gameState.phase !== 'drinking') return
     const answeredThisHole = scores.filter(
@@ -146,8 +148,8 @@ export default function GamePage() {
     }
   }, [scores, gameState])
 
-  // Auto-fail anyone whose drink deadline has expired. Any active client runs
-  // this — the `.is('completed', null)` filter makes the update idempotent.
+  // Auto-fail anyone who hasn't answered when the 15-min deadline expires,
+  // then advance to scoring. Idempotent: .is('completed', null) guard.
   useEffect(() => {
     if (!gameState || gameState.phase !== 'drinking' || !gameState.drink_deadline_at) return
     const deadline = new Date(gameState.drink_deadline_at).getTime()
@@ -157,7 +159,6 @@ export default function GamePage() {
       const stillNull = scores.filter(
         (s) => s.hole_id === currentHole && s.completed === null
       )
-      if (stillNull.length === 0) return
       for (const s of stillNull) {
         supabase
           .from('scores')
@@ -196,10 +197,10 @@ export default function GamePage() {
   )
 
   const handleRevealComplete = useCallback(async () => {
-    // Reset the drink deadline for the new drinking phase.
+    // Timer was already set when everyone committed — just advance the phase.
     await supabase
       .from('game_state')
-      .update({ phase: 'drinking', drink_deadline_at: null })
+      .update({ phase: 'drinking' })
       .eq('id', 1)
       .eq('phase', 'reveal')
   }, [])
@@ -207,27 +208,12 @@ export default function GamePage() {
   const handleDrinkResult = useCallback(
     async (completed: boolean) => {
       if (!currentPlayer || !gameState) return
-      // `.is('completed', null)` ensures a slow phone can't undo an auto-fail
-      // that already fired. If the timer expired and set completed=false, this
-      // update becomes a no-op.
       await supabase
         .from('scores')
         .update({ completed })
         .eq('player_id', currentPlayer.id)
         .eq('hole_id', gameState.current_hole)
         .is('completed', null)
-
-      // First player to finish (✓) starts the 5-min countdown for everyone else.
-      // The `.is('drink_deadline_at', null)` guard makes this race-safe — only the
-      // first concurrent UPDATE wins; later ones become no-ops.
-      if (completed && !gameState.drink_deadline_at) {
-        const deadline = new Date(Date.now() + DRINK_DEADLINE_MS).toISOString()
-        await supabase
-          .from('game_state')
-          .update({ drink_deadline_at: deadline })
-          .eq('id', 1)
-          .is('drink_deadline_at', null)
-      }
     },
     [currentPlayer, gameState]
   )
