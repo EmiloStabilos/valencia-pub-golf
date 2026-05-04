@@ -28,9 +28,9 @@ export default function HoleCard({ hole, showMapLink = true, currentPlayerName =
       </p>
 
       {/* Drink pill */}
-      <div className="inline-flex items-center gap-2" style={{ background: '#8B1A3A', padding: '5px 14px' }}>
+      <div className="inline-flex items-center gap-2" style={{ background: 'var(--cobalt)', padding: '5px 14px' }}>
         <span style={{ fontSize: '1rem' }}>{hole.drink_emoji}</span>
-        <span className="font-sans italic" style={{ color: '#FEFDFB', fontSize: '0.9rem', letterSpacing: '0.04em' }}>
+        <span className="font-sans italic" style={{ color: 'var(--limestone-light)', fontSize: '0.9rem', letterSpacing: '0.04em' }}>
           {hole.drink}
         </span>
       </div>
@@ -45,7 +45,7 @@ export default function HoleCard({ hole, showMapLink = true, currentPlayerName =
 
       {/* Practice banner */}
       {hole.is_practice && (
-        <div style={{ border: '1px solid rgba(212,168,67,0.5)', background: 'rgba(212,168,67,0.06)', padding: '12px 16px' }}>
+        <div style={{ border: `1px solid rgb(var(--gold-rgb) / 0.5)`, background: `rgb(var(--gold-rgb) / 0.06)`, padding: '12px 16px' }}>
           <p className="smallcaps-gold" style={{ marginBottom: 4 }}>Prøverunde</p>
           <p className="font-sans italic text-ink-secondary" style={{ fontSize: '0.9rem' }}>
             Point tæller ikke. Lær reglerne undervejs.

@@ -61,7 +61,7 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
           <div className="field-card flex items-center justify-between">
             <div>
               <p className="smallcaps" style={{ marginBottom: 4 }}>Maximum</p>
-              <p className="font-serif" style={{ fontWeight: 700, fontSize: '2.2rem', color: '#2A0A06', lineHeight: 1 }}>
+              <p className="font-serif" style={{ fontWeight: 700, fontSize: '2.2rem', color: 'var(--ink)', lineHeight: 1 }}>
                 {hole.max_sips}
               </p>
             </div>
@@ -74,8 +74,8 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
                     width: 8,
                     height: 8,
                     borderRadius: '50%',
-                    background: i < sips ? '#C8381A' : '#E8E2D8',
-                    border: '1px solid #D8B888',
+                    background: i < sips ? 'var(--cobalt)' : 'var(--limestone-stepper)',
+                    border: '1px solid var(--rule)',
                     transition: 'background 0.15s',
                   }}
                 />
@@ -106,17 +106,17 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
             <div
               className="flex-1 flex flex-col items-center justify-center"
               style={{
-                background: '#FEFDFB',
-                borderTop: '1px solid #D8B888',
-                borderBottom: '1px solid #D8B888',
+                background: 'var(--limestone-light)',
+                borderTop: '1px solid var(--rule)',
+                borderBottom: '1px solid var(--rule)',
                 height: 96,
                 gap: 4,
               }}
             >
-              <span className="font-serif select-none leading-none" style={{ fontWeight: 900, fontSize: '3.8rem', color: '#2A0A06', lineHeight: 1 }}>
+              <span className="font-serif select-none leading-none" style={{ fontWeight: 900, fontSize: '3.8rem', color: 'var(--ink)', lineHeight: 1 }}>
                 {sips}
               </span>
-              <span className="font-sans italic" style={{ color: '#8A5030', fontSize: '0.78rem' }}>
+              <span className="font-sans italic" style={{ color: 'var(--ink-muted)', fontSize: '0.78rem' }}>
                 {hole.drink_emoji} {hole.drink}
               </span>
             </div>
@@ -132,8 +132,8 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
 
           {/* Penalty preview */}
           {previewReasons.length > 0 && (
-            <div style={{ borderLeft: '3px solid #8B1A1A', paddingLeft: 14, paddingTop: 8, paddingBottom: 8, background: 'rgba(158,42,26,0.04)' }}>
-              <p className="smallcaps" style={{ color: '#8B1A1A', marginBottom: 4 }}>
+            <div style={{ borderLeft: '3px solid var(--wine)', paddingLeft: 14, paddingTop: 8, paddingBottom: 8, background: 'rgb(var(--wine-rgb) / 0.04)' }}>
+              <p className="smallcaps" style={{ color: 'var(--wine)', marginBottom: 4 }}>
                 ⚠ {previewReasons.length === 1 ? '1 straf-shot' : `${previewReasons.length} straf-shots`}
               </p>
               <ul className="space-y-0.5">
@@ -155,7 +155,7 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
           {/* Committed confirmation */}
           <div className="field-card text-center" style={{ padding: '32px 20px' }}>
             <p className="smallcaps" style={{ marginBottom: 12 }}>Du meldte</p>
-            <p className="font-serif leading-none" style={{ fontWeight: 900, fontSize: '5rem', color: '#2A0A06', lineHeight: 1 }}>
+            <p className="font-serif leading-none" style={{ fontWeight: 900, fontSize: '5rem', color: 'var(--ink)', lineHeight: 1 }}>
               {myScore!.committed_sips}
             </p>
             <p className="font-sans italic text-ink-muted" style={{ fontSize: '0.9rem', marginTop: 8 }}>
@@ -166,7 +166,7 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
                 ? myScore!.penalty_shot_reasons
                 : (myScore!.penalty_shot_reason ? [myScore!.penalty_shot_reason] : [])
               return (
-                <div className="mt-4 inline-block text-left" style={{ borderLeft: '2px solid #8B1A1A', paddingLeft: 12, paddingTop: 4, paddingBottom: 4 }}>
+                <div className="mt-4 inline-block text-left" style={{ borderLeft: '2px solid var(--wine)', paddingLeft: 12, paddingTop: 4, paddingBottom: 4 }}>
                   <p className="smallcaps text-wine mb-1">
                     ⚠ {reasons.length === 1 ? 'Straf-shot' : `${reasons.length} straf-shots`}
                   </p>
@@ -195,8 +195,8 @@ export default function CommitPhase({ hole, myScore, myPreviousSips, committedCo
                     width: 10,
                     height: 10,
                     borderRadius: '50%',
-                    background: i < committedCount ? '#C8381A' : 'transparent',
-                    border: i < committedCount ? 'none' : '1.5px solid #D8B888',
+                    background: i < committedCount ? 'var(--cobalt)' : 'transparent',
+                    border: i < committedCount ? 'none' : '1.5px solid var(--rule)',
                     transition: 'background 0.3s',
                   }}
                 />

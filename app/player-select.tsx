@@ -70,24 +70,10 @@ export default function PlayerSelectPage() {
       {/* Hero — azulejo header */}
       <div className="azulejo-bg" style={{ padding: '40px 24px 0', textAlign: 'center', position: 'relative' }}>
         {/* Moorish arch watermark */}
-        <svg
-          viewBox="0 0 260 200"
-          width={220}
-          style={{ margin: '0 auto', display: 'block', opacity: 0.15 }}
-        >
-          <path
-            d="M30 200 L30 100 Q30 20 130 20 Q230 20 230 100 L230 200"
-            fill="none"
-            stroke="#F0EAD6"
-            strokeWidth="2.5"
-          />
-          <path
-            d="M55 200 L55 105 Q55 45 130 45 Q205 45 205 105 L205 200"
-            fill="none"
-            stroke="#F0EAD6"
-            strokeWidth="1.2"
-          />
-          <line x1="10" y1="200" x2="250" y2="200" stroke="#F0EAD6" strokeWidth="1.5" />
+        <svg viewBox="0 0 260 200" width={220} style={{ margin: '0 auto', display: 'block', opacity: 0.15 }}>
+          <path d="M30 200 L30 100 Q30 20 130 20 Q230 20 230 100 L230 200" fill="none" stroke="var(--limestone)" strokeWidth="2.5" />
+          <path d="M55 200 L55 105 Q55 45 130 45 Q205 45 205 105 L205 200" fill="none" stroke="var(--limestone)" strokeWidth="1.2" />
+          <line x1="10" y1="200" x2="250" y2="200" stroke="var(--limestone)" strokeWidth="1.5" />
         </svg>
 
         {/* Title overlaid on arch */}
@@ -98,7 +84,7 @@ export default function PlayerSelectPage() {
               fontWeight: 900,
               fontSize: '3.6rem',
               lineHeight: 1,
-              color: '#F0EAD6',
+              color: 'var(--limestone)',
               letterSpacing: '-0.01em',
               textShadow: '0 2px 16px rgba(0,0,0,0.4)',
             }}
@@ -110,7 +96,7 @@ export default function PlayerSelectPage() {
             style={{
               fontWeight: 600,
               fontSize: '1.9rem',
-              color: '#F5C860',
+              color: 'var(--gold-soft)',
               marginTop: 4,
               textShadow: '0 1px 8px rgba(0,0,0,0.3)',
             }}
@@ -118,26 +104,22 @@ export default function PlayerSelectPage() {
             Pub Golf
           </p>
 
-          {/* Thin tile border strip */}
           <div className="tile-border-thin" style={{ margin: '20px auto', width: 120 }} />
 
-          <p
-            className="smallcaps"
-            style={{ color: 'rgba(240,234,214,0.7)', letterSpacing: '0.22em' }}
-          >
+          <p className="smallcaps" style={{ color: 'rgb(var(--limestone-rgb) / 0.7)', letterSpacing: '0.22em' }}>
             🇪🇸 {day} · 9 STOPS
           </p>
           <p
             className="font-mono"
-            style={{ color: 'rgba(240,234,214,0.5)', fontSize: '0.72rem', letterSpacing: '0.18em', marginTop: 4 }}
+            style={{ color: 'rgb(var(--limestone-rgb) / 0.5)', fontSize: '0.72rem', letterSpacing: '0.18em', marginTop: 4 }}
           >
             {date}
           </p>
         </div>
       </div>
 
-      {/* Arch divider — azulejo → parchment */}
-      <ArchDivider color="rgba(26,74,122,0.4)" bg="#F5F1EB" />
+      {/* Arch divider */}
+      <ArchDivider />
 
       {/* Player list */}
       <div className="flex-1 bg-parchment">
@@ -146,7 +128,7 @@ export default function PlayerSelectPage() {
             <div className="w-6 h-6 border border-ink border-t-transparent rounded-full animate-spin" />
           </div>
         ) : (
-          <div style={{ borderTop: '1px solid #D8B888' }}>
+          <div style={{ borderTop: '1px solid var(--rule)' }}>
             {activePlayers.map((player) => (
               <button
                 key={player.id}
@@ -158,9 +140,9 @@ export default function PlayerSelectPage() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '18px 24px',
-                  background: '#F5F1EB',
+                  background: 'var(--limestone)',
                   border: 'none',
-                  borderBottom: '1px solid #D8B888',
+                  borderBottom: '1px solid var(--rule)',
                   cursor: 'pointer',
                   textAlign: 'left',
                   opacity: selecting !== null && selecting !== player.id ? 0.35 : 1,
@@ -172,8 +154,8 @@ export default function PlayerSelectPage() {
                     style={{
                       width: 36,
                       height: 36,
-                      background: selecting === player.id ? '#C8381A' : '#E8E2D8',
-                      border: '1px solid #D8B888',
+                      background: selecting === player.id ? 'var(--cobalt)' : 'var(--limestone-dark)',
+                      border: '1px solid var(--rule)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -186,23 +168,17 @@ export default function PlayerSelectPage() {
                       style={{
                         fontWeight: 700,
                         fontSize: '0.85rem',
-                        color: selecting === player.id ? '#F0EAD6' : '#8A5030',
+                        color: selecting === player.id ? 'var(--limestone)' : 'var(--ink-muted)',
                       }}
                     >
                       {player.display_order}
                     </span>
                   </div>
-                  <span
-                    className="font-serif"
-                    style={{ fontWeight: 600, fontSize: '1.25rem', color: '#2A0A06' }}
-                  >
+                  <span className="font-serif" style={{ fontWeight: 600, fontSize: '1.25rem', color: 'var(--ink)' }}>
                     {player.name}
                   </span>
                 </div>
-                <span
-                  className="smallcaps"
-                  style={{ color: selecting === player.id ? '#C8381A' : '#8A5030' }}
-                >
+                <span className="smallcaps" style={{ color: selecting === player.id ? 'var(--cobalt)' : 'var(--ink-muted)' }}>
                   {selecting === player.id ? 'Forbinder...' : 'Klar'}
                 </span>
               </button>
@@ -223,8 +199,8 @@ export default function PlayerSelectPage() {
                 padding: '16px 24px',
                 background: 'transparent',
                 border: 'none',
-                borderTop: '1px solid #D8B888',
-                borderBottom: manageOpen ? 'none' : '1px solid #D8B888',
+                borderTop: '1px solid var(--rule)',
+                borderBottom: manageOpen ? 'none' : '1px solid var(--rule)',
                 cursor: 'pointer',
               }}
             >
@@ -238,8 +214,8 @@ export default function PlayerSelectPage() {
               <div
                 style={{
                   padding: '16px 24px',
-                  borderBottom: '1px solid #D8B888',
-                  background: '#FEFDFB',
+                  borderBottom: '1px solid var(--rule)',
+                  background: 'var(--limestone-light)',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 12,
@@ -247,20 +223,13 @@ export default function PlayerSelectPage() {
               >
                 {/* Toggle existing players */}
                 {players.map((player) => (
-                  <div
-                    key={player.id}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                    }}
-                  >
+                  <div key={player.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span
                       className="font-serif"
                       style={{
                         fontSize: '1.1rem',
                         fontWeight: 500,
-                        color: player.active ? '#2A0A06' : '#B09070',
+                        color: player.active ? 'var(--ink)' : 'var(--ink-faint)',
                         textDecoration: player.active ? 'none' : 'line-through',
                       }}
                     >
@@ -272,8 +241,8 @@ export default function PlayerSelectPage() {
                       style={{
                         background: 'none',
                         border: '1px solid',
-                        borderColor: player.active ? '#C8381A' : '#D8B888',
-                        color: player.active ? '#C8381A' : '#8A5030',
+                        borderColor: player.active ? 'var(--terracotta)' : 'var(--rule)',
+                        color: player.active ? 'var(--terracotta)' : 'var(--ink-muted)',
                         padding: '4px 12px',
                         cursor: 'pointer',
                         fontSize: '0.7rem',
@@ -292,7 +261,7 @@ export default function PlayerSelectPage() {
                     gap: 8,
                     marginTop: 4,
                     paddingTop: 12,
-                    borderTop: '1px solid #D8B888',
+                    borderTop: '1px solid var(--rule)',
                   }}
                 >
                   <input
@@ -303,12 +272,12 @@ export default function PlayerSelectPage() {
                     placeholder="Nyt spillernavn"
                     style={{
                       flex: 1,
-                      background: '#F5F1EB',
-                      border: '1px solid #D8B888',
+                      background: 'var(--limestone)',
+                      border: '1px solid var(--rule)',
                       padding: '8px 12px',
                       fontFamily: 'inherit',
                       fontSize: '1rem',
-                      color: '#2A0A06',
+                      color: 'var(--ink)',
                       outline: 'none',
                     }}
                   />
@@ -317,8 +286,8 @@ export default function PlayerSelectPage() {
                     disabled={adding || !newName.trim()}
                     className="smallcaps"
                     style={{
-                      background: '#C8381A',
-                      color: '#F0EAD6',
+                      background: 'var(--cobalt)',
+                      color: 'var(--limestone)',
                       border: 'none',
                       padding: '8px 16px',
                       cursor: 'pointer',
@@ -345,8 +314,8 @@ export default function PlayerSelectPage() {
               padding: '16px 24px',
               background: 'transparent',
               border: 'none',
-              borderTop: gameStarted ? '1px solid #D8B888' : 'none',
-              borderBottom: '1px solid #D8B888',
+              borderTop: gameStarted ? '1px solid var(--rule)' : 'none',
+              borderBottom: '1px solid var(--rule)',
               cursor: 'pointer',
             }}
           >
@@ -357,13 +326,7 @@ export default function PlayerSelectPage() {
           </button>
 
           {rulesOpen && (
-            <div
-              style={{
-                padding: '20px 24px',
-                borderBottom: '1px solid #D8B888',
-                background: '#FEFDFB',
-              }}
-            >
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--rule)', background: 'var(--limestone-light)' }}>
               <Rules compact />
             </div>
           )}

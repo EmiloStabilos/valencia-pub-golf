@@ -9,34 +9,38 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Surfaces — Mediterranean limestone
-        'parchment':       '#F5F1EB',
-        'parchment-light': '#FEFDFB',
-        'parchment-dark':  '#E8E2D8',
+        // Surfaces — reference CSS vars so retheme = edit :root only
+        'parchment':       'var(--limestone)',
+        'parchment-light': 'var(--limestone-light)',
+        'parchment-dark':  'rgb(var(--limestone-dark-rgb) / <alpha-value>)',
 
-        // Primary accents
-        'terracotta':      '#C8381A',
-        'terracotta-dark': '#9E2A10',
-        'terracotta-light':'#E8714A',
-        'cobalt':          '#1A3A7A',
-        'cobalt-soft':     '#2B5BA8',
-        'gold':            '#E8A020',
-        'gold-soft':       '#F5C860',
-        'sangria':         '#8B1A3A',
+        // Primary brand
+        'cobalt':          'var(--cobalt)',
+        'cobalt-soft':     'var(--cobalt-soft)',
+
+        // Accents
+        'gold':            'rgb(var(--gold-rgb) / <alpha-value>)',
+        'gold-soft':       'var(--gold-soft)',
+        'sangria':         'var(--sangria)',
         'sun':             '#F5C518',
 
+        // Terracotta
+        'terracotta':      'var(--terracotta)',
+        'terracotta-dark': 'var(--terracotta-dark)',
+        'terracotta-light':'#E8714A',
+
         // Score / status
-        'olive':           '#3A6820',
-        'wine':            '#8B1A1A',
+        'olive':           'rgb(var(--olive-rgb) / <alpha-value>)',
+        'wine':            'rgb(var(--wine-rgb) / <alpha-value>)',
 
         // Ink hierarchy
-        'ink':             '#2A0A06',
-        'ink-secondary':   '#5A2010',
-        'ink-muted':       '#8A5030',
-        'ink-faint':       '#C0906A',
+        'ink':             'rgb(var(--ink-rgb) / <alpha-value>)',
+        'ink-secondary':   'var(--ink-secondary)',
+        'ink-muted':       'var(--ink-muted)',
+        'ink-faint':       'var(--ink-faint)',
 
-        // Rules
-        'rule':            '#D8B888',
+        // Rules / borders
+        'rule':            'rgb(var(--rule-rgb) / <alpha-value>)',
 
         // Valencia orange
         'orange':          '#E86A10',

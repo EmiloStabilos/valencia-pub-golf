@@ -29,13 +29,9 @@ export default function RouteStrip({ holes, currentHoleId, onClick }: Props) {
               width: isCurrent ? 10 : 6,
               height: isCurrent ? 10 : 6,
               borderRadius: '50%',
-              background: isCurrent || isPast ? '#C8381A' : 'transparent',
-              border: isCurrent
-                ? 'none'
-                : isPast
-                ? 'none'
-                : '1.5px solid rgba(245,241,235,0.35)',
-              boxShadow: isCurrent ? '0 0 0 3px rgba(200,56,26,0.18)' : 'none',
+              background: isCurrent || isPast ? 'var(--gold)' : 'transparent',
+              border: isCurrent || isPast ? 'none' : '1.5px solid rgba(245,241,235,0.35)',
+              boxShadow: isCurrent ? '0 0 0 3px rgb(var(--gold-rgb) / 0.25)' : 'none',
               opacity: isPast ? 0.8 : 1,
               flexShrink: 0,
               transition: 'background 0.3s',

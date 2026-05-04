@@ -62,29 +62,35 @@ export default function ScoringPhase({ hole, scores, players, allScores, holes, 
         {hole.is_practice && (
           <p
             className="font-sans italic text-ink-muted text-center"
-            style={{ fontSize: '0.9rem', padding: '10px 0', borderTop: '1px solid #D8B888', borderBottom: '1px solid #D8B888', marginBottom: 12 }}
+            style={{
+              fontSize: '0.9rem',
+              padding: '10px 0',
+              borderTop: '1px solid var(--rule)',
+              borderBottom: '1px solid var(--rule)',
+              marginBottom: 12,
+            }}
           >
             Prøverunde — point tæller ikke
           </p>
         )}
 
-        <div style={{ borderTop: '1px solid #D8B888' }}>
+        <div style={{ borderTop: '1px solid var(--rule)' }}>
           {sorted.map(({ player, score, base, distancePenalty, commitmentPenalty, total }, i) => {
             const totalPenalty = distancePenalty + commitmentPenalty
             const scoreColor =
-              totalPenalty === 0 ? '#3A6820' : totalPenalty >= 4 ? '#8B1A1A' : '#2A0A06'
+              totalPenalty === 0 ? 'var(--olive)' : totalPenalty >= 4 ? 'var(--wine)' : 'var(--ink)'
             return (
               <div
                 key={player.id}
                 className="flex items-center justify-between"
-                style={{ padding: '14px 0', borderBottom: '1px solid #D8B888' }}
+                style={{ padding: '14px 0', borderBottom: '1px solid var(--rule)' }}
               >
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', width: 20, letterSpacing: '0.1em' }}>
                     {i + 1}
                   </span>
                   <div>
-                    <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.05rem', color: '#2A0A06' }}>
+                    <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.05rem', color: 'var(--ink)' }}>
                       {player.name}
                     </p>
                     {score?.penalty_shot && (
@@ -115,19 +121,19 @@ export default function ScoringPhase({ hole, scores, players, allScores, holes, 
       {!hole.is_practice && (
         <section>
           <p className="smallcaps" style={{ marginBottom: 10 }}>Total standings</p>
-          <div style={{ borderTop: '1px solid #D8B888' }}>
+          <div style={{ borderTop: '1px solid var(--rule)' }}>
             {leaderboard.map((entry, i) => (
               <div
                 key={entry.player.id}
                 className="flex items-center justify-between"
-                style={{ padding: '14px 0', borderBottom: '1px solid #D8B888' }}
+                style={{ padding: '14px 0', borderBottom: '1px solid var(--rule)' }}
               >
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', width: 20, letterSpacing: '0.1em' }}>
                     {i + 1}
                   </span>
                   <div>
-                    <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.05rem', color: '#2A0A06' }}>
+                    <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.05rem', color: 'var(--ink)' }}>
                       {entry.player.name}
                     </p>
                     {(entry.penaltyShots > 0 || entry.commitmentFails > 0) && (
@@ -139,7 +145,7 @@ export default function ScoringPhase({ hole, scores, players, allScores, holes, 
                     )}
                   </div>
                 </div>
-                <span className="font-serif" style={{ fontWeight: 700, fontSize: '1.6rem', color: '#2A0A06' }}>
+                <span className="font-serif" style={{ fontWeight: 700, fontSize: '1.6rem', color: 'var(--ink)' }}>
                   {entry.total}
                 </span>
               </div>

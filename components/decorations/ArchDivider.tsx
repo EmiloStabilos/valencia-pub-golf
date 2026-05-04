@@ -3,7 +3,10 @@ interface Props {
   bg?: string
 }
 
-export default function ArchDivider({ color = 'rgba(26,74,122,0.4)', bg = '#F5F1EB' }: Props) {
+export default function ArchDivider({
+  color = 'rgb(var(--cobalt-rgb) / 0.4)',
+  bg = 'var(--limestone)',
+}: Props) {
   const xValues = [0, 65, 130, 195, 260, 325]
   return (
     <svg
@@ -15,12 +18,10 @@ export default function ArchDivider({ color = 'rgba(26,74,122,0.4)', bg = '#F5F1
         <path
           key={i}
           d={`M${x} 20 Q${x + 32.5} 0 ${x + 65} 20`}
-          fill={bg}
-          stroke={color}
-          strokeWidth="0.8"
+          style={{ fill: bg, stroke: color, strokeWidth: 0.8 }}
         />
       ))}
-      <line x1="0" y1="20" x2="390" y2="20" stroke={color} strokeWidth="0.8" />
+      <line x1="0" y1="20" x2="390" y2="20" style={{ stroke: color, strokeWidth: 0.8 }} />
     </svg>
   )
 }

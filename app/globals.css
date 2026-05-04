@@ -4,6 +4,55 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS — edit here to retheme the entire app
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* Brand */
+  --cobalt:              #1A3A7A;
+  --cobalt-soft:         #2B5BA8;
+  --cobalt-deep:         #0E2050;
+
+  /* Surfaces */
+  --limestone:           #F5F1EB;
+  --limestone-light:     #FEFDFB;
+  --limestone-dark:      #E8E2D8;
+  --limestone-stepper:   #EDF0F5;
+
+  /* Accents */
+  --gold:                #E8A020;
+  --gold-soft:           #F5C860;
+  --terracotta:          #C8381A;
+  --terracotta-dark:     #9E2A10;
+  --sangria:             #8B1A3A;
+
+  /* Status */
+  --olive:               #3A6820;
+  --olive-dark:          #254510;
+  --wine:                #8B1A1A;
+  --wine-dark:           #5A0A0A;
+
+  /* Ink */
+  --ink:                 #2A0A06;
+  --ink-secondary:       #5A2010;
+  --ink-muted:           #8A5030;
+  --ink-faint:           #C0906A;
+
+  /* Rule / border — cool blue-stone replaces warm tan */
+  --rule:                #C0C8D8;
+
+  /* RGB channels — required for Tailwind opacity modifiers (bg-gold/30 etc.) */
+  --cobalt-rgb:          26 58 122;
+  --gold-rgb:            232 160 32;
+  --rule-rgb:            192 200 216;
+  --olive-rgb:           58 104 32;
+  --wine-rgb:            139 26 26;
+  --ink-rgb:             42 10 6;
+  --limestone-rgb:       245 241 235;
+  --limestone-dark-rgb:  232 226 216;
+  --limestone-light-rgb: 254 253 251;
+}
+
 @layer base {
   html {
     font-size: 17px;
@@ -11,8 +60,8 @@
   }
 
   body {
-    background-color: #F5F1EB;
-    color: #2A0A06;
+    background-color: var(--limestone);
+    color: var(--ink);
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 400;
     min-height: 100vh;
@@ -24,8 +73,8 @@
   }
 
   ::selection {
-    background-color: #E8A020;
-    color: #F5F1EB;
+    background-color: var(--gold);
+    color: var(--limestone);
   }
 }
 
@@ -63,7 +112,7 @@
   .gold-rule {
     width: 36px;
     height: 1px;
-    background-color: #E8A020;
+    background-color: var(--gold);
     margin: 14px auto;
     opacity: 0.7;
   }
@@ -71,14 +120,14 @@
   .gold-rule-wide {
     width: 60px;
     height: 1px;
-    background-color: #E8A020;
+    background-color: var(--gold);
     margin: 14px auto;
     opacity: 0.7;
   }
 
   /* Hairline divider */
   .rule-row {
-    border-top: 1px solid #D8B888;
+    border-top: 1px solid var(--rule);
   }
 
   /* Tile border — repeating azulejo strip */
@@ -86,12 +135,12 @@
     height: 10px;
     background: repeating-linear-gradient(
       90deg,
-      #1A3A7A 0px,  #1A3A7A 10px,
-      #F5F1EB 10px, #F5F1EB 20px,
-      #C8381A 20px, #C8381A 30px,
-      #F5F1EB 30px, #F5F1EB 40px,
-      #E8A020 40px, #E8A020 50px,
-      #F5F1EB 50px, #F5F1EB 60px
+      var(--cobalt)     0px,  var(--cobalt)     10px,
+      var(--limestone)  10px, var(--limestone)  20px,
+      var(--terracotta) 20px, var(--terracotta) 30px,
+      var(--limestone)  30px, var(--limestone)  40px,
+      var(--gold)       40px, var(--gold)       50px,
+      var(--limestone)  50px, var(--limestone)  60px
     );
   }
 
@@ -99,33 +148,35 @@
     height: 5px;
     background: repeating-linear-gradient(
       90deg,
-      #1A3A7A 0px,  #1A3A7A 10px,
-      #F5F1EB 10px, #F5F1EB 20px,
-      #C8381A 20px, #C8381A 30px,
-      #F5F1EB 30px, #F5F1EB 40px,
-      #E8A020 40px, #E8A020 50px,
-      #F5F1EB 50px, #F5F1EB 60px
+      var(--cobalt)     0px,  var(--cobalt)     10px,
+      var(--limestone)  10px, var(--limestone)  20px,
+      var(--terracotta) 20px, var(--terracotta) 30px,
+      var(--limestone)  30px, var(--limestone)  40px,
+      var(--gold)       40px, var(--gold)       50px,
+      var(--limestone)  50px, var(--limestone)  60px
     );
   }
 
-  /* Azulejo background — cobalt with geometric tile SVG */
+  /* Azulejo background — cobalt with geometric tile SVG.
+     Note: CSS vars cannot be used inside SVG data URIs, so the SVG
+     keeps hardcoded hex values. Only background-color uses the var. */
   .azulejo-bg {
-    background-color: #1A3A7A;
+    background-color: var(--cobalt);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%231A3A7A'/%3E%3Crect x='2' y='2' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='2' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='2' y='26' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='26' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='%23E8A020' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='36' r='4' fill='none' stroke='%23E8A020' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='12' r='4' fill='none' stroke='%23C8381A' stroke-width='0.8' opacity='0.3'/%3E%3Ccircle cx='12' cy='36' r='4' fill='none' stroke='%23C8381A' stroke-width='0.8' opacity='0.3'/%3E%3Cpath d='M24 2 L24 46 M2 24 L46 24' stroke='%23F5F1EB' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
   }
 
-  /* Primary CTA — sangria */
+  /* Primary CTA — cobalt */
   .btn-primary {
     @apply w-full flex items-center justify-center font-label uppercase disabled:opacity-40 transition-all;
     height: 58px;
-    background: #8B1A3A;
-    color: #FEFDFB;
+    background: var(--cobalt);
+    color: var(--limestone-light);
     font-size: 0.72rem;
     letter-spacing: 0.22em;
-    box-shadow: 0 3px 0 #5A0A1E;
+    box-shadow: 0 3px 0 var(--cobalt-deep);
   }
   .btn-primary:active:not(:disabled) {
-    background: #6A1028;
+    background: var(--cobalt-soft);
     box-shadow: none;
     transform: translateY(2px);
   }
@@ -134,24 +185,24 @@
   .btn-ghost {
     @apply w-full flex items-center justify-center font-label uppercase bg-transparent transition-all disabled:opacity-40;
     height: 58px;
-    color: #2A0A06;
+    color: var(--ink);
     font-size: 0.72rem;
     letter-spacing: 0.22em;
-    border: 1.5px solid #D8B888;
+    border: 1.5px solid var(--rule);
   }
   .btn-ghost:active:not(:disabled) {
-    background: rgba(216,184,136,0.12);
+    background: rgb(var(--cobalt-rgb) / 0.07);
   }
 
   /* Success — olive */
   .btn-success {
     @apply w-full flex items-center justify-center font-label uppercase disabled:opacity-40 transition-all;
     height: 58px;
-    background: #3A6820;
-    color: #FEFDFB;
+    background: var(--olive);
+    color: var(--limestone-light);
     font-size: 0.72rem;
     letter-spacing: 0.22em;
-    box-shadow: 0 3px 0 #254510;
+    box-shadow: 0 3px 0 var(--olive-dark);
   }
   .btn-success:active:not(:disabled) {
     box-shadow: none;
@@ -162,11 +213,11 @@
   .btn-danger {
     @apply w-full flex items-center justify-center font-label uppercase disabled:opacity-40 transition-all;
     height: 58px;
-    background: #8B1A1A;
-    color: #FEFDFB;
+    background: var(--wine);
+    color: var(--limestone-light);
     font-size: 0.72rem;
     letter-spacing: 0.22em;
-    box-shadow: 0 3px 0 #5A0A0A;
+    box-shadow: 0 3px 0 var(--wine-dark);
   }
   .btn-danger:active:not(:disabled) {
     box-shadow: none;
@@ -178,19 +229,19 @@
     @apply flex items-center justify-center text-ink disabled:opacity-30 disabled:cursor-not-allowed transition-colors;
     width: 64px;
     height: 96px;
-    background: #E8E2D8;
-    border: 1px solid #D8B888;
+    background: var(--limestone-stepper);
+    border: 1px solid var(--rule);
     font-size: 1.6rem;
     font-family: 'Playfair Display', Georgia, serif;
   }
   .stepper-btn:active:not(:disabled) {
-    background: #E8C890;
+    background: rgb(var(--cobalt-rgb) / 0.1);
   }
 
   /* Card — minimal, hairline border */
   .field-card {
-    background: #FEFDFB;
-    border: 1px solid #D8B888;
+    background: var(--limestone-light);
+    border: 1px solid var(--rule);
     padding: 20px;
   }
 
@@ -227,7 +278,7 @@
 
   .display-italic {
     @apply font-serif italic;
-    color: #F5C860;
+    color: var(--gold-soft);
     font-weight: 600;
     letter-spacing: 0.005em;
   }

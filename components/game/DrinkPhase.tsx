@@ -55,6 +55,18 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
     }
   }
 
+  const countdownBorderColor = isExpired
+    ? `rgb(var(--wine-rgb) / 0.6)`
+    : isUrgent
+    ? `rgb(var(--wine-rgb) / 0.4)`
+    : `rgb(var(--cobalt-rgb) / 0.25)`
+  const countdownBg = isExpired
+    ? `rgb(var(--wine-rgb) / 0.1)`
+    : isUrgent
+    ? `rgb(var(--wine-rgb) / 0.05)`
+    : `rgb(var(--cobalt-rgb) / 0.04)`
+  const timeColor = isExpired || isUrgent ? 'var(--wine)' : 'var(--ink)'
+
   return (
     <div className="space-y-7">
       {/* Header */}
@@ -69,22 +81,14 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
       {/* 15-min countdown */}
       <div
         className="border px-5 py-6 text-center transition-colors"
-        style={{
-          borderColor: isExpired ? 'rgba(139,26,26,0.6)' : isUrgent ? 'rgba(139,26,26,0.4)' : 'rgba(232,160,32,0.4)',
-          background: isExpired ? 'rgba(139,26,26,0.1)' : isUrgent ? 'rgba(139,26,26,0.05)' : 'rgba(232,160,32,0.05)',
-        }}
+        style={{ borderColor: countdownBorderColor, background: countdownBg }}
       >
         <p className="smallcaps" style={{ marginBottom: 4 }}>
           {isExpired ? 'Tid udløbet' : 'Tid tilbage'}
         </p>
         <p
           className="font-mono leading-none"
-          style={{
-            fontSize: '3rem',
-            fontWeight: 600,
-            letterSpacing: '0.04em',
-            color: isExpired || isUrgent ? '#8B1A1A' : '#2A0A06',
-          }}
+          style={{ fontSize: '3rem', fontWeight: 600, letterSpacing: '0.04em', color: timeColor }}
         >
           {remainingMs == null
             ? '--:--'
@@ -105,15 +109,15 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
           className="text-center fade-up-2"
           style={{
             border: wentOver
-              ? '1px solid rgba(139,26,26,0.5)'
+              ? `1px solid rgb(var(--wine-rgb) / 0.5)`
               : sipsTaken === committed && committed > 0
-              ? '1px solid rgba(232,160,32,0.5)'
-              : '1px solid #D8B888',
+              ? `1px solid rgb(var(--gold-rgb) / 0.5)`
+              : '1px solid var(--rule)',
             background: wentOver
-              ? 'rgba(139,26,26,0.05)'
+              ? `rgb(var(--wine-rgb) / 0.05)`
               : sipsTaken === committed && committed > 0
-              ? 'rgba(232,160,32,0.05)'
-              : '#FEFDFB',
+              ? `rgb(var(--gold-rgb) / 0.05)`
+              : 'var(--limestone-light)',
             padding: 16,
             transition: 'border-color 0.3s, background 0.3s',
           }}
@@ -127,12 +131,7 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
           >
             <p
               className="font-serif leading-none"
-              style={{
-                fontWeight: 900,
-                fontSize: '3rem',
-                color: wentOver ? '#8B1A1A' : '#2A0A06',
-                lineHeight: 1,
-              }}
+              style={{ fontWeight: 900, fontSize: '3rem', color: wentOver ? 'var(--wine)' : 'var(--ink)', lineHeight: 1 }}
             >
               {sipsTaken === 0 ? '·' : sipsTaken}
               <span className="font-sans italic text-ink-muted" style={{ fontSize: '1.4rem' }}> / </span>
@@ -158,18 +157,10 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
       {/* Done/fail buttons or result */}
       {!hasAnswered ? (
         <div className="fade-up-3 space-y-3">
-          <button
-            onClick={() => handleResult(true)}
-            disabled={submitting || isExpired}
-            className="btn-success"
-          >
+          <button onClick={() => handleResult(true)} disabled={submitting || isExpired} className="btn-success">
             Klarede det
           </button>
-          <button
-            onClick={() => handleResult(false)}
-            disabled={submitting || isExpired}
-            className="btn-danger"
-          >
+          <button onClick={() => handleResult(false)} disabled={submitting || isExpired} className="btn-danger">
             Fejlede (+III)
           </button>
         </div>
@@ -177,12 +168,12 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
         <div className="field-card text-center" style={{ padding: '24px 20px' }}>
           {myScore?.completed === true ? (
             <>
-              <p className="smallcaps" style={{ color: '#3A6820', marginBottom: 6 }}>Klaret</p>
+              <p className="smallcaps" style={{ color: 'var(--olive)', marginBottom: 6 }}>Klaret</p>
               <p className="font-serif italic text-ink" style={{ fontSize: '1.1rem' }}>Æren intakt.</p>
             </>
           ) : (
             <>
-              <p className="smallcaps" style={{ color: '#8B1A1A', marginBottom: 6 }}>Fejlede</p>
+              <p className="smallcaps" style={{ color: 'var(--wine)', marginBottom: 6 }}>Fejlede</p>
               <p className="font-serif italic text-ink" style={{ fontSize: '1.1rem' }}>+III strafpoint registreret.</p>
             </>
           )}
@@ -190,26 +181,23 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
       )}
 
       {/* Player status list */}
-      <div style={{ borderTop: '1px solid #D8B888' }}>
+      <div style={{ borderTop: '1px solid var(--rule)' }}>
         {players.map((player) => {
           const score = scores.find((s) => s.player_id === player.id)
           const done = score?.completed !== null && score?.completed !== undefined
           const status = !done ? 'Venter' : score?.completed ? 'Klaret' : 'Fejlede'
-          const statusColor = !done ? '#8A5030' : score?.completed ? '#3A6820' : '#8B1A1A'
+          const statusColor = !done ? 'var(--ink-muted)' : score?.completed ? 'var(--olive)' : 'var(--wine)'
           return (
             <div
               key={player.id}
               className="flex items-center justify-between"
-              style={{ padding: '12px 0', borderBottom: '1px solid #D8B888' }}
+              style={{ padding: '12px 0', borderBottom: '1px solid var(--rule)' }}
             >
               <div className="flex items-center gap-3">
-                <span
-                  className="font-mono text-ink-muted"
-                  style={{ fontSize: '0.65rem', width: 20, letterSpacing: '0.1em' }}
-                >
+                <span className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', width: 20, letterSpacing: '0.1em' }}>
                   {player.display_order}
                 </span>
-                <span className="font-serif" style={{ fontWeight: 500, fontSize: '1.05rem', color: '#2A0A06' }}>
+                <span className="font-serif" style={{ fontWeight: 500, fontSize: '1.05rem', color: 'var(--ink)' }}>
                   {player.name}
                 </span>
               </div>

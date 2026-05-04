@@ -12,7 +12,7 @@ function WaypointRow({ waypoint, currentPlayerName }: { waypoint: Waypoint; curr
       {/* Spacer in dot column to align with timeline rail */}
       <div className="flex flex-col items-center pt-2 w-2.5 shrink-0">
         <div className="w-2.5 flex justify-center">
-          <TempleMarker size={12} color="#B89A60" />
+          <TempleMarker size={12} color="var(--gold)" />
         </div>
       </div>
 
@@ -35,7 +35,7 @@ function WaypointRow({ waypoint, currentPlayerName }: { waypoint: Waypoint; curr
             onClick={(e) => e.stopPropagation()}
             className="inline-flex items-center gap-1.5 mt-2 text-ink-secondary text-sm font-sans underline underline-offset-4 decoration-gold/60 decoration-1 hover:decoration-2"
           >
-            <TempleMarker size={12} color="#B89A60" />
+            <TempleMarker size={12} color="var(--gold)" />
             Se på kort
           </a>
         )}
@@ -55,7 +55,7 @@ function MapsLink({ hole }: { hole: Hole }) {
       onClick={(e) => e.stopPropagation()}
       className="inline-flex items-center gap-1.5 mt-2 text-ink-secondary text-sm font-sans underline underline-offset-4 decoration-gold/60 decoration-1 hover:decoration-2"
     >
-      <TempleMarker size={14} color="#B89A60" />
+      <TempleMarker size={14} color="var(--gold)" />
       Google Maps
     </a>
   )

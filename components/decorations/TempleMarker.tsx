@@ -12,7 +12,7 @@ export default function TempleMarker({ size = 16, color = 'currentColor', classN
       height={size}
       viewBox="0 0 16 16"
       fill="none"
-      stroke={color}
+      style={{ stroke: color }}
       strokeWidth="1.1"
       strokeLinecap="square"
       strokeLinejoin="round"
@@ -21,7 +21,7 @@ export default function TempleMarker({ size = 16, color = 'currentColor', classN
       aria-hidden
     >
       {/* Pediment (triangle roof) */}
-      <path d="M2 6 L8 1.5 L14 6 Z" fill={color} fillOpacity="0.15" />
+      <path d="M2 6 L8 1.5 L14 6 Z" style={{ fill: color, fillOpacity: 0.15 }} />
       {/* Architrave */}
       <line x1="2.5" y1="6" x2="13.5" y2="6" />
       <line x1="2.5" y1="7" x2="13.5" y2="7" />

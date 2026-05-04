@@ -90,24 +90,24 @@ export default function RevealPhase({ hole, scores, players, onRevealComplete }:
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: 1,
-          background: '#D8B888',
-          border: '1px solid #D8B888',
+          background: 'var(--rule)',
+          border: '1px solid var(--rule)',
         }}
       >
         {revealedPlayers.map((rp, i) => {
           const isLeader = rp.position === 1 && !hole.is_practice
           const label = distanceLabel(rp.sips, avg)
           const numberColor =
-            label.tone === 'good' ? '#3A6820' : label.tone === 'bad' ? '#8B1A1A' : '#2A0A06'
+            label.tone === 'good' ? 'var(--olive)' : label.tone === 'bad' ? 'var(--wine)' : 'var(--ink)'
           const distColor =
-            label.tone === 'good' ? '#3A6820' : label.tone === 'bad' ? '#8B1A1A' : '#8A5030'
+            label.tone === 'good' ? 'var(--olive)' : label.tone === 'bad' ? 'var(--wine)' : 'var(--ink-muted)'
           return (
             <div
               key={rp.player.id}
               style={{
-                background: '#FEFDFB',
+                background: 'var(--limestone-light)',
                 padding: '16px 14px',
-                borderLeft: isLeader ? '3px solid #E8A020' : undefined,
+                borderLeft: isLeader ? '3px solid var(--gold)' : undefined,
                 opacity: revealed ? 1 : 0,
                 transition: `opacity 0.4s cubic-bezier(0.34,1.56,0.64,1)`,
                 transitionDelay: `${i * 0.08}s`,
@@ -119,7 +119,7 @@ export default function RevealPhase({ hole, scores, players, onRevealComplete }:
                 </span>
                 {isLeader && <span className="smallcaps-gold">Leader</span>}
               </div>
-              <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.05rem', color: '#2A0A06', marginBottom: 8 }}>
+              <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.05rem', color: 'var(--ink)', marginBottom: 8 }}>
                 {rp.player.name}
               </p>
               <p className="font-serif leading-none" style={{ fontWeight: 900, fontSize: '2.8rem', color: numberColor, lineHeight: 1, marginBottom: 4 }}>
@@ -132,7 +132,7 @@ export default function RevealPhase({ hole, scores, players, onRevealComplete }:
       </div>
 
       {/* Average row */}
-      <div className="flex items-center justify-between py-3" style={{ borderTop: '1px solid #D8B888', borderBottom: '1px solid #D8B888' }}>
+      <div className="flex items-center justify-between py-3" style={{ borderTop: '1px solid var(--rule)', borderBottom: '1px solid var(--rule)' }}>
         <span className="smallcaps">Gennemsnit</span>
         <span className="font-mono text-ink" style={{ fontSize: '1.1rem', fontWeight: 600, letterSpacing: '0.05em' }}>
           {avg.toFixed(1)} slurke
@@ -141,7 +141,7 @@ export default function RevealPhase({ hole, scores, players, onRevealComplete }:
 
       {/* Penalty shots */}
       {committed.some((s) => s.penalty_shot) && (
-        <div style={{ borderLeft: '3px solid #8B1A1A', paddingLeft: 16, paddingTop: 8, paddingBottom: 8 }}>
+        <div style={{ borderLeft: '3px solid var(--wine)', paddingLeft: 16, paddingTop: 8, paddingBottom: 8 }}>
           <p className="smallcaps text-wine" style={{ marginBottom: 8 }}>Straf-shots</p>
           {committed
             .filter((s) => s.penalty_shot)

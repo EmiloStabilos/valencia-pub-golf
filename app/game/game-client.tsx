@@ -74,47 +74,28 @@ export default function GamePage() {
   useEffect(() => {
     const channel = supabase
       .channel('game-realtime')
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'scores' },
-        (payload) => {
-          setScores((prev) => [...prev, payload.new as Score])
-        }
-      )
-      .on(
-        'postgres_changes',
-        { event: 'UPDATE', schema: 'public', table: 'scores' },
-        (payload) => {
-          setScores((prev) =>
-            prev.map((s) => (s.id === (payload.new as Score).id ? (payload.new as Score) : s))
-          )
-        }
-      )
-      .on(
-        'postgres_changes',
-        { event: 'UPDATE', schema: 'public', table: 'game_state' },
-        (payload) => {
-          setGameState(payload.new as GameState)
-        }
-      )
-      .on(
-        'postgres_changes',
-        { event: 'UPDATE', schema: 'public', table: 'holes' },
-        (payload) => {
-          setHoles((prev) =>
-            prev.map((h) => (h.id === (payload.new as Hole).id ? (payload.new as Hole) : h))
-          )
-        }
-      )
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'scores' }, (payload) => {
+        setScores((prev) => [...prev, payload.new as Score])
+      })
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'scores' }, (payload) => {
+        setScores((prev) =>
+          prev.map((s) => (s.id === (payload.new as Score).id ? (payload.new as Score) : s))
+        )
+      })
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'game_state' }, (payload) => {
+        setGameState(payload.new as GameState)
+      })
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'holes' }, (payload) => {
+        setHoles((prev) =>
+          prev.map((h) => (h.id === (payload.new as Hole).id ? (payload.new as Hole) : h))
+        )
+      })
       .subscribe()
 
-    return () => {
-      supabase.removeChannel(channel)
-    }
+    return () => { supabase.removeChannel(channel) }
   }, [])
 
-  // Auto-transition: committing → reveal (when all players committed)
-  // Also sets the 15-min drink timer so it starts running from commit time.
+  // Auto-transition: committing → reveal when all players committed
   useEffect(() => {
     if (!gameState || gameState.phase !== 'committing') return
     const committedThisHole = scores.filter(
@@ -131,7 +112,7 @@ export default function GamePage() {
     }
   }, [scores, gameState])
 
-  // Auto-transition: drinking → scoring when all answered OR 15-min timer expires.
+  // Auto-transition: drinking → scoring when all answered
   useEffect(() => {
     if (!gameState || gameState.phase !== 'drinking') return
     const answeredThisHole = scores.filter(
@@ -147,24 +128,16 @@ export default function GamePage() {
     }
   }, [scores, gameState])
 
-  // Auto-fail anyone who hasn't answered when the 15-min deadline expires,
-  // then advance to scoring. Idempotent: .is('completed', null) guard.
+  // Auto-fail anyone who hasn't answered when 15-min deadline expires
   useEffect(() => {
     if (!gameState || gameState.phase !== 'drinking' || !gameState.drink_deadline_at) return
     const deadline = new Date(gameState.drink_deadline_at).getTime()
     const currentHole = gameState.current_hole
     function expireSlackers() {
       if (Date.now() < deadline) return
-      const stillNull = scores.filter(
-        (s) => s.hole_id === currentHole && s.completed === null
-      )
+      const stillNull = scores.filter((s) => s.hole_id === currentHole && s.completed === null)
       for (const s of stillNull) {
-        supabase
-          .from('scores')
-          .update({ completed: false })
-          .eq('id', s.id)
-          .is('completed', null)
-          .then()
+        supabase.from('scores').update({ completed: false }).eq('id', s.id).is('completed', null).then()
       }
     }
     expireSlackers()
@@ -188,7 +161,7 @@ export default function GamePage() {
         hole_id: gameState.current_hole,
         committed_sips: sips,
         penalty_shot: reasons.length > 0,
-        penalty_shot_reason: reasons[0] ?? null, // primary reason for backward compat
+        penalty_shot_reason: reasons[0] ?? null,
         penalty_shot_reasons: reasons,
       })
     },
@@ -196,12 +169,7 @@ export default function GamePage() {
   )
 
   const handleRevealComplete = useCallback(async () => {
-    // Timer was already set when everyone committed — just advance the phase.
-    await supabase
-      .from('game_state')
-      .update({ phase: 'drinking' })
-      .eq('id', 1)
-      .eq('phase', 'reveal')
+    await supabase.from('game_state').update({ phase: 'drinking' }).eq('id', 1).eq('phase', 'reveal')
   }, [])
 
   const handleDrinkResult = useCallback(
@@ -219,11 +187,10 @@ export default function GamePage() {
 
   const handleNextHole = useCallback(async () => {
     if (!gameState || holes.length === 0) return
-    // Find next existing hole id (handles gaps + added stops dynamically)
     const sortedIds = holes.map((h) => h.id).sort((a, b) => a - b)
     const idx = sortedIds.indexOf(gameState.current_hole)
     const nextHole = sortedIds[idx + 1]
-    if (nextHole == null) return // No more holes — game over
+    if (nextHole == null) return
     await supabase
       .from('game_state')
       .update({ current_hole: nextHole, phase: 'committing', drink_deadline_at: null })
@@ -236,7 +203,6 @@ export default function GamePage() {
     router.push('/')
   }, [router])
 
-  // Loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-parchment flex flex-col items-center justify-center gap-4">
@@ -250,9 +216,7 @@ export default function GamePage() {
     return (
       <div className="min-h-screen bg-parchment flex flex-col items-center justify-center gap-4 px-6">
         <p className="font-serif italic text-wine text-lg text-center">{error ?? 'Noget gik galt'}</p>
-        <button onClick={() => router.push('/')} className="btn-ghost w-auto px-6">
-          Tilbage
-        </button>
+        <button onClick={() => router.push('/')} className="btn-ghost w-auto px-6">Tilbage</button>
       </div>
     )
   }
@@ -263,14 +227,12 @@ export default function GamePage() {
   const myCurrentScore = currentHoleScores.find((s) => s.player_id === currentPlayer.id)
   const canSwitchPlayer = !myCurrentScore || myCurrentScore.committed_sips == null
 
-  // Sorted hole ids — handles non-contiguous IDs (added/removed stops)
   const sortedHoleIds = holes.map((h) => h.id).sort((a, b) => a - b)
   const totalHoles = sortedHoleIds.length
   const lastHoleId = sortedHoleIds[sortedHoleIds.length - 1]
   const currentHolePosition = sortedHoleIds.indexOf(gameState.current_hole) + 1
   const isLastHole = gameState.current_hole === lastHoleId
 
-  // Defensive: if current hole was deleted from DB, show error
   if (!currentHole) {
     return (
       <div className="min-h-screen bg-parchment flex flex-col items-center justify-center gap-4 px-6">
@@ -281,7 +243,6 @@ export default function GamePage() {
     )
   }
 
-  // Final scoreboard — when on the last hole's scoring phase
   if (gameState.phase === 'scoring' && isLastHole) {
     return (
       <FinalScoreboard
@@ -298,67 +259,56 @@ export default function GamePage() {
       {/* Sticky header — cobalt brand bar */}
       <header
         className="sticky top-0 z-40 backdrop-blur-sm"
-        style={{ background: 'rgba(26,58,122,0.97)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
+        style={{ background: 'rgb(var(--cobalt-rgb) / 0.97)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
       >
         <div className="max-w-md mx-auto flex items-center justify-between px-5 gap-2" style={{ padding: '10px 20px' }}>
           {canSwitchPlayer ? (
-            <button
-              onClick={handleSwitchPlayer}
-              className="flex items-center gap-1.5 min-w-0"
-              aria-label="Skift spiller"
-            >
-              <span className="font-sans" style={{ fontSize: '0.9rem', color: 'rgba(245,241,235,0.5)' }}>‹</span>
-              <span className="font-serif truncate" style={{ fontWeight: 600, fontSize: '1.05rem', color: '#F5F1EB' }}>
+            <button onClick={handleSwitchPlayer} className="flex items-center gap-1.5 min-w-0" aria-label="Skift spiller">
+              <span className="font-sans" style={{ fontSize: '0.9rem', color: 'rgb(var(--limestone-rgb) / 0.5)' }}>‹</span>
+              <span className="font-serif truncate" style={{ fontWeight: 600, fontSize: '1.05rem', color: 'var(--limestone)' }}>
                 {currentPlayer.name}
               </span>
             </button>
           ) : (
-            <span className="font-serif truncate min-w-0" style={{ fontWeight: 600, fontSize: '1.05rem', color: '#F5F1EB' }}>
+            <span className="font-serif truncate min-w-0" style={{ fontWeight: 600, fontSize: '1.05rem', color: 'var(--limestone)' }}>
               {currentPlayer.name}
             </span>
           )}
 
           <div className="text-center flex-shrink-0">
-            <p className="smallcaps" style={{ color: 'rgba(245,241,235,0.7)' }}>
+            <p className="smallcaps" style={{ color: 'rgb(var(--limestone-rgb) / 0.7)' }}>
               Stop {currentHolePosition}
-              <span style={{ color: '#E8A020' }}> · </span>
+              <span style={{ color: 'var(--gold)' }}> · </span>
               {totalHoles}
             </p>
           </div>
 
-          {/* Arch icon */}
+          {/* Arch icon — uses currentColor so it inherits the CSS var */}
           <button
             onClick={() => setShowInfo(true)}
             className="flex items-center justify-center"
             aria-label="Vis info"
             style={{ width: 30, display: 'flex', justifyContent: 'flex-end' }}
           >
-            <svg viewBox="0 0 24 24" width={22} height={22} fill="none">
-              <path d="M4 20 L4 10 Q4 4 12 4 Q20 4 20 10 L20 20" stroke="#F5F1EB" strokeWidth="1.5" />
-              <line x1="2" y1="20" x2="22" y2="20" stroke="#F5F1EB" strokeWidth="1.5" />
-              <line x1="8" y1="20" x2="8" y2="14" stroke="#F5F1EB" strokeWidth="1" />
-              <line x1="16" y1="20" x2="16" y2="14" stroke="#F5F1EB" strokeWidth="1" />
+            <svg viewBox="0 0 24 24" width={22} height={22} fill="none" style={{ color: 'var(--limestone)' }}>
+              <path d="M4 20 L4 10 Q4 4 12 4 Q20 4 20 10 L20 20" stroke="currentColor" strokeWidth="1.5" />
+              <line x1="2" y1="20" x2="22" y2="20" stroke="currentColor" strokeWidth="1.5" />
+              <line x1="8" y1="20" x2="8" y2="14" stroke="currentColor" strokeWidth="1" />
+              <line x1="16" y1="20" x2="16" y2="14" stroke="currentColor" strokeWidth="1" />
             </svg>
           </button>
         </div>
 
-        {/* Route progress strip — tap to open timeline */}
+        {/* Route progress strip */}
         <div className="max-w-md mx-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-          <RouteStrip
-            holes={holes}
-            currentHoleId={gameState.current_hole}
-            onClick={() => setShowRoute(true)}
-          />
+          <RouteStrip holes={holes} currentHoleId={gameState.current_hole} onClick={() => setShowRoute(true)} />
         </div>
       </header>
 
-      {/* Main content */}
       <main className="max-w-md mx-auto px-4 py-5 pb-10">
         {gameState.phase === 'committing' && (() => {
           const prevHoleId = sortedHoleIds[sortedHoleIds.indexOf(gameState.current_hole) - 1]
-          const myPrev = scores.find(
-            (s) => s.player_id === currentPlayer.id && s.hole_id === prevHoleId
-          )
+          const myPrev = scores.find((s) => s.player_id === currentPlayer.id && s.hole_id === prevHoleId)
           return (
             <CommitPhase
               hole={currentHole}
@@ -405,7 +355,6 @@ export default function GamePage() {
         )}
       </main>
 
-      {/* Info sheet — Stilling | Historik | Regler */}
       {showInfo && (
         <InfoSheet
           players={activePlayers}
@@ -417,7 +366,6 @@ export default function GamePage() {
         />
       )}
 
-      {/* Route timeline overlay */}
       {showRoute && (
         <RouteTimeline
           holes={holes}

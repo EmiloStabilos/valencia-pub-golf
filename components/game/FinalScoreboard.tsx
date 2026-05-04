@@ -31,12 +31,9 @@ export default function FinalScoreboard({ players, scores, holes, currentPlayer 
   return (
     <div className="min-h-screen bg-parchment">
       {/* Cobalt hero */}
-      <div
-        className="azulejo-bg"
-        style={{ padding: '40px 24px 32px', position: 'relative', overflow: 'hidden' }}
-      >
+      <div className="azulejo-bg" style={{ padding: '40px 24px 32px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
-          <p className="smallcaps" style={{ color: 'rgba(240,234,214,0.6)', marginBottom: 20 }}>
+          <p className="smallcaps" style={{ color: 'rgb(var(--limestone-rgb) / 0.6)', marginBottom: 20 }}>
             Final · {date}
           </p>
 
@@ -49,7 +46,7 @@ export default function FinalScoreboard({ players, scores, holes, currentPlayer 
             <path
               d="M20 100 L20 50 Q20 5 100 5 Q180 5 180 50 L180 100"
               fill="none"
-              stroke="#F0EAD6"
+              stroke="var(--limestone)"
               strokeWidth="2"
             />
           </svg>
@@ -61,17 +58,14 @@ export default function FinalScoreboard({ players, scores, holes, currentPlayer 
               style={{
                 fontWeight: 900,
                 fontSize: '3rem',
-                color: '#F0EAD6',
+                color: 'var(--limestone)',
                 lineHeight: 1,
                 textShadow: '0 2px 12px rgba(0,0,0,0.3)',
               }}
             >
               {winner?.player.name ?? ''}
             </p>
-            <p
-              className="smallcaps"
-              style={{ marginTop: 10, color: '#F5C860', letterSpacing: '0.22em' }}
-            >
+            <p className="smallcaps" style={{ marginTop: 10, color: 'var(--gold-soft)', letterSpacing: '0.22em' }}>
               Winner · {winner?.total ?? 0} points
             </p>
           </div>
@@ -79,31 +73,31 @@ export default function FinalScoreboard({ players, scores, holes, currentPlayer 
       </div>
 
       {/* Arch divider */}
-      <ArchDivider color="rgba(26,74,122,0.35)" bg="#F5F1EB" />
+      <ArchDivider />
 
       <div style={{ padding: '16px 24px 32px' }}>
         {/* Title */}
-        <h1 className="font-serif" style={{ fontWeight: 900, fontSize: '2.6rem', color: '#2A0A06', lineHeight: 1, marginBottom: 2 }}>
+        <h1 className="font-serif" style={{ fontWeight: 900, fontSize: '2.6rem', color: 'var(--ink)', lineHeight: 1, marginBottom: 2 }}>
           The route
         </h1>
-        <h1 className="font-serif italic" style={{ fontWeight: 900, fontSize: '2.6rem', color: '#C8381A', lineHeight: 1, marginBottom: 24 }}>
+        <h1 className="font-serif italic" style={{ fontWeight: 900, fontSize: '2.6rem', color: 'var(--terracotta)', lineHeight: 1, marginBottom: 24 }}>
           is complete.
         </h1>
 
         {/* Leaderboard */}
-        <div style={{ borderTop: '1px solid #D8B888', marginBottom: 24 }}>
+        <div style={{ borderTop: '1px solid var(--rule)', marginBottom: 24 }}>
           {board.map((entry, i) => (
             <div
               key={entry.player.id}
               className="flex items-center justify-between"
-              style={{ padding: '16px 0', borderBottom: '1px solid #D8B888' }}
+              style={{ padding: '16px 0', borderBottom: '1px solid var(--rule)' }}
             >
               <div className="flex items-center gap-3">
                 <span className="font-mono text-ink-muted" style={{ fontSize: '0.65rem', width: 20 }}>
                   {i + 1}
                 </span>
                 <div>
-                  <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.2rem', color: '#2A0A06' }}>
+                  <p className="font-serif" style={{ fontWeight: 600, fontSize: '1.2rem', color: 'var(--ink)' }}>
                     {entry.player.name}
                     {entry.player.id === currentPlayer.id && (
                       <span className="font-sans italic text-ink-muted" style={{ fontSize: '0.9rem', marginLeft: 8 }}>
@@ -118,7 +112,7 @@ export default function FinalScoreboard({ players, scores, holes, currentPlayer 
                   </p>
                 </div>
               </div>
-              <span className="font-serif" style={{ fontWeight: 900, fontSize: '2rem', color: '#2A0A06' }}>
+              <span className="font-serif" style={{ fontWeight: 900, fontSize: '2rem', color: 'var(--ink)' }}>
                 {entry.total}
               </span>
             </div>
@@ -130,7 +124,7 @@ export default function FinalScoreboard({ players, scores, holes, currentPlayer 
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr 1fr',
-            border: '1px solid #D8B888',
+            border: '1px solid var(--rule)',
             marginBottom: 24,
           }}
         >
@@ -144,11 +138,11 @@ export default function FinalScoreboard({ players, scores, holes, currentPlayer 
               style={{
                 padding: '16px 8px',
                 textAlign: 'center',
-                borderRight: i < 2 ? '1px solid #D8B888' : 'none',
+                borderRight: i < 2 ? '1px solid var(--rule)' : 'none',
               }}
             >
               <p className="smallcaps" style={{ marginBottom: 6 }}>{stat.label}</p>
-              <p className="font-serif" style={{ fontWeight: 700, fontSize: '1.5rem', color: '#2A0A06', lineHeight: 1 }}>
+              <p className="font-serif" style={{ fontWeight: 700, fontSize: '1.5rem', color: 'var(--ink)', lineHeight: 1 }}>
                 {stat.value}
               </p>
             </div>
