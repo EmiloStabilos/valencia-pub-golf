@@ -2,7 +2,7 @@
 
 9 stop · 4 spillere · 1 dag i Valencia.
 
-Real-time multiplayer pub-golf med hemmelige commits, distance-baseret scoring, og frokost + middag undervejs.
+Real-time multiplayer pub-golf med hemmelige meldte antal slurke, distance-baseret scoring, og frokost + middag undervejs.
 
 Tilpasset fra [lukashoerup/athens-pub-golf](https://github.com/lukashoerup/athens-pub-golf).
 
@@ -13,14 +13,11 @@ Tilpasset fra [lukashoerup/athens-pub-golf](https://github.com/lukashoerup/athen
 | Hvad | URL / ID |
 |---|---|
 | **Live app** (deles med spillere) | https://valencia-pub-golf-app.vercel.app ← opdater efter deploy |
-| **Supabase SQL Editor** | https://supabase.com/dashboard/project/\<your-project-id\>/sql/new |
-| **Supabase project ID** | `<your-project-id>` — udfyld efter setup |
+| **Supabase SQL Editor** | https://supabase.com/dashboard/project/fiucpbakevqzytbphghy/sql/new |
+| **Supabase project ID** | fiucpbakevqzytbphghy |
 | **Vercel project** | `valencia-pub-golf-app` |
-| **GitHub** | `<your-github-username>/valencia-pub-golf` |
+| **GitHub** | https://github.com/EmiloStabilos/valencia-pub-golf|
 | **Default branch** | `main` (auto-deploy til Vercel ved push) |
-
-**Spillere (4):** Emil (host), Søren, Frederik, Ruben
-
 
 
 ## Stack
@@ -40,7 +37,7 @@ Hvis noget går galt under turen:
 2. **Første besked:**
    > Læs https://raw.githubusercontent.com/\<your-github-username\>/valencia-pub-golf/main/CLAUDE.md og hjælp mig med Valencia Pub Golf-spillet.
 3. **Beskriv problemet** på dansk: *"Frederik trykkede ❌ ved en fejl på hul 4"*
-4. **Claude returnerer ready-to-paste SQL** → åbn SQL Editor → paste → Run.
+4. **Claude sender SQL kommando** til Supabase SQL Editor jf. docs/ADMIN.MD
 
 ### Bookmark inden afrejse
 
