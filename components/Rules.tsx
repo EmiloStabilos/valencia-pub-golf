@@ -139,13 +139,13 @@ export default function Rules({ compact = false }: Props) {
           <li>
             <strong>Du melder max</strong> (fx 8 på øl, 3 på shot) — straf-shot.<br />
             <em className="font-serif text-ink-muted text-sm">
-              Stop med bare at bunke. Max ændres per stop — det er altid det største mulige tal.
+              Stop med at være en pussy. Max ændres per stop — det er altid det største mulige tal.
             </em>
           </li>
           <li>
-            <strong>Du melder 1</strong> (kun ét lille nip) — straf-shot.<br />
+            <strong>Du melder 1</strong> — straf-shot.<br />
             <em className="font-serif text-ink-muted text-sm">
-              Stop med bare at nippe. Ingen low-effort taktik.
+              Stop med bare at bunde - nyd din drink. Ingen low-effort taktik.
             </em>
           </li>
           <li>
@@ -190,7 +190,7 @@ export default function Rules({ compact = false }: Props) {
       <section className="space-y-2">
         <p className="smallcaps-ink">Vinderen</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
-          Laveste totalscore efter Stop 9 vinder. Som rigtig golf handler det altså om at score lavt. Præmien gives efter sidste stop er gennemført.
+          Laveste totalscore efter Stop 9 vinder. Som rigtig golf handler det altså om at score lavt. <strong>Præmien gives efter sidste stop er gennemført</strong>.
         </p>
       </section>
     </div>
