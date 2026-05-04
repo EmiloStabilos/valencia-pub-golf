@@ -6,13 +6,13 @@ Reference for understanding *why* a score is what it is, and explaining mechanic
 
 ## The core game
 
-- **4 players, 8 stops** (stop 1 = practice walk, doesn't count)
+- **4 players, 9 stops** (stop 1 = practice round at Café de las Horas, doesn't count)
 - All players drink the **same drink** at each stop
-- Each player **secretly commits** to a number of sips before drinking
+- Each player **secretly commits** ("melder") to a number of sips before drinking
 - After all commit, numbers are **revealed simultaneously**, group average is computed
-- Players are scored **only** on the **distance penalty from the average** + commitment penalty, then **multiplied by the stop's `score_multiplier`** (1.0 for most stops, 1.5/2.0/2.5 for the last three). The number of sips itself contributes **zero points**.
+- Players are scored **only** on the **distance penalty from the average** + commitment penalty, then **multiplied by the stop's `score_multiplier`** (1.0 for stops 1–6, 1.5/2.0/2.5 for stops 7/8/9). The number of sips itself contributes **zero points**.
 
-**Lowest total after stop VIII wins** (like real golf).
+**Lowest total after stop 9 wins** (like real golf).
 
 ---
 
@@ -66,9 +66,9 @@ The last three stops have weighted scoring — late-game mistakes hurt more.
 
 | Stop | Bar | Multiplier | Example (raw 4 → final) |
 |---|---|---|---|
-| VI | Nuvolc | × 1.5 | 4 → 6 |
-| VII | Bukowski | × 2.0 | 4 → 8 |
-| VIII | Olhöps | × 2.5 | 4 → 10 |
+| 7 | Cava stop | × 1.5 | 4 → 6 |
+| 8 | Marina Beach Club Restaurant | × 2.0 | 4 → 8 |
+| 9 | Mya | × 2.5 | 4 → 10 |
 
 Stored as `holes.score_multiplier` (NUMERIC). Default 1.0 for all other holes.
 
@@ -108,8 +108,8 @@ The route includes **2 meal breaks** that appear as waypoints in the route timel
 
 | ID | Name | After Stop |
 |---|---|---|
-| 1 | 🍽 Frokost · Casa Vani | III |
-| 2 | 🍽 Middag · Restaurant Secret | VI |
+| 1 | 🍽 Frokost · Casa Vani | 3 |
+| 2 | 🍽 Middag · Restaurant Secret | 6 |
 
 ---
 
@@ -125,14 +125,32 @@ Honor system. The group polices each other.
 
 ## Practice round (stop 1)
 
-- La Cola del Pez, Plaça de Sant Jaume
+- Café de las Horas — Agua de Valencia (max 8 sips)
 - Players go through the full flow (commit, reveal, drink, ✓/✗) to learn the mechanics
 - **Points DO NOT count** — `is_practice = true` excludes hole 1 from leaderboard sums
 - `'same_as_last'` does NOT trigger (only from hole 3 onwards)
 
 ---
 
-## Final scoreboard awards (after stop VIII)
+## The route
+
+| Stop | Name | Drink | Max sips | Multiplier |
+|---|---|---|---|---|
+| 1 ★ | Café de las Horas | Agua de Valencia | 8 | 1.0 |
+| 2 | Botanista Bar | Signature cocktail | 10 | 1.0 |
+| 3 | Atenea Sky Rooftop | Gin & tonic / cocktail | 12 | 1.0 |
+| 4 | Lokal bar (Carmen) | Øl (0,5L) | 6 | 1.0 |
+| 5 | Russafa bar | Tinto de verano | 7 | 1.0 |
+| 6 | L'eixample bar | Shot + lille øl | 5 | 1.0 |
+| 7 | Cava stop | Cava glas | 6 | **×1.5** |
+| 8 | Marina Beach Club Restaurant | Mojito / longdrink | 12 | **×2.0** |
+| 9 | Mya | Vodka Red Bull / gin & tonic | 10 | **×2.5** |
+
+★ = practice round
+
+---
+
+## Final scoreboard awards (after stop 9)
 
 Computed client-side from raw scores:
 
@@ -152,13 +170,13 @@ Computed client-side from raw scores:
 COMMIT → REVEAL → DRINK → SCORE → (next stop)
 ```
 
-1. **COMMIT**: Stepper screen, lock in. Other players show as "X af Y har committed" (no names — prevents strategic waiting). Live preview of penalty rules that would trigger.
+1. **COMMIT**: Stepper screen, lock in ("melder"). Other players show as "X af Y har meldt" (no names — prevents strategic waiting). Live preview of penalty rules that would trigger.
 2. **REVEAL**: All numbers shown simultaneously. Average + per-player penalty shot list.
 3. **DRINK**: ✓/✗ commitment-check buttons.
 4. **SCORE**: Hole breakdown + live leaderboard.
 5. **Next**: Any player can advance to stop X+1.
 
-After stop 8 → final scoreboard with awards.
+After stop 9 → final scoreboard with awards.
 
 ---
 
