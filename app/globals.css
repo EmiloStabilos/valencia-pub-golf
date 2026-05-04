@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,600;1,6..96,700&family=IM+Fell+English:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,600;1,6..96,700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,7 +13,7 @@
   body {
     background-color: #FBE8C8;
     color: #2A0A06;
-    font-family: 'IM Fell English', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
     font-weight: 400;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
@@ -32,31 +32,31 @@
 @layer components {
   /* Small-caps label */
   .smallcaps {
-    @apply font-sans uppercase text-ink-muted;
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    font-weight: 400;
+    @apply font-label uppercase text-ink-muted;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    font-weight: 600;
   }
 
   .smallcaps-ink {
-    @apply font-sans uppercase text-ink;
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    font-weight: 400;
+    @apply font-label uppercase text-ink;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    font-weight: 600;
   }
 
   .smallcaps-gold {
-    @apply font-sans uppercase text-gold;
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    font-weight: 400;
+    @apply font-label uppercase text-gold;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    font-weight: 600;
   }
 
   .smallcaps-terra {
-    @apply font-sans uppercase text-terracotta;
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    font-weight: 400;
+    @apply font-label uppercase text-terracotta;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    font-weight: 600;
   }
 
   /* Gold rule */
@@ -116,7 +116,7 @@
 
   /* Primary CTA — sangria */
   .btn-primary {
-    @apply w-full flex items-center justify-center font-sans uppercase disabled:opacity-40 transition-all;
+    @apply w-full flex items-center justify-center font-label uppercase disabled:opacity-40 transition-all;
     height: 58px;
     background: #8B1A3A;
     color: #FEF4E0;
@@ -132,7 +132,7 @@
 
   /* Ghost — outlined */
   .btn-ghost {
-    @apply w-full flex items-center justify-center font-sans uppercase bg-transparent transition-all disabled:opacity-40;
+    @apply w-full flex items-center justify-center font-label uppercase bg-transparent transition-all disabled:opacity-40;
     height: 58px;
     color: #2A0A06;
     font-size: 0.72rem;
@@ -145,7 +145,7 @@
 
   /* Success — olive */
   .btn-success {
-    @apply w-full flex items-center justify-center font-sans uppercase disabled:opacity-40 transition-all;
+    @apply w-full flex items-center justify-center font-label uppercase disabled:opacity-40 transition-all;
     height: 58px;
     background: #3A6820;
     color: #FEF4E0;
@@ -160,7 +160,7 @@
 
   /* Danger — wine */
   .btn-danger {
-    @apply w-full flex items-center justify-center font-sans uppercase disabled:opacity-40 transition-all;
+    @apply w-full flex items-center justify-center font-label uppercase disabled:opacity-40 transition-all;
     height: 58px;
     background: #8B1A1A;
     color: #FEF4E0;
@@ -181,7 +181,7 @@
     background: #F0D4A0;
     border: 1px solid #D8B888;
     font-size: 1.6rem;
-    font-family: 'IM Fell English', Georgia, serif;
+    font-family: 'Playfair Display', Georgia, serif;
   }
   .stepper-btn:active:not(:disabled) {
     background: #E8C890;

@@ -37,10 +37,15 @@ const config: Config = {
 
         // Rules
         'rule':            '#D8B888',
+
+        // Valencia orange
+        'orange':          '#E86A10',
+        'orange-soft':     '#F5903A',
       },
       fontFamily: {
         serif: ['"Bodoni Moda"', 'Georgia', 'serif'],
-        sans:  ['"IM Fell English"', 'Georgia', 'serif'],
+        sans:  ['"Playfair Display"', 'Georgia', 'serif'],
+        label: ['"Nunito"', 'system-ui', 'sans-serif'],
         mono:  ['"JetBrains Mono"', 'monospace'],
       },
       letterSpacing: {
