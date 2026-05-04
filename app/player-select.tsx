@@ -94,7 +94,7 @@ export default function PlayerSelectPage() {
             className="smallcaps"
             style={{ color: 'rgba(240,234,214,0.7)', letterSpacing: '0.22em' }}
           >
-            {day} · 8 STOPS
+            {day} · 9 STOPS
           </p>
           <p
             className="font-mono"
