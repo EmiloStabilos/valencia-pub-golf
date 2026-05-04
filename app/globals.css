@@ -34,10 +34,10 @@
   --wine-dark:           #5A0A0A;
 
   /* Ink */
-  --ink:                 #2A0A06;
-  --ink-secondary:       #5A2010;
-  --ink-muted:           #8A5030;
-  --ink-faint:           #C0906A;
+  --ink:                 #1E1C18;
+  --ink-secondary:       #3E3C34;
+  --ink-muted:           #6E6A5E;
+  --ink-faint:           #A8A49A;
 
   /* Badge — player number in selection list */
   --badge-number:        #4A9CC8;
@@ -51,7 +51,7 @@
   --rule-rgb:            208 204 191;
   --olive-rgb:           58 104 32;
   --wine-rgb:            139 26 26;
-  --ink-rgb:             42 10 6;
+  --ink-rgb:             30 28 24;
   --limestone-rgb:       255 254 248;
   --limestone-dark-rgb:  245 242 236;
   --limestone-light-rgb: 255 255 255;
