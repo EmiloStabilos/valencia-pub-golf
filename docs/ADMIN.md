@@ -47,10 +47,13 @@ WHERE player_id = (SELECT id FROM players WHERE name = 'Søren')
 
 ---
 
-## R2: Wrong commitment-check (clicked ✗ by mistake)
+## R2: Fix a wrong completed flag
 
-> "Frederik trykkede ❌ ved en fejl"
+> "Frederik blev fejlagtigt markeret som fejlet" (auto-fail fired wrongly, or need to override)
 
+There's no ✗ button anymore — `completed = false` is only set automatically (timer expired or over-sipped). Use this to correct a wrongly set flag.
+
+Set to passed (undo an auto-fail):
 ```sql
 UPDATE scores
 SET completed = true
@@ -58,9 +61,16 @@ WHERE player_id = (SELECT id FROM players WHERE name = 'Frederik')
   AND hole_id = 7;
 ```
 
-Reverse direction (changing ✓ to ✗):
+Set to failed manually (override):
 ```sql
 UPDATE scores SET completed = false
+WHERE player_id = (SELECT id FROM players WHERE name = 'Frederik')
+  AND hole_id = 7;
+```
+
+Reset to unanswered (null = timer still running, player can still tap ✓):
+```sql
+UPDATE scores SET completed = null
 WHERE player_id = (SELECT id FROM players WHERE name = 'Frederik')
   AND hole_id = 7;
 ```
@@ -219,12 +229,12 @@ WHERE player_id = (SELECT id FROM players WHERE name = 'Emil')
 
 ## R9b: Drink timer fixes
 
-The drinking phase has a 2-min deadline that starts when the first player marks ✓. Anyone still pending when it expires auto-fails (+3).
+The drinking phase has a **15-min deadline** set the moment all players commit (at the `committing → reveal` transition). Anyone who hasn't tapped ✓ when it expires auto-fails (+3).
 
 **Give everyone more time** (extend by N minutes):
 ```sql
 UPDATE game_state
-SET drink_deadline_at = drink_deadline_at + INTERVAL '2 minutes'
+SET drink_deadline_at = drink_deadline_at + INTERVAL '5 minutes'
 WHERE id = 1;
 ```
 
@@ -233,9 +243,9 @@ WHERE id = 1;
 UPDATE game_state SET drink_deadline_at = NULL WHERE id = 1;
 ```
 
-**Restart the timer fresh from now**:
+**Restart the timer fresh from now** (full 15 min from this moment):
 ```sql
-UPDATE game_state SET drink_deadline_at = NOW() + INTERVAL '2 minutes' WHERE id = 1;
+UPDATE game_state SET drink_deadline_at = NOW() + INTERVAL '15 minutes' WHERE id = 1;
 ```
 
 ---

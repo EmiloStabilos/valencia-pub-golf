@@ -36,10 +36,11 @@ The committed sips number has **no direct point value** — it's only used to co
 
 ### Commitment penalty
 
-| What you tap | Penalty |
+| Outcome | Penalty |
 |---|---|
-| ✓ "Klarede det" | +0 |
-| ✗ "Fejlede" | **+3** |
+| Tapped ✓ "Klarede det" in time | +0 |
+| Didn't tap ✓ before 15-min timer expired | **+3** |
+| Went over committed sip count | **+3** |
 
 ### Strategic implication
 
@@ -113,20 +114,25 @@ The route includes **2 meal breaks** that appear as waypoints in the route timel
 
 ---
 
-## Commitment check (the +3 lever)
+## Drinking phase — 15-minute timer
 
-After drinking, each player gets two buttons:
-- ✓ "Klarede det" — no penalty
-- ✗ "Fejlede (+III)" — 3 points added to this hole's score (before multiplier)
+When all players commit, a **15-minute countdown** starts immediately (visible during the reveal and drinking phases).
 
-Honor system. The group polices each other.
+During the drinking phase:
+- A **sip counter** lets each player tap once per sip to track progress
+- Tap ✓ **"Klarede det"** when you finish your drink → no penalty
+- **Going over your committed sip count** → instant auto-fail (+3), sip counter turns red
+- **Not tapping ✓ before the timer hits 0:00** → auto-fail (+3)
+- No manual ✗ button — failures are triggered automatically by the sip counter or the timer
+
+Honor system for the sip counter. The group polices each other.
 
 ---
 
 ## Practice round (stop 1)
 
 - Café de las Horas — Agua de Valencia (max 8 sips)
-- Players go through the full flow (commit, reveal, drink, ✓/✗) to learn the mechanics
+- Players go through the full flow (commit, reveal, drink, tap ✓ when done) to learn the mechanics
 - **Points DO NOT count** — `is_practice = true` excludes hole 1 from leaderboard sums
 - `'same_as_last'` does NOT trigger (only from hole 3 onwards)
 
@@ -170,9 +176,9 @@ Computed client-side from raw scores:
 COMMIT → REVEAL → DRINK → SCORE → (next stop)
 ```
 
-1. **COMMIT**: Stepper screen, lock in ("melder"). Other players show as "X af Y har meldt" (no names — prevents strategic waiting). Live preview of penalty rules that would trigger.
-2. **REVEAL**: All numbers shown simultaneously. Average + per-player penalty shot list.
-3. **DRINK**: ✓/✗ commitment-check buttons.
+1. **COMMIT**: Stepper screen, lock in ("melder"). Other players show as "X af Y har meldt" (no names — prevents strategic waiting). Live preview of penalty rules that would trigger. **15-min drink timer is set the moment the last player commits.**
+2. **REVEAL**: All numbers shown simultaneously. Average + per-player penalty shot list. Timer is already counting down.
+3. **DRINK**: 15-min countdown visible. Sip counter active — tap once per sip. Tap ✓ when done. Going over committed sips or letting the timer expire = auto-fail (+3).
 4. **SCORE**: Hole breakdown + live leaderboard.
 5. **Next**: Any player can advance to stop X+1.
 
