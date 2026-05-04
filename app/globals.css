@@ -16,7 +16,7 @@
   /* Surfaces — clean Valencian whites */
   --limestone:           #FFFEF8;
   --limestone-light:     #FFFFFF;
-  --limestone-dark:      #FFF5C8;
+  --limestone-dark:      #F5F2EC;
   --limestone-stepper:   #EEF5FB;
 
   /* Accents — Valencian gold (the yellow stripes) */
@@ -50,7 +50,7 @@
   --wine-rgb:            139 26 26;
   --ink-rgb:             42 10 6;
   --limestone-rgb:       255 254 248;
-  --limestone-dark-rgb:  255 245 200;
+  --limestone-dark-rgb:  245 242 236;
   --limestone-light-rgb: 255 255 255;
 }
 
