@@ -49,9 +49,10 @@ You can run SQL directly. Project ID: `fiucpbakevqzytbphghy`.
 
 ### Mode C — Code fix needed
 If the app itself is broken (UI bug, crash, wrong behaviour):
-1. Edit the relevant file in `C:\Users\emilr\OneDrive\Documents\Valencia Pub Golf\`
+1. Edit the relevant file (working dir is `/home/user/valencia-pub-golf/`)
 2. `git add` + `git commit` + `git push origin main`
 3. Vercel auto-deploys in ~1 min
+4. For visual/theme changes see [`docs/DESIGN.md`](docs/DESIGN.md) — edit only `app/globals.css` `:root` to retheme
 
 ---
 
@@ -60,6 +61,7 @@ If the app itself is broken (UI bug, crash, wrong behaviour):
 1. **[`docs/ADMIN.md`](docs/ADMIN.md)** ⭐ — copy-paste SQL recipes for in-game fixes (player wrongly clicked, replace a stop, reset a hole, etc.)
 2. **[`docs/DATABASE.md`](docs/DATABASE.md)** — full schema (4 tables), diagnostic queries, leaderboard SQL
 3. **[`docs/GAME_RULES.md`](docs/GAME_RULES.md)** — scoring math, phase flow, penalty rules, multipliers, waypoints
+4. **[`docs/DESIGN.md`](docs/DESIGN.md)** — CSS token system, retheme instructions, SVG gotchas, utility classes
 
 If a problem doesn't match a recipe in ADMIN.md, fall back to DATABASE.md to write custom SQL.
 
