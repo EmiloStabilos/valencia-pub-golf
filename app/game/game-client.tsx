@@ -15,7 +15,7 @@ import InfoSheet from '@/components/InfoSheet'
 import RouteStrip from '@/components/RouteStrip'
 import RouteTimeline from '@/components/RouteTimeline'
 
-const DRINK_DEADLINE_MS = 15 * 60 * 1000 // 15-min timer starts when first player answers ✓/✗
+const DRINK_DEADLINE_MS = 10 * 60 * 1000 // 10-min timer starts when first player answers ✓/✗
 
 export default function GamePage() {
   const router = useRouter()
