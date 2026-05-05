@@ -1,3 +1,8 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { supabase } from '@/lib/supabase'
+
 const PENALTY_TABLE: { range: string; penalty: string; label: string }[] = [
   { range: '±0.5 eller mindre', penalty: '+0', label: 'Spot on' },
   { range: '±0.5 til ±1.0', penalty: '+1', label: '' },
@@ -19,14 +24,30 @@ interface Props {
 }
 
 export default function Rules({ compact = false }: Props) {
+  const [playerCount, setPlayerCount] = useState<number | null>(null)
+  const [holeCount, setHoleCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    Promise.all([
+      supabase.from('players').select('id', { count: 'exact', head: true }).eq('active', true),
+      supabase.from('holes').select('id', { count: 'exact', head: true }),
+    ]).then(([players, holes]) => {
+      if (players.count != null) setPlayerCount(players.count)
+      if (holes.count != null) setHoleCount(holes.count)
+    })
+  }, [])
+
+  const playersLabel = playerCount != null ? `${playerCount} spillere` : 'spillere'
+  const stopsLabel = holeCount != null ? `${holeCount} stop` : 'stop'
+
   return (
     <div className={`${compact ? 'space-y-5' : 'px-6 py-6 space-y-7'}`}>
       {/* Section 1 — The setup */}
       <section className="space-y-2">
         <p className="smallcaps-ink">Spillet</p>
         <ul className="font-sans text-ink-secondary text-base space-y-1.5 leading-snug list-none">
-          <li>4 spillere, 9 stop på én dag i Valencia.</li>
-          <li>Stop 1 er <em className="font-serif">prøverunde</em> — point tæller ikke.</li>
+          <li>{playersLabel}, {stopsLabel} på én dag i Valencia.</li>
+          <li>Stop 1 er altid <em className="font-serif">prøverunde</em> — point tæller ikke.</li>
           <li>Hvert stop har én drink som <strong>alle</strong> skal tømme.</li>
         </ul>
       </section>
