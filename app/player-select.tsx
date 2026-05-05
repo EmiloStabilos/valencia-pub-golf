@@ -12,6 +12,7 @@ export default function PlayerSelectPage() {
   const router = useRouter()
   const [players, setPlayers] = useState<Player[]>([])
   const [loading, setLoading] = useState(true)
+  const [holeCount, setHoleCount] = useState<number | null>(null)
   const [selecting, setSelecting] = useState<string | null>(null)
   const [rulesOpen, setRulesOpen] = useState(false)
   const [manageOpen, setManageOpen] = useState(false)
@@ -23,12 +24,14 @@ export default function PlayerSelectPage() {
 
   useEffect(() => {
     async function load() {
-      const [playersRes, scoresRes] = await Promise.all([
+      const [playersRes, scoresRes, holesRes] = await Promise.all([
         supabase.from('players').select('*').order('display_order'),
         supabase.from('scores').select('id').limit(1),
+        supabase.from('holes').select('id', { count: 'exact', head: true }),
       ])
       setPlayers(playersRes.data || [])
       setGameStarted((scoresRes.data?.length ?? 0) > 0)
+      if (holesRes.count != null) setHoleCount(holesRes.count)
       setLoading(false)
     }
     load()
@@ -107,7 +110,7 @@ export default function PlayerSelectPage() {
           <div className="tile-border-thin" style={{ margin: '20px auto', width: 120 }} />
 
           <p className="smallcaps" style={{ color: 'rgb(var(--limestone-rgb) / 0.7)', letterSpacing: '0.22em' }}>
-            🇪🇸 {day} · 9 STOPS
+            🇪🇸 {day} · {holeCount != null ? `${holeCount} STOPS` : 'STOPS'}
           </p>
           <p
             className="font-mono"
