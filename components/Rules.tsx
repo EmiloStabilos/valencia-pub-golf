@@ -44,7 +44,7 @@ export default function Rules({ compact = false }: Props) {
     <div className={`${compact ? 'space-y-5' : 'px-6 py-6 space-y-7'}`}>
       {/* Section 1 — The setup */}
       <section className="space-y-2">
-        <p className="smallcaps-ink">Spillet</p>
+        <p className="smallcaps-ink !text-base">Spillet</p>
         <ul className="font-sans text-ink-secondary text-base space-y-1.5 leading-snug list-none">
           <li>{playersLabel}, {stopsLabel} på én dag i Valencia.</li>
           <li>Stop 1 er altid <em className="font-serif">prøverunde</em> — point tæller ikke.</li>
@@ -54,7 +54,7 @@ export default function Rules({ compact = false }: Props) {
 
       {/* Section 2 — Core rule */}
       <section className="space-y-3">
-        <p className="smallcaps-ink">Sådan scorer du</p>
+        <p className="smallcaps-ink !text-base">Sådan scorer du</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
           Du vælger <strong>hemmeligt</strong> hvor mange slurke du tømmer drinken på.
           Når alle har valgt, afsløres tallene og gruppens gennemsnit beregnes.
@@ -89,7 +89,7 @@ export default function Rules({ compact = false }: Props) {
 
       {/* Section 3 — Example */}
       <section className="space-y-3">
-        <p className="smallcaps-ink">Eksempel — gennemsnit 4.0</p>
+        <p className="smallcaps-ink !text-base">Eksempel — gennemsnit 4.0</p>
         <div className="border border-rule">
           <div className="grid grid-cols-12 bg-parchment-dark/50 border-b border-rule">
             <p className="smallcaps col-span-2 px-2 py-2">Du</p>
@@ -125,7 +125,7 @@ export default function Rules({ compact = false }: Props) {
 
       {/* Section 4 — Strategy */}
       <section className="space-y-2">
-        <p className="smallcaps-ink">Strategien</p>
+        <p className="smallcaps-ink !text-base">Strategien</p>
         <ul className="font-sans text-ink-secondary text-base space-y-1.5 leading-snug list-none">
           <li>Antallet af slurke giver <strong>ingen point</strong> i sig selv. Du bliver kun straffet for at afvige fra gruppens gennemsnit.</li>
           <li><strong>Sweet spot</strong>: gæt hvad de andre vælger, og ram tallet præcist.</li>
@@ -134,7 +134,7 @@ export default function Rules({ compact = false }: Props) {
 
       {/* Section 5 — Honor system */}
       <section className="space-y-2">
-        <p className="smallcaps-ink">Drak du den faktisk på det meldte antal tårer?</p>
+        <p className="smallcaps-ink !text-base">Drak du den faktisk på det meldte antal tårer?</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
           Efter alle har drukket, vælger hver spiller én af to:
         </p>
@@ -152,7 +152,7 @@ export default function Rules({ compact = false }: Props) {
 
       {/* Section 6 — Penalty shots */}
       <section className="space-y-2">
-        <p className="smallcaps-ink">Straf-shots (drikke, ikke point)</p>
+        <p className="smallcaps-ink !text-base">Straf-shots (drikke, ikke point)</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
           Disse koster ikke point — kun smerte. Drikkes inden gruppen går videre.
         </p>
@@ -183,7 +183,7 @@ export default function Rules({ compact = false }: Props) {
 
       {/* Section 7 — Late-game multiplier */}
       <section className="space-y-2">
-        <p className="smallcaps-ink">Sluttiden tæller mere</p>
+        <p className="smallcaps-ink !text-base">Sluttiden tæller mere</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
           De sidste tre stop har en score-multiplikator. Sene fejl koster mere — så husk at holde hovedet koldt på de sidste stop
         </p>
@@ -209,7 +209,7 @@ export default function Rules({ compact = false }: Props) {
 
       {/* Section 8 — Winner */}
       <section className="space-y-2">
-        <p className="smallcaps-ink">Vinderen</p>
+        <p className="smallcaps-ink !text-base">Vinderen</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
           Laveste totalscore efter Stop 9 vinder. Som rigtig golf handler det altså om at score lavt. <strong>Præmien gives efter sidste stop er gennemført</strong>.
         </p>
