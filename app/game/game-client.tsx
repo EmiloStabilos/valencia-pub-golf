@@ -15,7 +15,7 @@ import InfoSheet from '@/components/InfoSheet'
 import RouteStrip from '@/components/RouteStrip'
 import RouteTimeline from '@/components/RouteTimeline'
 
-const DRINK_DEADLINE_MS = 15 * 60 * 1000 // 15-min timer starts when all players commit
+const DRINK_DEADLINE_MS = 15 * 60 * 1000 // 15-min timer starts when first player answers ✓/✗
 
 export default function GamePage() {
   const router = useRouter()
@@ -102,10 +102,9 @@ export default function GamePage() {
       (s) => s.hole_id === gameState.current_hole && s.committed_sips != null
     )
     if (committedThisHole.length >= activePlayers.length) {
-      const deadline = new Date(Date.now() + DRINK_DEADLINE_MS).toISOString()
       supabase
         .from('game_state')
-        .update({ phase: 'reveal', drink_deadline_at: deadline })
+        .update({ phase: 'reveal' })
         .eq('id', 1)
         .eq('phase', 'committing')
         .then()
@@ -181,6 +180,14 @@ export default function GamePage() {
         .eq('player_id', currentPlayer.id)
         .eq('hole_id', gameState.current_hole)
         .is('completed', null)
+      if (!gameState.drink_deadline_at) {
+        const deadline = new Date(Date.now() + DRINK_DEADLINE_MS).toISOString()
+        await supabase
+          .from('game_state')
+          .update({ drink_deadline_at: deadline })
+          .eq('id', 1)
+          .is('drink_deadline_at', null)
+      }
     },
     [currentPlayer, gameState]
   )
