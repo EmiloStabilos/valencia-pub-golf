@@ -122,7 +122,7 @@ export default function Rules({ compact = false }: Props) {
           <li><span className="font-mono text-wine font-semibold">✗</span> Fejlede — <strong>+3 strafpoint</strong></li>
         </ul>
         <p className="font-sans text-ink-secondary text-base leading-snug mt-2">
-          Der er en <strong>15-minutters nedtælling</strong> fra det øjeblik alle har meldt. Svarer du ikke inden uret rammer 0:00, fejler du automatisk (+3).
+          Der er en <strong>10-minutters nedtælling</strong> fra det øjeblik den første spiller svarer. Svarer du ikke inden uret rammer 0:00, fejler du automatisk (+3).
         </p>
         <p className="font-serif italic text-ink-muted text-base mt-1">
           Æressystem. Gruppen holder dig ansvarlig.

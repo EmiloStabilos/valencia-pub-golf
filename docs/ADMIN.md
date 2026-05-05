@@ -226,7 +226,7 @@ WHERE player_id = (SELECT id FROM players WHERE name = 'Emil')
 
 ## R9b: Drink timer fixes
 
-The drinking phase has a **15-min deadline** set the moment all players commit (at the `committing → reveal` transition). Anyone who hasn't tapped ✓ when it expires auto-fails (+3).
+The drinking phase has a **10-min deadline** set the moment the first player answers ✓/✗. Anyone who hasn't tapped either button when it expires auto-fails (+3).
 
 **Give everyone more time** (extend by N minutes):
 ```sql
@@ -240,9 +240,9 @@ WHERE id = 1;
 UPDATE game_state SET drink_deadline_at = NULL WHERE id = 1;
 ```
 
-**Restart the timer fresh from now** (full 15 min from this moment):
+**Restart the timer fresh from now** (full 10 min from this moment):
 ```sql
-UPDATE game_state SET drink_deadline_at = NOW() + INTERVAL '15 minutes' WHERE id = 1;
+UPDATE game_state SET drink_deadline_at = NOW() + INTERVAL '10 minutes' WHERE id = 1;
 ```
 
 ---

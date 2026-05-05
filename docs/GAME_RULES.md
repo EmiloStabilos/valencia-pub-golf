@@ -40,7 +40,7 @@ The committed sips number has **no direct point value** — it's only used to co
 |---|---|
 | Tapped ✓ "Klarede det" | +0 |
 | Tapped ✗ "Fejlede (+III)" | **+3** |
-| Didn't tap either before 15-min timer expired | **+3** (auto-fail) |
+| Didn't tap either before 10-min timer expired | **+3** (auto-fail) |
 
 ### Strategic implication
 
@@ -114,9 +114,9 @@ The route includes **2 meal breaks** that appear as waypoints in the route timel
 
 ---
 
-## Drinking phase — 15-minute timer
+## Drinking phase — 10-minute timer
 
-When all players commit, a **15-minute countdown** starts immediately (visible during the reveal and drinking phases).
+When the first player answers ✓/✗, a **10-minute countdown** starts (visible during the drinking phase).
 
 During the drinking phase:
 - A **sip counter** lets each player tap once per sip to track progress (informational only)
@@ -175,9 +175,9 @@ Computed client-side from raw scores:
 COMMIT → REVEAL → DRINK → SCORE → (next stop)
 ```
 
-1. **COMMIT**: Stepper screen, lock in ("melder"). Other players show as "X af Y har meldt" (no names — prevents strategic waiting). Live preview of penalty rules that would trigger. **15-min drink timer is set the moment the last player commits.**
+1. **COMMIT**: Stepper screen, lock in ("melder"). Other players show as "X af Y har meldt" (no names — prevents strategic waiting). Live preview of penalty rules that would trigger.
 2. **REVEAL**: All numbers shown simultaneously. Average + per-player penalty shot list. Timer is already counting down.
-3. **DRINK**: 15-min countdown visible. Sip counter active (informational). Tap ✓ when done or ✗ to self-report failure. Timer expiry = auto-fail (+3).
+3. **DRINK**: 10-min countdown starts when the first player answers. Sip counter active (informational). Tap ✓ when done or ✗ to self-report failure. Timer expiry = auto-fail (+3).
 4. **SCORE**: Hole breakdown + live leaderboard.
 5. **Next**: Any player can advance to stop X+1.
 
