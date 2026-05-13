@@ -4,10 +4,8 @@ import { useState } from 'react'
 import type { Player, Score, Hole, GameState, HoleScore } from '@/lib/types'
 import { computeLeaderboard, computeHoleScores, calculateGroupAverage } from '@/lib/scoring'
 import Rules from './Rules'
-import SpinWheel from './SpinWheel'
-import DiceRoller from './DiceRoller'
 
-type Tab = 'standing' | 'history' | 'rules' | 'wheel' | 'dice'
+type Tab = 'standing' | 'history' | 'rules'
 
 interface Props {
   players: Player[]
@@ -18,6 +16,7 @@ interface Props {
   onClose: () => void
   initialTab?: Tab
 }
+
 
 /** A hole's commits are public once we've moved past its committing phase. */
 function isHoleRevealed(holeId: number, gameState: GameState): boolean {
@@ -76,28 +75,6 @@ export default function InfoSheet({ players, scores, holes, gameState, currentPl
                 </span>
               </button>
             ))}
-            <button
-              onClick={() => setTab('wheel')}
-              className={`px-4 py-4 transition-colors ${
-                tab === 'wheel'
-                  ? 'text-ink border-b-2 border-gold -mb-px'
-                  : 'text-ink-muted'
-              }`}
-              aria-label="Lykkehjul"
-            >
-              <span style={{ fontSize: '1.1rem' }}>🎰</span>
-            </button>
-            <button
-              onClick={() => setTab('dice')}
-              className={`px-4 py-4 transition-colors ${
-                tab === 'dice'
-                  ? 'text-ink border-b-2 border-gold -mb-px'
-                  : 'text-ink-muted'
-              }`}
-              aria-label="Terninger"
-            >
-              <span style={{ fontSize: '1.1rem' }}>🎲</span>
-            </button>
           </div>
 
           {/* Close button absolute right */}
@@ -125,8 +102,6 @@ export default function InfoSheet({ players, scores, holes, gameState, currentPl
             />
           )}
           {tab === 'rules' && <Rules />}
-          {tab === 'wheel' && <SpinWheel />}
-          {tab === 'dice' && <DiceRoller />}
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@ import DrinkPhase from '@/components/game/DrinkPhase'
 import ScoringPhase from '@/components/game/ScoringPhase'
 import FinalScoreboard from '@/components/game/FinalScoreboard'
 import InfoSheet from '@/components/InfoSheet'
+import GamesSheet from '@/components/GamesSheet'
 import RouteStrip from '@/components/RouteStrip'
 import RouteTimeline from '@/components/RouteTimeline'
 
@@ -27,6 +28,7 @@ export default function GamePage() {
   const [holes, setHoles] = useState<Hole[]>([])
   const [waypoints, setWaypoints] = useState<Waypoint[]>([])
   const [showInfo, setShowInfo] = useState(false)
+  const [showGames, setShowGames] = useState(false)
   const [showRoute, setShowRoute] = useState(false)
   const [wildcardDone, setWildcardDone] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -303,19 +305,27 @@ export default function GamePage() {
             </p>
           </div>
 
-          <button
-            onClick={() => setShowInfo(true)}
-            className="flex items-center justify-center"
-            aria-label="Vis info"
-            style={{ width: 30, display: 'flex', justifyContent: 'flex-end' }}
-          >
-            <svg viewBox="0 0 24 24" width={22} height={22} fill="none" style={{ color: 'var(--limestone)' }}>
-              <path d="M4 20 L4 10 Q4 4 12 4 Q20 4 20 10 L20 20" stroke="currentColor" strokeWidth="1.5" />
-              <line x1="2" y1="20" x2="22" y2="20" stroke="currentColor" strokeWidth="1.5" />
-              <line x1="8" y1="20" x2="8" y2="14" stroke="currentColor" strokeWidth="1" />
-              <line x1="16" y1="20" x2="16" y2="14" stroke="currentColor" strokeWidth="1" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-3" style={{ justifyContent: 'flex-end' }}>
+            <button
+              onClick={() => setShowGames(true)}
+              className="flex items-center justify-center"
+              aria-label="Spil"
+            >
+              <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>🎲</span>
+            </button>
+            <button
+              onClick={() => setShowInfo(true)}
+              className="flex items-center justify-center"
+              aria-label="Vis info"
+            >
+              <svg viewBox="0 0 24 24" width={22} height={22} fill="none" style={{ color: 'var(--limestone)' }}>
+                <path d="M4 20 L4 10 Q4 4 12 4 Q20 4 20 10 L20 20" stroke="currentColor" strokeWidth="1.5" />
+                <line x1="2" y1="20" x2="22" y2="20" stroke="currentColor" strokeWidth="1.5" />
+                <line x1="8" y1="20" x2="8" y2="14" stroke="currentColor" strokeWidth="1" />
+                <line x1="16" y1="20" x2="16" y2="14" stroke="currentColor" strokeWidth="1" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         <div className="max-w-md mx-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
@@ -393,6 +403,10 @@ export default function GamePage() {
           currentPlayerId={currentPlayer.id}
           onClose={() => setShowInfo(false)}
         />
+      )}
+
+      {showGames && (
+        <GamesSheet onClose={() => setShowGames(false)} />
       )}
 
       {showRoute && (
