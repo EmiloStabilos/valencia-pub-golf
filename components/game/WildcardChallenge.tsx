@@ -107,10 +107,10 @@ export default function WildcardChallenge({ holeId, players, currentPlayerId, on
             {isSelected ? (
               <div className="space-y-3">
                 <button onClick={onDone} className="btn-success">
-                  Klarede det ✓
+                  Jeg gør det
                 </button>
                 <button onClick={handleFail} className="btn-danger">
-                  Fejlede / Nægter ✗
+                  Jeg tager straf shot
                 </button>
               </div>
             ) : (
