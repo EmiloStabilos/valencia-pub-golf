@@ -35,10 +35,17 @@ export default function SpinWheel() {
   function spin() {
     if (spinning) return
     const chosen = Math.floor(Math.random() * N)
-    const spinAmount = (5 + Math.floor(Math.random() * 3)) * 360 + Math.random() * 360
+    // Center of chosen segment in wheel coordinates (conic-gradient starts from top)
+    const segCenter = chosen * SEG + SEG / 2
+    // Current wheel position mod 360
+    const currentPos = angle % 360
+    // Target: wheel total angle mod 360 should equal (360 - segCenter) % 360
+    const targetPos = (360 - segCenter + 360) % 360
+    const diff = (targetPos - currentPos + 360) % 360 || 360
+    const extra = (5 + Math.floor(Math.random() * 3)) * 360
     setResult(null)
     setSpinning(true)
-    setAngle((prev) => prev + spinAmount)
+    setAngle(angle + extra + diff)
     setTimeout(() => {
       setResult(chosen)
       setSpinning(false)
