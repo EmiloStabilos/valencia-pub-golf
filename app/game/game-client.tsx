@@ -16,7 +16,7 @@ import InfoSheet from '@/components/InfoSheet'
 import RouteStrip from '@/components/RouteStrip'
 import RouteTimeline from '@/components/RouteTimeline'
 
-const DRINK_DEADLINE_MS = 10 * 60 * 1000 // 10-min timer starts when first player answers ✓/✗
+const DRINK_DEADLINE_MS = 10 * 60 * 1000
 
 export default function GamePage() {
   const router = useRouter()
@@ -29,8 +29,9 @@ export default function GamePage() {
   const [showInfo, setShowInfo] = useState(false)
   const [showRoute, setShowRoute] = useState(false)
   const [wildcardDone, setWildcardDone] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  // Initial data load
   useEffect(() => {
     const playerId = localStorage.getItem('athens_player_id')
     if (!playerId) {
@@ -70,7 +71,6 @@ export default function GamePage() {
     initialize()
   }, [router])
 
-  // Realtime subscription
   useEffect(() => {
     const channel = supabase
       .channel('game-realtime')
@@ -95,7 +95,6 @@ export default function GamePage() {
     return () => { supabase.removeChannel(channel) }
   }, [])
 
-  // Auto-transition: committing → reveal when all players committed
   useEffect(() => {
     if (!gameState || gameState.phase !== 'committing') return
     const committedThisHole = scores.filter(
@@ -111,7 +110,6 @@ export default function GamePage() {
     }
   }, [scores, gameState])
 
-  // Auto-transition: drinking → scoring when all answered
   useEffect(() => {
     if (!gameState || gameState.phase !== 'drinking') return
     const answeredThisHole = scores.filter(
@@ -127,7 +125,6 @@ export default function GamePage() {
     }
   }, [scores, gameState])
 
-  // Auto-fail anyone who hasn't answered when 15-min deadline expires
   useEffect(() => {
     if (!gameState || gameState.phase !== 'drinking' || !gameState.drink_deadline_at) return
     const deadline = new Date(gameState.drink_deadline_at).getTime()
@@ -144,7 +141,6 @@ export default function GamePage() {
     return () => clearInterval(interval)
   }, [gameState, scores])
 
-  // Reset wildcard gate when hole advances
   useEffect(() => {
     if (!gameState) return
     const done = sessionStorage.getItem(`wildcard_done_${gameState.current_hole}`) === 'true'
@@ -281,7 +277,6 @@ export default function GamePage() {
 
   return (
     <div className="min-h-screen bg-parchment">
-      {/* Sticky header — cobalt brand bar */}
       <header
         className="sticky top-0 z-40 backdrop-blur-sm"
         style={{ background: 'rgb(var(--cobalt-rgb) / 0.97)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
@@ -308,7 +303,6 @@ export default function GamePage() {
             </p>
           </div>
 
-          {/* Arch icon — uses currentColor so it inherits the CSS var */}
           <button
             onClick={() => setShowInfo(true)}
             className="flex items-center justify-center"
@@ -324,7 +318,6 @@ export default function GamePage() {
           </button>
         </div>
 
-        {/* Route progress strip */}
         <div className="max-w-md mx-auto" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
           <RouteStrip holes={holes} currentHoleId={gameState.current_hole} onClick={() => setShowRoute(true)} />
         </div>
