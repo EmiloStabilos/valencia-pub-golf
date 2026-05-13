@@ -86,6 +86,7 @@ export default function InfoSheet({ players, scores, holes, gameState, currentPl
             >
               <span style={{ fontSize: '1.1rem' }}>🎰</span>
             </button>
+          </div>
 
           {/* Close button absolute right */}
           <button
