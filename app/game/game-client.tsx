@@ -7,6 +7,7 @@ import type { Player, Score, GameState, Hole, Waypoint } from '@/lib/types'
 import { checkPenaltyShot } from '@/lib/scoring'
 
 import CommitPhase from '@/components/game/CommitPhase'
+import WildcardChallenge from '@/components/game/WildcardChallenge'
 import RevealPhase from '@/components/game/RevealPhase'
 import DrinkPhase from '@/components/game/DrinkPhase'
 import ScoringPhase from '@/components/game/ScoringPhase'
@@ -27,8 +28,7 @@ export default function GamePage() {
   const [waypoints, setWaypoints] = useState<Waypoint[]>([])
   const [showInfo, setShowInfo] = useState(false)
   const [showRoute, setShowRoute] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [wildcardDone, setWildcardDone] = useState(false)
 
   // Initial data load
   useEffect(() => {
@@ -144,6 +144,19 @@ export default function GamePage() {
     return () => clearInterval(interval)
   }, [gameState, scores])
 
+  // Reset wildcard gate when hole advances
+  useEffect(() => {
+    if (!gameState) return
+    const done = sessionStorage.getItem(`wildcard_done_${gameState.current_hole}`) === 'true'
+    setWildcardDone(done)
+  }, [gameState?.current_hole])
+
+  const handleWildcardDone = useCallback(() => {
+    if (!gameState) return
+    sessionStorage.setItem(`wildcard_done_${gameState.current_hole}`, 'true')
+    setWildcardDone(true)
+  }, [gameState])
+
   const handleCommit = useCallback(
     async (sips: number) => {
       if (!currentPlayer || !gameState) return
@@ -155,14 +168,19 @@ export default function GamePage() {
       const maxSips = currentHoleData?.max_sips ?? 8
       const { reasons } = checkPenaltyShot(sips, maxSips, prevSips, gameState.current_hole)
 
+      const wildcardFail = sessionStorage.getItem(`wildcard_fail_${gameState.current_hole}`) === 'true'
+      const allReasons = wildcardFail ? [...reasons, 'wildcard'] : reasons
+
       await supabase.from('scores').insert({
         player_id: currentPlayer.id,
         hole_id: gameState.current_hole,
         committed_sips: sips,
-        penalty_shot: reasons.length > 0,
-        penalty_shot_reason: reasons[0] ?? null,
-        penalty_shot_reasons: reasons,
+        penalty_shot: allReasons.length > 0,
+        penalty_shot_reason: allReasons[0] ?? null,
+        penalty_shot_reasons: allReasons,
       })
+
+      if (wildcardFail) sessionStorage.removeItem(`wildcard_fail_${gameState.current_hole}`)
     },
     [currentPlayer, gameState, scores, holes]
   )
@@ -317,15 +335,26 @@ export default function GamePage() {
           const prevHoleId = sortedHoleIds[sortedHoleIds.indexOf(gameState.current_hole) - 1]
           const myPrev = scores.find((s) => s.player_id === currentPlayer.id && s.hole_id === prevHoleId)
           return (
-            <CommitPhase
-              hole={currentHole}
-              myScore={myCurrentScore}
-              myPreviousSips={myPrev?.committed_sips ?? null}
-              committedCount={currentHoleScores.filter((s) => s.committed_sips != null).length}
-              totalPlayers={activePlayers.length}
-              currentPlayerName={currentPlayer.name}
-              onCommit={handleCommit}
-            />
+            <>
+              {!wildcardDone && (
+                <WildcardChallenge
+                  holeId={gameState.current_hole}
+                  players={activePlayers}
+                  currentPlayerId={currentPlayer.id}
+                  onFail={() => {}}
+                  onDone={handleWildcardDone}
+                />
+              )}
+              <CommitPhase
+                hole={currentHole}
+                myScore={myCurrentScore}
+                myPreviousSips={myPrev?.committed_sips ?? null}
+                committedCount={currentHoleScores.filter((s) => s.committed_sips != null).length}
+                totalPlayers={activePlayers.length}
+                currentPlayerName={currentPlayer.name}
+                onCommit={handleCommit}
+              />
+            </>
           )
         })()}
 
