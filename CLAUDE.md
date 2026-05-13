@@ -72,7 +72,7 @@ If a problem doesn't match a recipe in ADMIN.md, fall back to DATABASE.md to wri
 - ✅ Always reference players by **name** via subquery: `(SELECT id FROM players WHERE name = 'Frederik')` — never UUIDs
 - ✅ Always echo the action in plain English **before** the SQL block, e.g. "Setting Frederik's hole 6 ✓:"
 - ✅ Mention if the change will broadcast to all 4 phones (any UPDATE on `scores`, `game_state`, `holes`, `waypoints` will)
-- ✅ For penalty shot reasons, use the array column: `penalty_shot_reasons TEXT[]`. Valid values: `'max'`, `'min'`, `'same_as_last'`. Legacy `'8'` may exist.
+- ✅ For penalty shot reasons, use the array column: `penalty_shot_reasons TEXT[]`. Valid values: `'max'`, `'min'`, `'same_as_last'`, `'wildcard'`. Legacy `'8'` may exist.
 - ❌ Don't combine multiple recipes into one query unless explicitly asked
 - ❌ Don't compute or insert score totals — the app calculates them on-the-fly from raw data via `lib/scoring.ts`
 - ❌ Don't touch `players.id` or `holes.id`, or insert new rows in `game_state`
@@ -98,13 +98,61 @@ A phase is "stuck" if Realtime didn't fire — fix with `UPDATE game_state SET p
 ## Key features (so you don't suggest things that already exist)
 
 - **Score multipliers**: stops 7/8/9 have ×1.5/×2.0/×2.5 (column `holes.score_multiplier`)
-- **Stacking penalty shots**: `scores.penalty_shot_reasons TEXT[]` — multiple rules can trigger per commit. E.g. committing 1 twice = `['min','same_as_last']` = 2 shots.
+- **Stacking penalty shots**: `scores.penalty_shot_reasons TEXT[]` — multiple rules can trigger per commit. E.g. committing 1 twice = `['min','same_as_last']` = 2 shots. Valid reasons: `'max'`, `'min'`, `'same_as_last'`, `'wildcard'`.
 - **Cultural waypoints**: `waypoints` table for sights between drinking stops; rendered in route timeline
 - **Host notes**: `holes.host_notes` and `waypoints.host_notes` contain anecdotes shown ONLY when player.name = 'Emil'
 - **Dynamic hole count**: app reads count from DB; adding a 10th stop "just works" via INSERT
 - **Route timeline reveal logic**: future stops show name + district but DRINK is hidden until arrival
 - **History tab secret-protection**: pending commits on the current hole are masked with 🔒 from other players until reveal
 - **UI terminology**: "melder/meldt" (Danish card-game term) is used in the UI — DB fields are still `committed_sips`, `committing` phase etc.
+- **Wildcard challenge**: at the start of every stop's committing phase, a dice roll selects one player who must complete a stop-specific challenge. Failing/refusing triggers a `'wildcard'` penalty shot (written to `penalty_shot_reasons` at commit time). Fully client-side — no DB column.
+- **Punishment spin wheel**: 🎰 tab in the InfoSheet (Stilling/Historik/Regler/🎰). Purely for fun, no game-state effect.
+
+---
+
+## Changing punishments
+
+### Wildcard challenges (one per stop, dice roll selects a player)
+**File**: `components/game/WildcardChallenge.tsx`
+
+Edit the `WILDCARDS` object — keys are hole IDs (1–10):
+
+```ts
+const WILDCARDS: Record<number, string> = {
+  1: 'Få en tilfældig person i parken til at tage et gruppefoto',
+  2: 'Bestil næste drink på spansk — ingen hjælp fra de andre',
+  3: 'Bed bartenderen om at forklare drinken, og gentag den på dansk til gruppen',
+  4: "Tag en video fra taget, hvor hele gruppen råber 'Valencia!' — og post den i gruppe-chatten",
+  5: 'Find en lokal og spørg om deres yndlingsbar — skriv den ned til næste gang',
+  6: 'Kun spansk i 10 minutter',
+  7: 'Bund drinken i ét hug',
+  8: "Skål med en fremmed med cavaen — de skal sige 'salud' tilbage",
+  9: "Bed DJ'en om at spille en sang",
+  10: 'Sørg for at hele gruppen danser i mindst 2 minutter — æressystem',
+}
+```
+
+Player selection is deterministic per hole (`(holeId * 3 + 1) % players.length` on players sorted by `display_order`). To change the selection formula, edit `selectWildcardPlayer()` in the same file.
+
+### Spin wheel punishments (random party wheel, no scoring effect)
+**File**: `components/SpinWheel.tsx`
+
+Edit the `PUNISHMENTS` array — each entry needs `emoji` and `text`:
+
+```ts
+const PUNISHMENTS = [
+  { emoji: '🥃', text: '1 shot vodka' },
+  { emoji: '🍶', text: '1 shot Fernet Branca' },
+  { emoji: '🌶️', text: 'Spis 1 chili' },
+  { emoji: '✍️', text: 'Bed en fremmed om autograf' },
+  { emoji: '📞', text: 'Ring til din mor' },
+  { emoji: '🎤', text: 'Syng 10 sek. af en sang' },
+  { emoji: '🍺', text: 'Drik et ekstra slurk' },
+  { emoji: '🔄', text: 'Byt drink med naboen' },
+]
+```
+
+The wheel auto-sizes to however many entries are in the array. After editing either file: `git add`, `git commit`, `git push origin main` — live in ~1 min.
 
 ---
 
