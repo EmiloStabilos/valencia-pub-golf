@@ -92,7 +92,9 @@ export default function DiceRoller() {
             <span
               key={i}
               style={{
-                fontSize: count <= 4 ? '4.5rem' : count <= 6 ? '3.5rem' : '2.5rem',
+                fontSize: !controlsVisible
+                  ? (count <= 4 ? '6rem' : count <= 6 ? '4.5rem' : '3rem')
+                  : (count <= 4 ? '4.5rem' : count <= 6 ? '3.5rem' : '2.5rem'),
                 lineHeight: 1,
                 opacity: rolling ? 0.5 : 1,
                 transition: 'opacity 0.1s',
