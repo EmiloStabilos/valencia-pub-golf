@@ -103,6 +103,13 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
         </p>
       </div>
 
+      {/* Photo reminder (not stop 1 — that's the challenge) */}
+      {hole.id !== 1 && (
+        <p className="font-sans text-ink-muted text-sm text-center italic">
+          📸 Husk et gruppefoto inden I går videre
+        </p>
+      )}
+
       {/* Sip counter */}
       {myScore && !hasAnswered && (
         <div
