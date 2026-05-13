@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import TileRule from '@/components/decorations/TileRule'
 
 const PIPS = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅']
 
@@ -13,6 +12,7 @@ export default function DiceRoller() {
   const [count, setCount] = useState(2)
   const [values, setValues] = useState<number[]>([])
   const [rolling, setRolling] = useState(false)
+  const [controlsVisible, setControlsVisible] = useState(true)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   function roll() {
@@ -46,13 +46,19 @@ export default function DiceRoller() {
 
   return (
     <div className="px-6 py-6 space-y-7">
-      <div className="text-center">
-        <p className="smallcaps-ink border-b border-rule pb-1.5">Terninger</p>
-        <TileRule wide />
+      <div className="flex items-center justify-between border-b border-rule pb-1.5">
+        <p className="smallcaps-ink">Terninger</p>
+        <button
+          onClick={() => setControlsVisible((v) => !v)}
+          className="font-sans text-ink-muted text-xs underline underline-offset-2"
+          style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+        >
+          {controlsVisible ? 'Skjul' : `Rediger (${count})`}
+        </button>
       </div>
 
       {/* Count control */}
-      <div className="flex items-center justify-center gap-8">
+      {controlsVisible && <div className="flex items-center justify-center gap-8">
         <button
           onClick={remove}
           disabled={count === 0}
@@ -74,7 +80,7 @@ export default function DiceRoller() {
         >
           +
         </button>
-      </div>
+      </div>}
 
       {/* Dice display */}
       {count > 0 && values.length === count && (
