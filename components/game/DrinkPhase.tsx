@@ -141,7 +141,7 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
               {wentOver ? 'For mange slurke — fejlede!' : `${sipsTaken} af ${committed} slurke`}
             </p>
           </button>
-          {sipsTaken > 0 && !wentOver && (
+          {sipsTaken > 0 && (
             <button
               type="button"
               onClick={() => setSipsTaken((n) => Math.max(0, n - 1))}
