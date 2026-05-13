@@ -177,11 +177,27 @@ export default function Rules({ compact = false }: Props) {
           </li>
         </ul>
         <p className="font-sans text-ink-secondary text-base leading-snug mt-3 pt-2 border-t border-rule">
-          <strong>Straffe lægger sig sammen.</strong> Melder du 1 to gange i streg, får du <strong>2 straf-shots</strong> — én for at melde 1, én for samme tal som sidst. Tilsvarende hvis du melder max to gange i streg.
+          <strong>Straffe lægger sig sammen.</strong> Melder du 1 to gange i stræg, får du <strong>2 straf-shots</strong> — én for at melde 1, én for samme tal som sidst. Tilsvarende hvis du melder max to gange i stræg.
         </p>
       </section>
 
-      {/* Section 7 — Late-game multiplier */}
+      {/* Section 7 — Stop challenge */}
+      <section className="space-y-2">
+        <p className="smallcaps-ink border-b border-rule pb-1.5">Stop-challenge</p>
+        <p className="font-sans text-ink-secondary text-base leading-snug">
+          Ved hvert stop trækkes én spiller tilfældigt — de får en challenge for det stop.
+          Du ser opgaven <strong>inden</strong> du beslutter dig:
+        </p>
+        <ul className="font-sans text-ink-secondary text-base space-y-1 leading-snug list-none ml-1">
+          <li><span className="font-mono text-olive font-semibold">Jeg gør det</span> — du forpligter dig. Gruppen holder dig ansvarlig.</li>
+          <li><span className="font-mono text-wine font-semibold">Jeg tager straf shot</span> — du slipper for opgaven, men drikker et straf-shot med det samme.</li>
+        </ul>
+        <p className="font-serif italic text-ink-muted text-base mt-1">
+          Æressystem. Siger du ja og nægter alligevel — straf-shot plus skam.
+        </p>
+      </section>
+
+      {/* Section 8 — Late-game multiplier */}
       <section className="space-y-2">
         <p className="smallcaps-ink border-b border-rule pb-1.5">Sluttiden tæller mere</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
@@ -207,7 +223,7 @@ export default function Rules({ compact = false }: Props) {
         </div>
       </section>
 
-      {/* Section 8 — Winner */}
+      {/* Section 9 — Winner */}
       <section className="space-y-2">
         <p className="smallcaps-ink border-b border-rule pb-1.5">Vinderen</p>
         <p className="font-sans text-ink-secondary text-base leading-snug">
