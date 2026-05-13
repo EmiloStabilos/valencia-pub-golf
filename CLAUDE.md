@@ -105,8 +105,11 @@ A phase is "stuck" if Realtime didn't fire — fix with `UPDATE game_state SET p
 - **Route timeline reveal logic**: future stops show name + district but DRINK is hidden until arrival
 - **History tab secret-protection**: pending commits on the current hole are masked with 🔒 from other players until reveal
 - **UI terminology**: "melder/meldt" (Danish card-game term) is used in the UI — DB fields are still `committed_sips`, `committing` phase etc.
-- **Wildcard challenge**: at the start of every stop's committing phase, a dice roll selects one player who must complete a stop-specific challenge. Failing/refusing triggers a `'wildcard'` penalty shot (written to `penalty_shot_reasons` at commit time). Fully client-side — no DB column.
-- **Punishment spin wheel**: 🎰 tab in the InfoSheet (Stilling/Historik/Regler/🎰). Purely for fun, no game-state effect.
+- **Wildcard challenge**: at the start of every stop's committing phase, a dice roll selects one player who sees the challenge and must decide **upfront**: "Jeg gør det" (commits to doing it) or "Jeg tager straf shot" (skips, takes penalty shot immediately). Failing after saying yes = straf-shot + skam. Triggers a `'wildcard'` penalty shot written to `penalty_shot_reasons` at commit time. Fully client-side — no DB column.
+- **Photo reminder**: during the drinking phase on stops 2–9, a reminder shows: "Husk et gruppefoto inden I går videre". Stop 1 is excluded because the wildcard challenge there already is to take a group photo.
+- **GamesSheet**: separate sheet opened via the SVG dice icon in the header (next to the house/info icon). Contains two tabs: 🎲 Terninger (dice roller) and 🎰 Hjul (spin wheel). Add more games here.
+- **Dice roller**: `components/DiceRoller.tsx` — standard d6, 0–12 dice, one Roll button with shake animation. Controls (+/−) are collapsible via "Skjul/Rediger" toggle; dice get bigger when controls are hidden.
+- **InfoSheet** (house icon): Stilling / Historik / Regler — no longer contains the wheel or dice.
 
 ---
 
