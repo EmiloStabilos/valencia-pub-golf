@@ -30,12 +30,10 @@ export default function GamesSheet({ onClose }: Props) {
         {/* Tabs */}
         <div className="flex-shrink-0 border-b border-rule">
           <div className="flex">
-            {([{
-              key: 'dice', label: '🎲 Terninger',
-            },
-            {
-              key: 'wheel', label: '🎰 Hjul',
-            }] as { key: Tab; label: string }[]).map((t) => (
+            {([
+              { key: 'dice', label: '🎲 Terninger' },
+              { key: 'wheel', label: '🎰 Hjul' },
+            ] as { key: Tab; label: string }[]).map((t) => (
               <button
                 key={t.key}
                 onClick={() => setTab(t.key)}
