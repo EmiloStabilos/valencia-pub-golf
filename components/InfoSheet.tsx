@@ -4,8 +4,9 @@ import { useState } from 'react'
 import type { Player, Score, Hole, GameState, HoleScore } from '@/lib/types'
 import { computeLeaderboard, computeHoleScores, calculateGroupAverage } from '@/lib/scoring'
 import Rules from './Rules'
+import SpinWheel from './SpinWheel'
 
-type Tab = 'standing' | 'history' | 'rules'
+type Tab = 'standing' | 'history' | 'rules' | 'wheel'
 
 interface Props {
   players: Player[]
@@ -74,7 +75,17 @@ export default function InfoSheet({ players, scores, holes, gameState, currentPl
                 </span>
               </button>
             ))}
-          </div>
+            <button
+              onClick={() => setTab('wheel')}
+              className={`px-4 py-4 transition-colors ${
+                tab === 'wheel'
+                  ? 'text-ink border-b-2 border-gold -mb-px'
+                  : 'text-ink-muted'
+              }`}
+              aria-label="Lykkehjul"
+            >
+              <span style={{ fontSize: '1.1rem' }}>🎰</span>
+            </button>
 
           {/* Close button absolute right */}
           <button
@@ -101,6 +112,7 @@ export default function InfoSheet({ players, scores, holes, gameState, currentPl
             />
           )}
           {tab === 'rules' && <Rules />}
+          {tab === 'wheel' && <SpinWheel />}
         </div>
       </div>
     </div>
