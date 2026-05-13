@@ -44,10 +44,6 @@ export default function DiceRoller() {
     setValues((v) => v.slice(0, -1))
   }
 
-  const total = values.length === count && count > 0
-    ? values.reduce((a, b) => a + b, 0)
-    : null
-
   return (
     <div className="px-6 py-6 space-y-7">
       <div className="text-center">
@@ -90,7 +86,7 @@ export default function DiceRoller() {
             <span
               key={i}
               style={{
-                fontSize: count <= 6 ? '3rem' : '2.2rem',
+                fontSize: count <= 4 ? '4.5rem' : count <= 6 ? '3.5rem' : '2.5rem',
                 lineHeight: 1,
                 opacity: rolling ? 0.5 : 1,
                 transition: 'opacity 0.1s',
@@ -99,16 +95,6 @@ export default function DiceRoller() {
               {PIPS[v - 1]}
             </span>
           ))}
-        </div>
-      )}
-
-      {/* Total */}
-      {total !== null && count > 1 && (
-        <div className="text-center border border-rule py-4" style={{ background: 'var(--limestone-light)' }}>
-          <p className="smallcaps" style={{ marginBottom: 4 }}>Total</p>
-          <p className="font-mono text-ink font-semibold" style={{ fontSize: '2.5rem', lineHeight: 1 }}>
-            {total}
-          </p>
         </div>
       )}
 
