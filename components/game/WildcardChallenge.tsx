@@ -72,9 +72,9 @@ export default function WildcardChallenge({ holeId, players, currentPlayerId, on
     <div className="fixed inset-0 z-50 bg-parchment flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-sm text-center space-y-6">
         <div>
-          <p className="smallcaps mb-1">Stop {holeId} · Straf</p>
+          <p className="smallcaps mb-1">Stop {holeId} · Challenge</p>
           <h2 className="display-lg">
-            {stage === 'rolling' ? 'Hvem får straffen?' : selectedPlayer.name}
+            {stage === 'rolling' ? 'Hvem får challengen?' : selectedPlayer.name}
           </h2>
           <TileRule wide />
         </div>
@@ -101,7 +101,7 @@ export default function WildcardChallenge({ holeId, players, currentPlayerId, on
             </div>
 
             <p className="font-sans text-ink-muted text-sm">
-              Fejler eller nægter du — straf-shot.
+              Fejler eller nægter du — challenge-shot.
             </p>
 
             {isSelected ? (
