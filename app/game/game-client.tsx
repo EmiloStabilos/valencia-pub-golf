@@ -311,7 +311,14 @@ export default function GamePage() {
               className="flex items-center justify-center"
               aria-label="Spil"
             >
-              <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>🎲</span>
+              <svg viewBox="0 0 24 24" width={22} height={22} fill="none" style={{ color: 'var(--limestone)' }}>
+                <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="1.5" />
+                <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                <circle cx="16" cy="8" r="1.2" fill="currentColor" />
+                <circle cx="12" cy="12" r="1.2" fill="currentColor" />
+                <circle cx="8" cy="16" r="1.2" fill="currentColor" />
+                <circle cx="16" cy="16" r="1.2" fill="currentColor" />
+              </svg>
             </button>
             <button
               onClick={() => setShowInfo(true)}
