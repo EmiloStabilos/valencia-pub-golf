@@ -9,7 +9,7 @@ const PUNISHMENTS = [
   { emoji: '✍️', text: 'Bed en fremmed om autograf' },
   { emoji: '📞', text: 'Ring til din mor' },
   { emoji: '🎤', text: 'Syng 10 sek. af en sang' },
-  { emoji: '🍺', text: 'Drik et ekstra slurk' },
+  { emoji: '🍺', text: 'Drik en ekstra slurk' },
   { emoji: '🔄', text: 'Byt drink med naboen' },
 ]
 
