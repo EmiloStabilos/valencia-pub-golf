@@ -18,15 +18,16 @@ Ready-to-paste SQL for fixing common in-game issues during the trip.
 **Stop name → ID quick lookup:**
 | ID | Name | Drink | Max | Mult |
 |---|---|---|---|---|
-| 1 ★ | Café de las Horas | Agua de Valencia | 8 | 1.0 |
-| 2 | Botanista Bar | Signature cocktail | 10 | 1.0 |
-| 3 | Atenea Sky Rooftop | Gin & tonic / cocktail | 12 | 1.0 |
-| 4 | Lokal bar (Carmen) | Øl (0,5L) | 6 | 1.0 |
-| 5 | Russafa bar | Tinto de verano | 7 | 1.0 |
-| 6 | L'eixample bar | Shot + lille øl | 5 | 1.0 |
-| 7 | Cava stop | Cava glas | 6 | **1.5** |
-| 8 | Marina Beach Club Restaurant | Mojito / longdrink | 12 | **2.0** |
+| 1 ★ | Bænkebajer i Turia-parken | Bænkebajer | 8 | 1.0 |
+| 2 | Café de las Horas | Agua de Valencia | 8 | 1.0 |
+| 3 | Botanista Bar | Signature cocktail | 12 | 1.0 |
+| 4 | Atenea Sky Rooftop | Gin & tonic / cocktail | 12 | 1.0 |
+| 5 | Lokal bar (Carmen) | Øl (0,5L) | 8 | 1.0 |
+| 6 | Russafa bar | Tinto de verano | 7 | 1.0 |
+| 7 | L'eixample bar | Shot + lille øl | 5 | 1.0 |
+| 8 | Cava stop (på vej mod strand) | Cava glas | 6 | **1.5** |
 | 9 | Mya | Vodka Red Bull / gin & tonic | 10 | **2.5** |
+| 10 | Marina Beach Club Restaurant | Mojito / longdrink | 12 | **2.0** |
 
 ★ = practice round, points don't count
 
@@ -372,7 +373,7 @@ UPDATE holes SET score_multiplier = 2.0 WHERE id = 7;
 UPDATE holes SET score_multiplier = 1.0 WHERE id = 8;  -- remove multiplier
 ```
 
-Default is 1.0 (no multiplier). Currently: hole 7 = 1.5, hole 8 = 2.0, hole 9 = 2.5. Decimal values OK.
+Default is 1.0 (no multiplier). Currently: hole 8 = 1.5, hole 9 = 2.5, hole 10 = 2.0. Decimal values OK.
 
 ---
 

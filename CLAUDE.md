@@ -22,7 +22,7 @@ If you have **Supabase MCP** connected (tool name pattern `mcp__*__execute_sql`)
 
 ## What this app is
 
-A real-time multiplayer pub-golf scoring webapp for **4 players** playing **9 stops** across Valencia over 1 day. Stop 1 is a practice round — points don't count.
+A real-time multiplayer pub-golf scoring webapp for **4 players** playing **10 stops** across Valencia over 1 day. Stop 1 is a practice round — points don't count.
 
 - **Stack**: Next.js 15 (App Router) + Supabase (Postgres + Realtime, 4 tables) + Tailwind, hosted on Vercel
 - **Anon-key auth** — the app uses `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel env vars; no user-level auth. The anon role has full read/write access by design.
@@ -97,7 +97,7 @@ A phase is "stuck" if Realtime didn't fire — fix with `UPDATE game_state SET p
 
 ## Key features (so you don't suggest things that already exist)
 
-- **Score multipliers**: stops 7/8/9 have ×1.5/×2.0/×2.5 (column `holes.score_multiplier`)
+- **Score multipliers**: stop 8 ×1.5, stop 10 ×2.0, stop 9 ×2.5 (column `holes.score_multiplier`)
 - **Stacking penalty shots**: `scores.penalty_shot_reasons TEXT[]` — multiple rules can trigger per commit. E.g. committing 1 twice = `['min','same_as_last']` = 2 shots. Valid reasons: `'max'`, `'min'`, `'same_as_last'`, `'wildcard'`.
 - **Cultural waypoints**: `waypoints` table for sights between drinking stops; rendered in route timeline
 - **Host notes**: `holes.host_notes` and `waypoints.host_notes` contain anecdotes shown ONLY when player.name = 'Emil'
