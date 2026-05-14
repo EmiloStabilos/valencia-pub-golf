@@ -10,7 +10,7 @@
 |---|---|
 | **Live app** (share with players) | https://valencia-pub-golf.vercel.app |
 | **Supabase SQL Editor** (paste-and-run) | https://supabase.com/dashboard/project/fiucpbakevqzytbphghy/sql/new |
-| **Supabase project ID** | `fiucpbakevqzytbphghy` (region eu-west-1, name "AthenApp") |
+| **Supabase project ID** | `fiucpbakevqzytbphghy` (region eu-west-1, name "Valencia Pub Golf") |
 | **Vercel project name** | `valencia-pub-golf` (EmiloStabilos personal Hobby team) |
 | **GitHub repo** | `EmiloStabilos/valencia-pub-golf` (**public** — fetch docs directly) |
 | **Raw doc URLs** | `https://raw.githubusercontent.com/EmiloStabilos/valencia-pub-golf/main/<file>` |
