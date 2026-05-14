@@ -137,6 +137,23 @@ export default function SpinWheel() {
         />
       </div>
 
+      {/* Remaining punishments */}
+      <div className="flex flex-wrap justify-center gap-2 px-4">
+        {PUNISHMENTS.map((p, i) => (
+          <span
+            key={i}
+            title={p.text}
+            style={{
+              fontSize: '1.4rem',
+              opacity: used.includes(i) ? 0.25 : 1,
+              transition: 'opacity 0.4s',
+            }}
+          >
+            {p.emoji}
+          </span>
+        ))}
+      </div>
+
       {/* Result */}
       <div style={{ minHeight: 88, textAlign: 'center' }}>
         {result !== null && !spinning && (
