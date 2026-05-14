@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import SpinWheel from './SpinWheel'
 import DiceRoller from './DiceRoller'
+import HigherOrLower from './HigherOrLower'
 
-type Tab = 'dice' | 'wheel'
+type Tab = 'dice' | 'wheel' | 'hol'
 
 interface Props {
   onClose: () => void
@@ -33,6 +34,7 @@ export default function GamesSheet({ onClose }: Props) {
             {([
               { key: 'dice', label: '🎲 Terninger' },
               { key: 'wheel', label: '🎰 Hjul' },
+              { key: 'hol', label: '🔢 H/L' },
             ] as { key: Tab; label: string }[]).map((t) => (
               <button
                 key={t.key}
@@ -65,6 +67,7 @@ export default function GamesSheet({ onClose }: Props) {
         <div className="overflow-y-auto flex-1">
           {tab === 'dice' && <DiceRoller />}
           {tab === 'wheel' && <SpinWheel />}
+          {tab === 'hol' && <HigherOrLower />}
         </div>
       </div>
     </div>
