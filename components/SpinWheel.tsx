@@ -31,10 +31,14 @@ export default function SpinWheel() {
   const [spinning, setSpinning] = useState(false)
   const [angle, setAngle] = useState(0)
   const [result, setResult] = useState<number | null>(null)
+  const [used, setUsed] = useState<number[]>([])
 
   function spin() {
     if (spinning) return
-    const chosen = Math.floor(Math.random() * N)
+    const remaining = Array.from({ length: N }, (_, i) => i).filter((i) => !used.includes(i))
+    const pool = remaining.length === 0 ? Array.from({ length: N }, (_, i) => i) : remaining
+    if (remaining.length === 0) setUsed([])
+    const chosen = pool[Math.floor(Math.random() * pool.length)]
     // Center of chosen segment in wheel coordinates (conic-gradient starts from top)
     const segCenter = chosen * SEG + SEG / 2
     // Current wheel position mod 360
@@ -48,6 +52,7 @@ export default function SpinWheel() {
     setAngle(angle + extra + diff)
     setTimeout(() => {
       setResult(chosen)
+      setUsed((prev) => [...prev.filter((i) => i !== chosen), chosen])
       setSpinning(false)
     }, 3200)
   }
