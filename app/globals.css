@@ -8,23 +8,23 @@
    DESIGN TOKENS — edit here to retheme the entire app
    ═══════════════════════════════════════════════════════════ */
 :root {
-  /* Brand — Valencian sky blue (left panel of the flag) */
-  --cobalt:              #4A9CC8;
-  --cobalt-soft:         #5BAAD9;
-  --cobalt-deep:         #2E7AAF;
+  /* Brand — deep Mediterranean blue (Valencian flag, sea, sky) */
+  --cobalt:              #1565A0;
+  --cobalt-soft:         #1E7BBE;
+  --cobalt-deep:         #0D4875;
 
-  /* Surfaces — clean Valencian whites */
-  --limestone:           #FFFEF8;
-  --limestone-light:     #FFFFFF;
-  --limestone-dark:      #F5F2EC;
-  --limestone-stepper:   #EEF5FB;
+  /* Surfaces — sun-baked Valencian walls and plaster */
+  --limestone:           #FFF8EB;
+  --limestone-light:     #FFFDF6;
+  --limestone-dark:      #FFE5B0;
+  --limestone-stepper:   #FFF1D4;
 
-  /* Accents — Valencian gold (the yellow stripes) */
-  --gold:                #F5C400;
-  --gold-soft:           #FFD740;
-  /* Valencian red (the red stripes) */
-  --terracotta:          #CC2200;
-  --terracotta-dark:     #991A00;
+  /* Accents — Valencia oranges + Valencian flag gold */
+  --gold:                #F5A623;
+  --gold-soft:           #FFB93D;
+  /* Valencian red (the flag stripes, terracotta tiles) */
+  --terracotta:          #C84520;
+  --terracotta-dark:     #983018;
   --sangria:             #8B1A3A;
 
   /* Status */
@@ -33,28 +33,28 @@
   --wine:                #8B1A1A;
   --wine-dark:           #5A0A0A;
 
-  /* Ink */
-  --ink:                 #1E1C18;
-  --ink-secondary:       #3E3C34;
-  --ink-muted:           #6E6A5E;
-  --ink-faint:           #A8A49A;
+  /* Ink — warm dark brown, like stone inscriptions in Valencia old town */
+  --ink:                 #2D1506;
+  --ink-secondary:       #5C2D0C;
+  --ink-muted:           #8B5C2E;
+  --ink-faint:           #C49A72;
 
   /* Badge — player number in selection list */
-  --badge-number:        #4A9CC8;
+  --badge-number:        #1565A0;
 
-  /* Rule / border — Valencian golden-yellow (the yellow stripes as dividers) */
-  --rule:                #D0CCBF;
+  /* Rule / border — warm golden divider */
+  --rule:                #D4A870;
 
   /* RGB channels — required for Tailwind opacity modifiers (bg-gold/30 etc.) */
-  --cobalt-rgb:          74 156 200;
-  --gold-rgb:            245 196 0;
-  --rule-rgb:            208 204 191;
+  --cobalt-rgb:          21 101 160;
+  --gold-rgb:            245 166 35;
+  --rule-rgb:            212 168 112;
   --olive-rgb:           58 104 32;
   --wine-rgb:            139 26 26;
-  --ink-rgb:             30 28 24;
-  --limestone-rgb:       255 254 248;
-  --limestone-dark-rgb:  245 242 236;
-  --limestone-light-rgb: 255 255 255;
+  --ink-rgb:             45 21 6;
+  --limestone-rgb:       255 248 235;
+  --limestone-dark-rgb:  255 229 176;
+  --limestone-light-rgb: 255 253 246;
 }
 
 @layer base {
@@ -161,12 +161,12 @@
     );
   }
 
-  /* Azulejo background — cobalt with geometric tile SVG.
-     Note: CSS vars cannot be used inside SVG data URIs, so the SVG
-     keeps hardcoded hex values. Only background-color uses the var. */
+  /* Azulejo background — deep blue with Moorish 8-pointed star tile pattern.
+     CSS vars cannot be used inside SVG data URIs — hex values are hardcoded.
+     %231565A0=cobalt  %23F5A623=gold  %23C84520=terracotta  %23FFF8EB=limestone */
   .azulejo-bg {
     background-color: var(--cobalt);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%234A9CC8'/%3E%3Crect x='2' y='2' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='2' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='2' y='26' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Crect x='26' y='26' width='20' height='20' fill='none' stroke='%23F5F1EB' stroke-width='0.8' opacity='0.25'/%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='%23F5C400' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='36' r='4' fill='none' stroke='%23F5C400' stroke-width='0.8' opacity='0.35'/%3E%3Ccircle cx='36' cy='12' r='4' fill='none' stroke='%23CC2200' stroke-width='0.8' opacity='0.3'/%3E%3Ccircle cx='12' cy='36' r='4' fill='none' stroke='%23CC2200' stroke-width='0.8' opacity='0.3'/%3E%3Cpath d='M24 2 L24 46 M2 24 L46 24' stroke='%23F5F1EB' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' fill='%231565A0'/%3E%3Crect x='3' y='3' width='35' height='35' fill='none' stroke='%23FFF8EB' stroke-width='0.6' opacity='0.22'/%3E%3Crect x='42' y='3' width='35' height='35' fill='none' stroke='%23FFF8EB' stroke-width='0.6' opacity='0.22'/%3E%3Crect x='3' y='42' width='35' height='35' fill='none' stroke='%23FFF8EB' stroke-width='0.6' opacity='0.22'/%3E%3Crect x='42' y='42' width='35' height='35' fill='none' stroke='%23FFF8EB' stroke-width='0.6' opacity='0.22'/%3E%3Ccircle cx='20.5' cy='20.5' r='7' fill='none' stroke='%23FFF8EB' stroke-width='0.5' opacity='0.18'/%3E%3Ccircle cx='59.5' cy='20.5' r='7' fill='none' stroke='%23FFF8EB' stroke-width='0.5' opacity='0.18'/%3E%3Ccircle cx='20.5' cy='59.5' r='7' fill='none' stroke='%23FFF8EB' stroke-width='0.5' opacity='0.18'/%3E%3Ccircle cx='59.5' cy='59.5' r='7' fill='none' stroke='%23FFF8EB' stroke-width='0.5' opacity='0.18'/%3E%3Crect x='30' y='30' width='20' height='20' fill='none' stroke='%23F5A623' stroke-width='0.85' opacity='0.45'/%3E%3Crect x='30' y='30' width='20' height='20' fill='none' stroke='%23F5A623' stroke-width='0.85' opacity='0.45' transform='rotate(45 40 40)'/%3E%3Cpolygon points='40,33 47,40 40,47 33,40' fill='%23F5A623' opacity='0.15'/%3E%3Cpolygon points='40,1 43.5,4.5 40,8 36.5,4.5' fill='none' stroke='%23C84520' stroke-width='0.7' opacity='0.4'/%3E%3Cpolygon points='40,72 43.5,75.5 40,79 36.5,75.5' fill='none' stroke='%23C84520' stroke-width='0.7' opacity='0.4'/%3E%3Cpolygon points='1,40 4.5,43.5 8,40 4.5,36.5' fill='none' stroke='%23C84520' stroke-width='0.7' opacity='0.4'/%3E%3Cpolygon points='72,40 75.5,43.5 79,40 75.5,36.5' fill='none' stroke='%23C84520' stroke-width='0.7' opacity='0.4'/%3E%3Cline x1='40' y1='0' x2='40' y2='80' stroke='%23FFF8EB' stroke-width='0.3' opacity='0.1'/%3E%3Cline x1='0' y1='40' x2='80' y2='40' stroke='%23FFF8EB' stroke-width='0.3' opacity='0.1'/%3E%3C/svg%3E");
   }
 
   /* Primary CTA — cobalt */
