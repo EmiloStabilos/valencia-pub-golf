@@ -98,8 +98,8 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
         </p>
         <p className="font-sans italic text-ink-muted" style={{ fontSize: '0.9rem', marginTop: 8 }}>
           {isExpired
-            ? 'Fejlede automatisk — +III strafpoint.'
-            : 'Bund drinken inden uret går — ellers +III strafpoint.'}
+            ? 'Fejlede automatisk — +3 strafpoint.'
+            : 'Bund drinken inden uret går — ellers +3 strafpoint.'}
         </p>
       </div>
 
@@ -168,7 +168,7 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
             Klarede det
           </button>
           <button onClick={() => handleResult(false)} disabled={submitting || isExpired} className="btn-danger">
-            Fejlede (+III)
+            Fejlede (+3)
           </button>
         </div>
       ) : (
@@ -181,7 +181,7 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
           ) : (
             <>
               <p className="smallcaps" style={{ color: 'var(--wine)', marginBottom: 6 }}>Fejlede</p>
-              <p className="font-serif italic text-ink" style={{ fontSize: '1.1rem' }}>+III strafpoint registreret.</p>
+              <p className="font-serif italic text-ink" style={{ fontSize: '1.1rem' }}>+3 strafpoint registreret.</p>
             </>
           )}
         </div>
