@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import type { Hole, Player, Score } from '@/lib/types'
 import TileRule from '@/components/decorations/TileRule'
+import { calculateGroupAverage, calculateDistancePenalty } from '@/lib/scoring'
 
 interface Props {
   hole: Hole
@@ -41,6 +42,12 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
   const remainingSecPart = remainingSec != null ? remainingSec % 60 : null
   const isUrgent = remainingMs != null && remainingMs <= 60_000 && remainingMs > 0
   const isExpired = remainingMs === 0
+
+  const allCommittedSips = scores.filter((s) => s.committed_sips != null).map((s) => s.committed_sips as number)
+  const groupAverage = calculateGroupAverage(allCommittedSips)
+  const myDistancePenalty = myScore?.committed_sips != null
+    ? calculateDistancePenalty(myScore.committed_sips, groupAverage)
+    : 0
 
   const hasAnswered = myScore?.completed !== null && myScore?.completed !== undefined
   const committed = myScore?.committed_sips ?? 0
@@ -181,7 +188,12 @@ export default function DrinkPhase({ hole, scores, players, myScore, deadlineAt,
           ) : (
             <>
               <p className="smallcaps" style={{ color: 'var(--wine)', marginBottom: 6 }}>Fejlede</p>
-              <p className="font-serif italic text-ink" style={{ fontSize: '1.1rem' }}>+3 strafpoint registreret.</p>
+              <p className="font-serif italic text-ink" style={{ fontSize: '1.1rem' }}>
+                +{myDistancePenalty + 3} point
+                {myDistancePenalty > 0
+                  ? ` (${myDistancePenalty} afstand + 3 fejl)`
+                  : ' (spot on afstand + 3 fejl)'}
+              </p>
             </>
           )}
         </div>
