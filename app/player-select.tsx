@@ -70,59 +70,56 @@ export default function PlayerSelectPage() {
 
   return (
     <div className="min-h-screen bg-parchment flex flex-col">
-      {/* Hero — azulejo header */}
-      <div className="azulejo-bg" style={{ padding: '40px 24px 0', textAlign: 'center', position: 'relative' }}>
-        {/* Moorish arch watermark */}
-        <svg viewBox="0 0 260 200" width={220} style={{ margin: '0 auto', display: 'block', opacity: 0.15 }}>
-          <path d="M30 200 L30 100 Q30 20 130 20 Q230 20 230 100 L230 200" fill="none" stroke="var(--limestone)" strokeWidth="2.5" />
-          <path d="M55 200 L55 105 Q55 45 130 45 Q205 45 205 105 L205 200" fill="none" stroke="var(--limestone)" strokeWidth="1.2" />
-          <line x1="10" y1="200" x2="250" y2="200" stroke="var(--limestone)" strokeWidth="1.5" />
-        </svg>
+      {/* Hero — Spanish flag */}
+      <div style={{ textAlign: 'center', position: 'relative' }}>
+        {/* Top red stripe */}
+        <div style={{ background: '#AA151B', padding: '22px 24px 18px' }}>
+          <p
+            className="font-serif italic"
+            style={{
+              fontWeight: 900,
+              fontSize: '1.45rem',
+              color: '#F1BF00',
+              textShadow: '0 1px 6px rgba(0,0,0,0.5)',
+              letterSpacing: '0.01em',
+            }}
+          >
+            Freddy has a mini penis 🍆
+          </p>
+        </div>
 
-        {/* Title overlaid on arch */}
-        <div style={{ marginTop: -130, position: 'relative', zIndex: 2, paddingBottom: 36 }}>
+        {/* Gold middle stripe */}
+        <div style={{ background: '#F1BF00', padding: '20px 24px' }}>
           <h1
             className="font-serif"
             style={{
               fontWeight: 900,
-              fontSize: '3.6rem',
+              fontSize: '3.2rem',
               lineHeight: 1,
-              color: 'var(--limestone)',
+              color: '#AA151B',
               letterSpacing: '-0.01em',
-              textShadow: '0 2px 16px rgba(0,0,0,0.4)',
+              textShadow: '0 1px 4px rgba(0,0,0,0.15)',
             }}
           >
             Valencia
           </h1>
           <p
             className="font-serif italic"
-            style={{
-              fontWeight: 600,
-              fontSize: '1.9rem',
-              color: 'var(--gold-soft)',
-              marginTop: 4,
-              textShadow: '0 1px 8px rgba(0,0,0,0.3)',
-            }}
+            style={{ fontWeight: 700, fontSize: '1.7rem', color: '#7A0E12', marginTop: 2 }}
           >
             Pub Golf
           </p>
-
-          <div className="tile-border-thin" style={{ margin: '20px auto', width: 120 }} />
-
-          <p className="smallcaps" style={{ color: 'rgb(var(--limestone-rgb) / 0.7)', letterSpacing: '0.22em' }}>
+          <p className="smallcaps" style={{ color: '#7A0E12', letterSpacing: '0.22em', marginTop: 10, opacity: 0.8 }}>
             🇪🇸 {day} · {holeCount != null ? `${holeCount} STOPS` : 'STOPS'}
           </p>
-          <p
-            className="font-mono"
-            style={{ color: 'rgb(var(--limestone-rgb) / 0.5)', fontSize: '0.72rem', letterSpacing: '0.18em', marginTop: 4 }}
-          >
+          <p className="font-mono" style={{ color: '#7A0E12', fontSize: '0.7rem', letterSpacing: '0.18em', marginTop: 3, opacity: 0.6 }}>
             {date}
           </p>
         </div>
-      </div>
 
-      {/* Arch divider */}
-      <ArchDivider />
+        {/* Bottom red stripe */}
+        <div style={{ background: '#AA151B', height: 28 }} />
+      </div>
 
       {/* Player list */}
       <div className="flex-1 bg-parchment">
