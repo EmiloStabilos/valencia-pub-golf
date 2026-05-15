@@ -7,7 +7,7 @@ const PUNISHMENTS = [
   { emoji: '🍶', text: '1 shot Fernet Branca' },
   { emoji: '🌶️', text: 'Spis 1 chili' },
   { emoji: '✍️', text: 'Bed en fremmed om autograf' },
-  { emoji: '📞', text: 'Ring til din mor' },
+  { emoji: '💃', text: 'Dans med en fremmed i 30 sek.' },
   { emoji: '🎤', text: 'Syng 10 sek. af en sang' },
   { emoji: '🍺', text: 'Drik en ekstra slurk' },
   { emoji: '🔄', text: 'Byt drink med naboen' },
